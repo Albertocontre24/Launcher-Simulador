@@ -10,5 +10,11 @@ Este launcher permite comprobar versiones, descargar actualizaciones y mostrar n
 - Interfaz básica con botón JUGAR y sección de noticias
 
 ## Requisitos
-- .NET 6.0 o superior
-- Visual Studio / VSCode
+- Lenguaje: C# (.NET / Visual Studio)  
+- Hosting: CDN para versiones y manifest.json  
+- Sistema operativo: Windows 10/11  
+
+## Autor
+Antonio Pinillos 
+Luis Martinez
+Alberto Contreras
