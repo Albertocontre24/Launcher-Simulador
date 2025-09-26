@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Launcher-Simulador\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj": {}
+    "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Launcher-Simulador\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj": {
+    "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Launcher-Simulador\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj",
+        "projectUniqueName": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj",
         "projectName": "Launcher.App",
-        "projectPath": "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Launcher-Simulador\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj",
-        "packagesPath": "C:\\Users\\alber\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Launcher-Simulador\\Launcher-Simulador\\Launcher.App\\obj\\",
+        "projectPath": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj",
+        "packagesPath": "C:\\Users\\Luis Martínez Parra\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\alber\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Luis Martínez Parra\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0-windows"
@@ -26,8 +26,8 @@
           "net9.0-windows7.0": {
             "targetAlias": "net9.0-windows",
             "projectReferences": {
-              "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Launcher-Simulador\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj": {
-                "projectPath": "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Launcher-Simulador\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj"
+              "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj": {
+                "projectPath": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj"
               }
             }
           }
@@ -70,17 +70,17 @@
         }
       }
     },
-    "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Launcher-Simulador\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj": {
+    "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Launcher-Simulador\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj",
+        "projectUniqueName": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj",
         "projectName": "Launcher.Core",
-        "projectPath": "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Launcher-Simulador\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj",
-        "packagesPath": "C:\\Users\\alber\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Launcher-Simulador\\Launcher-Simulador\\Launcher.Core\\obj\\",
+        "projectPath": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj",
+        "packagesPath": "C:\\Users\\Luis Martínez Parra\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\alber\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Luis Martínez Parra\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
