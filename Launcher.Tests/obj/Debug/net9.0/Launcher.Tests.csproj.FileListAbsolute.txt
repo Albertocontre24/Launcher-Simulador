@@ -1,8 +1,6 @@
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Tests\bin\Debug\net9.0\.msCoverageSourceRootsMapping_Launcher.Tests
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Tests\bin\Debug\net9.0\testhost.dll
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Tests\bin\Debug\net9.0\testhost.exe
-C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Tests\bin\Debug\net9.0\es\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.resources.dll
-C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Tests\bin\Debug\net9.0\es\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.resources.dll
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Tests\bin\Debug\net9.0\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Tests\bin\Debug\net9.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Tests\bin\Debug\net9.0\Microsoft.TestPlatform.AdapterUtilities.dll

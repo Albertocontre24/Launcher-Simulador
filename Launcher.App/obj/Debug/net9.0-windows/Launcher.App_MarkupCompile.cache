@@ -1,5 +1,5 @@
 ﻿Launcher.App
-
+1.0.0.0
 
 winexe
 C#
@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET9_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\App.xaml
 11407045341
 
-4-1744059505
+6-1672729886
 201-670595825
 MainWindow.xaml;
 
-False
+True
 
