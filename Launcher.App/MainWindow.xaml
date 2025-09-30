@@ -97,8 +97,8 @@
 									<ItemsControl.ItemTemplate>
 										<DataTemplate>
 											<TextBlock TextWrapping="Wrap">
-                                                <Run Text="• "/>
-                                                <Run Text="{Binding}" />
+												<Run Text="• "/>
+												<Run Text="{Binding}" />
 											</TextBlock>
 										</DataTemplate>
 									</ItemsControl.ItemTemplate>
