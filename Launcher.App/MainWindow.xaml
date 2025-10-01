@@ -3,25 +3,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:local="clr-namespace:Launcher.App"
+        xmlns:local="clr-namespace:Launcher.App"
         mc:Ignorable="d"
         Title="Launcher 2.0" Height="800" Width="800"
-		WindowStartupLocation="CenterScreen"
-		Background="#FF778899">
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource PrimaryBackground}">
+
 	<DockPanel LastChildFill="True">
-		<Menu DockPanel.Dock="Top">
-			<MenuItem Header="_Archivo">
-				<MenuItem Header="Abrir..." />
+
+		<!-- MENÚ SUPERIOR -->
+		<Menu DockPanel.Dock="Top" Background="{StaticResource PrimaryBackground}">
+			<MenuItem Header="_Archivo" Foreground="{StaticResource PrimaryText}" >
+				<MenuItem Header="Abrir..." Foreground="#0D0D0D" IsCheckable="True" IsChecked="True" />
 				<Separator />
-				<MenuItem Header="Salir" Click="MenuSalir_Click"/>
+				<MenuItem Header="Salir" Foreground="#0D0D0D" IsCheckable="True" IsChecked="True" Click="MenuSalir_Click"/>
 			</MenuItem>
-			<MenuItem Header="_Ver">
-				<MenuItem Header="Actualizar" Click="MenuActualizar_Click"/>
+			
+			<MenuItem Header="_Ver" Foreground="{StaticResource PrimaryText}">
+				<MenuItem Header="Actualizar"
+						  Foreground="#0D0D0D"
+						  IsCheckable="True"
+						  IsChecked="True"
+						  Click="MenuActualizar_Click"/>
 			</MenuItem>
-			<MenuItem Header="_Ayuda">
-				<MenuItem Header="Acerca de..." Click="MenuAcercaDe_Click"/>
+			
+			<MenuItem Header="_Ayuda" Foreground="{StaticResource PrimaryText}" >
+				<MenuItem Header="Acerca de..." Foreground="#0D0D0D" IsCheckable="True"
+						  IsChecked="True" Click="MenuAcercaDe_Click"/>
 			</MenuItem>
 		</Menu>
+
+		<!-- BARRA SUPERIOR -->
 		<Border DockPanel.Dock="Top" Padding="10" Background="#FF2D2F33">
 			<Grid>
 				<Grid.ColumnDefinitions>
@@ -30,15 +42,15 @@
 					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
 
-				<!-- Icono / Logo -->
+				<!-- Logo -->
 				<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0">
 					<Image Source="Assets/logo.png" Width="38" Height="38" Margin="0,0,10,0"/>
 				</StackPanel>
 
-				<!-- Título y subtítulo -->
+				<!-- Título -->
 				<StackPanel Grid.Column="1" VerticalAlignment="Center">
 					<TextBlock Text="Mi Launcher" Foreground="White" FontSize="20" FontWeight="Bold"/>
-					<TextBlock Text="Panel principal" Foreground="#FFBFC3C6" FontSize="12"/>
+					<TextBlock Text="Panel principal" Foreground="{StaticResource SecondaryText}" FontSize="12"/>
 				</StackPanel>
 
 				<!-- Acciones rápidas -->
@@ -56,33 +68,37 @@
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
 
-			<!-- PESTAÑAS / NAVEGACIÓN -->
-			<TabControl Grid.Row="0" x:Name="MainTabs" Margin="0,0,0,10" Height="36" SelectionChanged="MainTabs_SelectionChanged">
+			<!-- Pestañas -->
+			<TabControl  Grid.Row="0"
+            x:Name="MainTabs"
+            Margin="0,0,0,10"
+            Height="36"
+            Background="{StaticResource CardBackground}" 
+            BorderThickness="0"
+            SelectionChanged="MainTabs_SelectionChanged">
 				<TabItem Header="Inicio" />
-				<TabItem Header="Biblioteca" />
-				<TabItem Header="Tiendas" />
-				<TabItem Header="Ajustes" />
+				<TabItem Header="Historial" />
 			</TabControl>
 
-			<!-- CONTENIDO: dividido en dos columnas -->
+			<!-- Contenido en dos columnas -->
 			<Grid Grid.Row="1">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="3*"/>
-					<!-- Estado -->
 					<ColumnDefinition Width="2*"/>
-					<!-- Noticias -->
 				</Grid.ColumnDefinitions>
 
-				<!-- SECCIÓN ESTADO (izquierda) -->
+				<!-- ESTADO -->
 				<ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
 					<StackPanel>
-						<TextBlock Text="Estado" FontSize="18" FontWeight="SemiBold" Margin="6"/>
-						<Border CornerRadius="8" Padding="10" Margin="6" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}">
+						<TextBlock Text="Estado" Foreground="{StaticResource PrimaryText}" FontSize="18" FontWeight="SemiBold" Margin="6"/>
+
+						<!-- Tarjeta Estado -->
+						<Border Style="{StaticResource CardStyle}">
 							<StackPanel>
-								<TextBlock Text="Conexión:" FontWeight="Bold"/>
-								<TextBlock Text="{Binding LauncherStatus.ConnectionText}" Margin="0,4,0,8"/>
-								<TextBlock Text="Versión:" FontWeight="Bold"/>
-								<TextBlock Text="{Binding LauncherStatus.Version}" Margin="0,4,0,8"/>
+								<TextBlock Text="Conexión:" Foreground="{StaticResource PrimaryText}" FontWeight="Bold"/>
+								<TextBlock Text="{Binding LauncherStatus.ConnectionText}" Foreground="{StaticResource SecondaryText}" Margin="0,4,0,8"/>
+								<TextBlock Text="Versión:" Foreground="{StaticResource PrimaryText}" FontWeight="Bold"/>
+								<TextBlock Text="{Binding LauncherStatus.Version}" Foreground="{StaticResource SecondaryText}" Margin="0,4,0,8"/>
 								<StackPanel Orientation="Horizontal" Margin="0,8,0,0">
 									<Button Content="Revisar actualizaciones" Click="BtnRevisarActualizaciones_Click" Padding="8,4" />
 									<Button Content="Reiniciar" Click="BtnReiniciar_Click" Padding="8,4" Margin="8,0,0,0"/>
@@ -90,13 +106,14 @@
 							</StackPanel>
 						</Border>
 
-						<Border CornerRadius="8" Padding="10" Margin="6" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}">
+						<!-- Tarjeta Actividades -->
+						<Border Style="{StaticResource CardStyle}">
 							<StackPanel>
-								<TextBlock Text="Actividades recientes" FontWeight="Bold" />
+								<TextBlock Text="Actividades recientes" Foreground="{StaticResource PrimaryText}" FontWeight="Bold" />
 								<ItemsControl ItemsSource="{Binding RecentActivities}">
 									<ItemsControl.ItemTemplate>
 										<DataTemplate>
-											<TextBlock TextWrapping="Wrap">
+											<TextBlock TextWrapping="Wrap" Foreground="{StaticResource SecondaryText}">
 												<Run Text="• "/>
 												<Run Text="{Binding}" />
 											</TextBlock>
@@ -108,19 +125,21 @@
 					</StackPanel>
 				</ScrollViewer>
 
-				<!-- SECCIÓN NOTICIAS (derecha) -->
+				<!-- NOTICIAS -->
 				<StackPanel Grid.Column="1">
-					<TextBlock Text="Noticias" FontSize="18" FontWeight="SemiBold" Margin="6"/>
-					<Border CornerRadius="8" Padding="10" Margin="6" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" VerticalAlignment="Stretch">
+					<TextBlock Text="Noticias" Foreground="{StaticResource PrimaryText}" FontSize="18" FontWeight="SemiBold" Margin="6"/>
+
+					<!-- Tarjeta Noticias -->
+					<Border Style="{StaticResource CardStyle}" VerticalAlignment="Stretch">
 						<Grid>
 							<Grid.RowDefinitions>
 								<RowDefinition Height="Auto"/>
 								<RowDefinition Height="*"/>
 							</Grid.RowDefinitions>
 
-							<!-- Filtros rápidos -->
+							<!-- Filtros -->
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-								<TextBlock Text="Filtrar:" VerticalAlignment="Center" Margin="0,0,6,0"/>
+								<TextBlock Text="Filtrar:" Foreground="{StaticResource PrimaryText}" VerticalAlignment="Center" Margin="0,0,6,0"/>
 								<ComboBox Width="140" SelectedIndex="0">
 									<ComboBoxItem Content="Todas"/>
 									<ComboBoxItem Content="Actualizaciones"/>
@@ -128,14 +147,14 @@
 								</ComboBox>
 							</StackPanel>
 
-							<!-- Lista de noticias -->
+							<!-- Lista noticias -->
 							<ListView Grid.Row="1" ItemsSource="{Binding NewsItems}" Margin="0,8,0,0" Name="NewsListView">
 								<ListView.ItemTemplate>
 									<DataTemplate>
 										<Border Padding="8" Margin="4" CornerRadius="6" Background="Transparent">
 											<StackPanel>
-												<TextBlock Text="{Binding Title}" FontWeight="Bold"/>
-												<TextBlock Text="{Binding Summary}" TextWrapping="Wrap" FontSize="12" Foreground="Gray" Margin="0,4,0,0"/>
+												<TextBlock Text="{Binding Title}" Foreground="{StaticResource PrimaryText}" FontWeight="Bold"/>
+												<TextBlock Text="{Binding Summary}" Foreground="{StaticResource SecondaryText}" TextWrapping="Wrap" FontSize="12" Margin="0,4,0,0"/>
 												<StackPanel Orientation="Horizontal" Margin="0,6,0,0">
 													<TextBlock Text="{Binding DateString}" FontSize="11" Foreground="#FF8A8D90"/>
 													<Button Content="Abrir" Margin="8,0,0,0" Padding="6,2" Tag="{Binding}" Click="BtnAbrirNoticia_Click"/>
