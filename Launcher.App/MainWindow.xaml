@@ -9,6 +9,83 @@
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource PrimaryBackground}">
 
+    <!-- Estilos locales -->
+    <Window.Resources>
+        <!-- Estilo para botón tipo 'glass' con esquinas redondeadas -->
+        <Style x:Key="GlassButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#80FFFFFF" Offset="0"/>
+                        <GradientStop Color="#40FFFFFF" Offset="0.5"/>
+                        <GradientStop Color="#20FFFFFF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="#40FFFFFF"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <!-- Fondo difuminado -->
+                            <Border x:Name="border"
+                                    CornerRadius="12"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    SnapsToDevicePixels="True">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#1A000000" BlurRadius="10" ShadowDepth="2"/>
+                                </Border.Effect>
+                                <Grid>
+                                    <!-- Sutil brillo superior -->
+                                    <Border CornerRadius="12" Background="Transparent">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#40FFFFFF" Offset="0"/>
+                                                <GradientStop Color="#10FFFFFF" Offset="0.5"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                    </Border>
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                            <!-- Borde interior brillante -->
+                            <Border CornerRadius="12" BorderThickness="1" BorderBrush="#20FFFFFF" Margin="1" IsHitTestVisible="False"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.95"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.02" ScaleY="1.02"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.99" ScaleY="0.99"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
 	<DockPanel LastChildFill="True">
 
 		<!-- MENÚ SUPERIOR -->
@@ -21,15 +98,15 @@
 			
 			<MenuItem Header="_Ver" Foreground="{StaticResource PrimaryText}">
 				<MenuItem Header="Actualizar"
-						  Foreground="#0D0D0D"
-						  IsCheckable="True"
-						  IsChecked="True"
-						  Click="MenuActualizar_Click"/>
+					  Foreground="#0D0D0D"
+					  IsCheckable="True"
+					  IsChecked="True"
+					  Click="MenuActualizar_Click"/>
 			</MenuItem>
 			
 			<MenuItem Header="_Ayuda" Foreground="{StaticResource PrimaryText}" >
 				<MenuItem Header="Acerca de..." Foreground="#0D0D0D" IsCheckable="True"
-						  IsChecked="True" Click="MenuAcercaDe_Click"/>
+					  IsChecked="True" Click="MenuAcercaDe_Click"/>
 			</MenuItem>
 		</Menu>
 
@@ -168,6 +245,16 @@
 					</Border>
 				</StackPanel>
 			</Grid>
+
+			<!-- Botón Jugar situado en la esquina inferior derecha del área principal -->
+			<Button x:Name="BtnJugar"
+				Grid.Row="1"
+				Grid.Column="1"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Bottom"
+				Margin="0,0,12,12"
+				Style="{StaticResource GlassButtonStyle}"
+				Content="Jugar" Width="140" Height="44"/>
 		</Grid>
 	</DockPanel>
 </Window>
