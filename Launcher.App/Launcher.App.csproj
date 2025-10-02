@@ -5,6 +5,8 @@
   </ItemGroup>
   <ItemGroup>
 	<Resource Include="Assets\logo.png" />
+	<Resource Include="Assets\warning.png" />
+	<Resource Include="Assets\tick.png" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>WinExe</OutputType>

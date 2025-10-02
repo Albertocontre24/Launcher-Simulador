@@ -9,6 +9,7 @@
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource PrimaryBackground}">
 
+<<<<<<< HEAD
     <!-- Estilos locales -->
     <Window.Resources>
         <!-- Estilo para botón tipo 'glass' con esquinas redondeadas -->
@@ -90,6 +91,89 @@
             </Setter>
         </Style>
     </Window.Resources>
+=======
+	<!-- Estilos locales -->
+	<Window.Resources>
+		<!-- Estilo para botón tipo 'glass' con esquinas redondeadas -->
+		<Style x:Key="GlassButtonStyle" TargetType="Button">
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+			<Setter Property="Padding" Value="12,8"/>
+			<Setter Property="MinWidth" Value="120"/>
+			<!-- usar color semitransparente simple para evitar property-element duplicados -->
+			<Setter Property="Background" Value="#60FFFFFF"/>
+			<Setter Property="BorderBrush" Value="#40FFFFFF"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="Cursor" Value="Hand"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Grid RenderTransformOrigin="0.5,0.5">
+							<!-- Fondo principal con binding a Background -->
+							<Border x:Name="border"
+									CornerRadius="12"
+									Background="{TemplateBinding Background}"
+									BorderBrush="{TemplateBinding BorderBrush}"
+									BorderThickness="{TemplateBinding BorderThickness}"
+									SnapsToDevicePixels="True">
+								<Border.Effect>
+									<DropShadowEffect Color="#1A000000" BlurRadius="10" ShadowDepth="2"/>
+								</Border.Effect>
+								<!-- Capa de contenido (no usamos Border.Background property element) -->
+								<Grid>
+									<!-- Brillo superior: rectángulo semitransparente -->
+									<Rectangle RadiusX="12" RadiusY="12" IsHitTestVisible="False" Opacity="0.6" Fill="#40FFFFFF" />
+									<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+								</Grid>
+							</Border>
+							<!-- Borde interior brillante -->
+							<Border CornerRadius="12" BorderThickness="1" BorderBrush="#20FFFFFF" Margin="1" IsHitTestVisible="False"/>
+						</Grid>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter TargetName="border" Property="Opacity" Value="0.95"/>
+								<Setter TargetName="border" Property="RenderTransform">
+									<Setter.Value>
+										<ScaleTransform ScaleX="1.02" ScaleY="1.02"/>
+									</Setter.Value>
+								</Setter>
+								<!-- Cambiar fondo a azul suave al pasar el ratón -->
+								<Setter TargetName="border" Property="Background">
+									<Setter.Value>
+										<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+											<GradientStop Color="#FF4A90E2" Offset="0"/>
+											<GradientStop Color="#FF3A78C8" Offset="1"/>
+										</LinearGradientBrush>
+									</Setter.Value>
+								</Setter>
+							</Trigger>
+							<Trigger Property="IsPressed" Value="True">
+								<Setter TargetName="border" Property="Opacity" Value="0.9"/>
+								<Setter TargetName="border" Property="RenderTransform">
+									<Setter.Value>
+										<ScaleTransform ScaleX="0.99" ScaleY="0.99"/>
+									</Setter.Value>
+								</Setter>
+								<!-- Fondo azul más oscuro al presionar -->
+								<Setter TargetName="border" Property="Background">
+									<Setter.Value>
+										<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+											<GradientStop Color="#FF357ABD" Offset="0"/>
+											<GradientStop Color="#FF2A5EA8" Offset="1"/>
+										</LinearGradientBrush>
+									</Setter.Value>
+								</Setter>
+							</Trigger>
+							<Trigger Property="IsEnabled" Value="False">
+								<Setter Property="Opacity" Value="0.5"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Window.Resources>
+>>>>>>> Luis
 
 	<DockPanel LastChildFill="True">
 
@@ -103,10 +187,16 @@
 			
 			<MenuItem Header="_Ver" Foreground="{StaticResource PrimaryText}">
 				<MenuItem Header="Actualizar"
+<<<<<<< HEAD
 					  Foreground="#0D0D0D"
 					  IsCheckable="True"
 					  IsChecked="True"
 					  Click="MenuActualizar_Click"/>
+=======
+                          Foreground="{StaticResource PrimaryText}"
+                          IsCheckable="True"
+                          Click="MenuActualizar_Click"/>
+>>>>>>> Luis
 			</MenuItem>
 			
 			<MenuItem Header="_Ayuda" Foreground="{StaticResource PrimaryText}" >
@@ -116,7 +206,7 @@
 		</Menu>
 
 		<!-- BARRA SUPERIOR -->
-		<Border DockPanel.Dock="Top" Padding="10" Background="#FF2D2F33">
+		<Border DockPanel.Dock="Top" Padding="2" Background="#FF2D2F33">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>
@@ -126,7 +216,7 @@
 
 				<!-- Logo -->
 				<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0">
-					<Image Source="Assets/logo.png" Width="38" Height="38" Margin="0,0,10,0"/>
+					<Image Source="Assets/logo.png" Width="100" Height="100" Margin="0,0,10,0"/>
 				</StackPanel>
 
 				<!-- Título -->
@@ -172,18 +262,74 @@
 				<!-- ESTADO -->
 				<ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
 					<StackPanel>
-						<TextBlock Text="Estado" Foreground="{StaticResource PrimaryText}" FontSize="18" FontWeight="SemiBold" Margin="6"/>
+						<TextBlock Text="Estado"
+                                   Foreground="{StaticResource PrimaryText}"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Margin="6"/>
 
-						<!-- Tarjeta Estado -->
+						<!-- Tarjeta: Estado del launcher -->
 						<Border Style="{StaticResource CardStyle}">
 							<StackPanel>
-								<TextBlock Text="Conexión:" Foreground="{StaticResource PrimaryText}" FontWeight="Bold"/>
-								<TextBlock Text="{Binding LauncherStatus.ConnectionText}" Foreground="{StaticResource SecondaryText}" Margin="0,4,0,8"/>
-								<TextBlock Text="Versión:" Foreground="{StaticResource PrimaryText}" FontWeight="Bold"/>
-								<TextBlock Text="{Binding LauncherStatus.Version}" Foreground="{StaticResource SecondaryText}" Margin="0,4,0,8"/>
+								<TextBlock Text="Estado del launcher"
+                                           Foreground="{StaticResource PrimaryText}"
+                                           FontWeight="Bold"
+                                           FontSize="16"
+                                           Margin="0,0,0,10"/>
+
+								<!-- Versión instalada -->
+								<StackPanel Orientation="Horizontal" Margin="0,4">
+									<TextBlock Text="Versión instalada:"
+                                               Foreground="{StaticResource PrimaryText}"
+                                               FontWeight="Bold" Width="160"/>
+									<TextBlock Text="{Binding GameStatus.VersionInstalada}"
+                                               Foreground="{StaticResource SecondaryText}"/>
+								</StackPanel>
+
+								<!-- Última versión disponible -->
+								<StackPanel Orientation="Horizontal" Margin="0,4">
+									<TextBlock Text="Última versión:"
+                                               Foreground="{StaticResource PrimaryText}"
+                                               FontWeight="Bold" Width="160"/>
+									<TextBlock Text="{Binding GameStatus.UltimaVersion}"
+                                               Foreground="{StaticResource SecondaryText}"/>
+								</StackPanel>
+
+								<!-- Estado con icono + texto -->
+								<StackPanel Orientation="Horizontal" Margin="0,8">
+									<Image Source="{Binding GameStatus.IconoEstado}"
+										   Width="18" Height="18" Margin="0,0,6,0"/>
+									<TextBlock Text="{Binding GameStatus.TextoEstado}"
+											   Foreground="{StaticResource SecondaryText}"/>
+								</StackPanel>
+							</StackPanel>
+						</Border>
+
+						<!-- Tarjeta: Estado de la conexión/launcher -->
+						<Border Style="{StaticResource CardStyle}">
+							<StackPanel>
+								<TextBlock Text="Conexión:"
+                                           Foreground="{StaticResource PrimaryText}"
+                                           FontWeight="Bold"/>
+								<TextBlock Text="{Binding LauncherStatus.ConnectionText}"
+                                           Foreground="{StaticResource SecondaryText}"
+                                           Margin="0,4,0,8"/>
+
+								<TextBlock Text="Versión:"
+                                           Foreground="{StaticResource PrimaryText}"
+                                           FontWeight="Bold"/>
+								<TextBlock Text="{Binding LauncherStatus.Version}"
+                                           Foreground="{StaticResource SecondaryText}"
+                                           Margin="0,4,0,8"/>
+
 								<StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-									<Button Content="Revisar actualizaciones" Click="BtnRevisarActualizaciones_Click" Padding="8,4" />
-									<Button Content="Reiniciar" Click="BtnReiniciar_Click" Padding="8,4" Margin="8,0,0,0"/>
+									<Button Content="Revisar actualizaciones"
+                                            Click="BtnRevisarActualizaciones_Click"
+                                            Padding="8,4" />
+									<Button Content="Reiniciar"
+                                            Click="BtnReiniciar_Click"
+                                            Padding="8,4"
+                                            Margin="8,0,0,0"/>
 								</StackPanel>
 							</StackPanel>
 						</Border>
@@ -191,7 +337,9 @@
 						<!-- Tarjeta Actividades -->
 						<Border Style="{StaticResource CardStyle}">
 							<StackPanel>
-								<TextBlock Text="Actividades recientes" Foreground="{StaticResource PrimaryText}" FontWeight="Bold" />
+								<TextBlock Text="Actividades recientes"
+                                           Foreground="{StaticResource PrimaryText}"
+                                           FontWeight="Bold" />
 								<ItemsControl ItemsSource="{Binding RecentActivities}">
 									<ItemsControl.ItemTemplate>
 										<DataTemplate>
