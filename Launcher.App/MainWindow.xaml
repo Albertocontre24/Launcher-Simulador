@@ -17,23 +17,16 @@
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Padding" Value="12,8"/>
             <Setter Property="MinWidth" Value="120"/>
-            <Setter Property="Background">
-                <Setter.Value>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#80FFFFFF" Offset="0"/>
-                        <GradientStop Color="#40FFFFFF" Offset="0.5"/>
-                        <GradientStop Color="#20FFFFFF" Offset="1"/>
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
+            <!-- usar color semitransparente simple para evitar property-element duplicados -->
+            <Setter Property="Background" Value="#60FFFFFF"/>
             <Setter Property="BorderBrush" Value="#40FFFFFF"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Grid>
-                            <!-- Fondo difuminado -->
+                        <Grid RenderTransformOrigin="0.5,0.5">
+                            <!-- Fondo principal con binding a Background -->
                             <Border x:Name="border"
                                     CornerRadius="12"
                                     Background="{TemplateBinding Background}"
@@ -43,16 +36,10 @@
                                 <Border.Effect>
                                     <DropShadowEffect Color="#1A000000" BlurRadius="10" ShadowDepth="2"/>
                                 </Border.Effect>
+                                <!-- Capa de contenido (no usamos Border.Background property element) -->
                                 <Grid>
-                                    <!-- Sutil brillo superior -->
-                                    <Border CornerRadius="12" Background="Transparent">
-                                        <Border.Background>
-                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                <GradientStop Color="#40FFFFFF" Offset="0"/>
-                                                <GradientStop Color="#10FFFFFF" Offset="0.5"/>
-                                            </LinearGradientBrush>
-                                        </Border.Background>
-                                    </Border>
+                                    <!-- Brillo superior: rectángulo semitransparente -->
+                                    <Rectangle RadiusX="12" RadiusY="12" IsHitTestVisible="False" Opacity="0.6" Fill="#40FFFFFF" />
                                     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Grid>
                             </Border>
@@ -62,7 +49,7 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border" Property="Opacity" Value="0.95"/>
-                                <Setter Property="RenderTransform">
+                                <Setter TargetName="border" Property="RenderTransform">
                                     <Setter.Value>
                                         <ScaleTransform ScaleX="1.02" ScaleY="1.02"/>
                                     </Setter.Value>
@@ -70,7 +57,7 @@
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="border" Property="Opacity" Value="0.9"/>
-                                <Setter Property="RenderTransform">
+                                <Setter TargetName="border" Property="RenderTransform">
                                     <Setter.Value>
                                         <ScaleTransform ScaleX="0.99" ScaleY="0.99"/>
                                     </Setter.Value>
@@ -237,13 +224,13 @@
 													<Button Content="Abrir" Margin="8,0,0,0" Padding="6,2" Tag="{Binding}" Click="BtnAbrirNoticia_Click"/>
 												</StackPanel>
 											</StackPanel>
-										</Border>
-									</DataTemplate>
-								</ListView.ItemTemplate>
-							</ListView>
-						</Grid>
-					</Border>
-				</StackPanel>
+											</Border>
+										</DataTemplate>
+									</ListView.ItemTemplate>
+								</ListView>
+							</Grid>
+						</Border>
+					</StackPanel>
 			</Grid>
 
 			<!-- Botón Jugar situado en la esquina inferior derecha del área principal -->
@@ -254,7 +241,7 @@
 				VerticalAlignment="Bottom"
 				Margin="0,0,12,12"
 				Style="{StaticResource GlassButtonStyle}"
-				Content="Jugar" Width="140" Height="44"/>
+				Content="Jugar" Width="140" Height="44" Click="BtnJugar_Click"/>
 		</Grid>
 	</DockPanel>
 </Window>
