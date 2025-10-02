@@ -9,6 +9,80 @@
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource PrimaryBackground}">
 
+        <Window.Resources>
+                <LinearGradientBrush x:Key="GlassButtonBackground" StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#B3FFFFFF" Offset="0"/>
+                        <GradientStop Color="#80FFFFFF" Offset="0.35"/>
+                        <GradientStop Color="#4C5AC8FF" Offset="1"/>
+                </LinearGradientBrush>
+
+                <LinearGradientBrush x:Key="GlassButtonHoverBackground" StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#CCFFFFFF" Offset="0"/>
+                        <GradientStop Color="#99FFFFFF" Offset="0.35"/>
+                        <GradientStop Color="#666EA5FF" Offset="1"/>
+                </LinearGradientBrush>
+
+                <Style x:Key="GlassButtonStyle" TargetType="Button">
+                        <Setter Property="Width" Value="160"/>
+                        <Setter Property="Height" Value="52"/>
+                        <Setter Property="Padding" Value="18,8"/>
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="Foreground" Value="#FF0D0D0D"/>
+                        <Setter Property="Background" Value="{StaticResource GlassButtonBackground}"/>
+                        <Setter Property="BorderBrush" Value="#80FFFFFF"/>
+                        <Setter Property="BorderThickness" Value="1.5"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="Effect">
+                                <Setter.Value>
+                                        <DropShadowEffect BlurRadius="25" ShadowDepth="4" Direction="270" Color="#40000000"/>
+                                </Setter.Value>
+                        </Setter>
+                        <Setter Property="Template">
+                                <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                                        CornerRadius="24">
+                                                        <Grid>
+                                                                <Border Background="#33FFFFFF"
+                                                                        CornerRadius="20"
+                                                                        Margin="6,6,6,0"
+                                                                        Height="Auto"
+                                                                        VerticalAlignment="Top"/>
+                                                                <ContentPresenter HorizontalAlignment="Center"
+                                                                                  VerticalAlignment="Center"/>
+                                                        </Grid>
+                                                </Border>
+                                        </ControlTemplate>
+                                </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{StaticResource GlassButtonHoverBackground}"/>
+                                        <Setter Property="BorderBrush" Value="#B3FFFFFF"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                        <Setter Property="Background">
+                                                <Setter.Value>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                <GradientStop Color="#99FFFFFF" Offset="0"/>
+                                                                <GradientStop Color="#80FFFFFF" Offset="0.4"/>
+                                                                <GradientStop Color="#80527CFF" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Effect">
+                                                <Setter.Value>
+                                                        <DropShadowEffect BlurRadius="18" ShadowDepth="2" Direction="270" Color="#40000000"/>
+                                                </Setter.Value>
+                                        </Setter>
+                                </Trigger>
+                        </Style.Triggers>
+                </Style>
+        </Window.Resources>
+
 	<DockPanel LastChildFill="True">
 
 		<!-- MENÚ SUPERIOR -->
@@ -168,6 +242,14 @@
 					</Border>
 				</StackPanel>
 			</Grid>
+
+		<Button Content="Jugar"
+			Grid.Row="1"
+			Style="{StaticResource GlassButtonStyle}"
+			HorizontalAlignment="Right"
+			VerticalAlignment="Bottom"
+			Margin="0,0,24,24"/>
+
 		</Grid>
 	</DockPanel>
 </Window>
