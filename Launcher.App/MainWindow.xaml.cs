@@ -28,4 +28,9 @@ public partial class MainWindow : Window
     private void BtnAbrirNoticia_Click(object sender, RoutedEventArgs e) { /* TODO */ }
 
     private void MainTabs_SelectionChanged(object sender, SelectionChangedEventArgs e) { /* opcional */ }
+    // Handler agregado para probar el botón "Jugar"
+    private void BtnJugar_Click(object sender, RoutedEventArgs e)
+    {
+        MessageBox.Show("Has pulsado Jugar.", "Jugar");
+    }
 }

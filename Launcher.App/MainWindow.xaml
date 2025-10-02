@@ -9,6 +9,88 @@
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource PrimaryBackground}">
 
+	<!-- Estilos locales -->
+	<Window.Resources>
+		<!-- Estilo para botón tipo 'glass' con esquinas redondeadas -->
+		<Style x:Key="GlassButtonStyle" TargetType="Button">
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+			<Setter Property="Padding" Value="12,8"/>
+			<Setter Property="MinWidth" Value="120"/>
+			<!-- usar color semitransparente simple para evitar property-element duplicados -->
+			<Setter Property="Background" Value="#60FFFFFF"/>
+			<Setter Property="BorderBrush" Value="#40FFFFFF"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="Cursor" Value="Hand"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Grid RenderTransformOrigin="0.5,0.5">
+							<!-- Fondo principal con binding a Background -->
+							<Border x:Name="border"
+									CornerRadius="12"
+									Background="{TemplateBinding Background}"
+									BorderBrush="{TemplateBinding BorderBrush}"
+									BorderThickness="{TemplateBinding BorderThickness}"
+									SnapsToDevicePixels="True">
+								<Border.Effect>
+									<DropShadowEffect Color="#1A000000" BlurRadius="10" ShadowDepth="2"/>
+								</Border.Effect>
+								<!-- Capa de contenido (no usamos Border.Background property element) -->
+								<Grid>
+									<!-- Brillo superior: rectángulo semitransparente -->
+									<Rectangle RadiusX="12" RadiusY="12" IsHitTestVisible="False" Opacity="0.6" Fill="#40FFFFFF" />
+									<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+								</Grid>
+							</Border>
+							<!-- Borde interior brillante -->
+							<Border CornerRadius="12" BorderThickness="1" BorderBrush="#20FFFFFF" Margin="1" IsHitTestVisible="False"/>
+						</Grid>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter TargetName="border" Property="Opacity" Value="0.95"/>
+								<Setter TargetName="border" Property="RenderTransform">
+									<Setter.Value>
+										<ScaleTransform ScaleX="1.02" ScaleY="1.02"/>
+									</Setter.Value>
+								</Setter>
+								<!-- Cambiar fondo a azul suave al pasar el ratón -->
+								<Setter TargetName="border" Property="Background">
+									<Setter.Value>
+										<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+											<GradientStop Color="#FF4A90E2" Offset="0"/>
+											<GradientStop Color="#FF3A78C8" Offset="1"/>
+										</LinearGradientBrush>
+									</Setter.Value>
+								</Setter>
+							</Trigger>
+							<Trigger Property="IsPressed" Value="True">
+								<Setter TargetName="border" Property="Opacity" Value="0.9"/>
+								<Setter TargetName="border" Property="RenderTransform">
+									<Setter.Value>
+										<ScaleTransform ScaleX="0.99" ScaleY="0.99"/>
+									</Setter.Value>
+								</Setter>
+								<!-- Fondo azul más oscuro al presionar -->
+								<Setter TargetName="border" Property="Background">
+									<Setter.Value>
+										<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+											<GradientStop Color="#FF357ABD" Offset="0"/>
+											<GradientStop Color="#FF2A5EA8" Offset="1"/>
+										</LinearGradientBrush>
+									</Setter.Value>
+								</Setter>
+							</Trigger>
+							<Trigger Property="IsEnabled" Value="False">
+								<Setter Property="Opacity" Value="0.5"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Window.Resources>
+
 	<DockPanel LastChildFill="True">
 
 		<!-- MENÚ SUPERIOR -->
@@ -224,6 +306,16 @@
 					</Border>
 				</StackPanel>
 			</Grid>
+
+			<!-- Botón Jugar situado en la esquina inferior derecha del área principal -->
+			<Button x:Name="BtnJugar"
+				Grid.Row="1"
+				Grid.Column="1"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Bottom"
+				Margin="0,0,12,12"
+				Style="{StaticResource GlassButtonStyle}"
+				Content="Jugar" Width="140" Height="44" Click="BtnJugar_Click"/>
 		</Grid>
 	</DockPanel>
 </Window>
