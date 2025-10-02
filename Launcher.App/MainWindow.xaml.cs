@@ -15,7 +15,8 @@ public partial class MainWindow : Window
 	private void MenuActualizar_Click(object sender, RoutedEventArgs e) { /* TODO */ }
 	private void MenuAcercaDe_Click(object sender, RoutedEventArgs e) => MessageBox.Show("Launcher v0.1", "Acerca de");
 
-	private void BtnActualizar_Click(object sender, RoutedEventArgs e) { /* TODO */ }
+        private void BtnJugar_Click(object sender, RoutedEventArgs e) { /* TODO */ }
+        private void BtnActualizar_Click(object sender, RoutedEventArgs e) { /* TODO */ }
 	private void BtnConfiguracion_Click(object sender, RoutedEventArgs e) { /* TODO */ }
 	private void BtnRevisarActualizaciones_Click(object sender, RoutedEventArgs e) { /* TODO */ }
 	private void BtnReiniciar_Click(object sender, RoutedEventArgs e) { /* TODO */ }
