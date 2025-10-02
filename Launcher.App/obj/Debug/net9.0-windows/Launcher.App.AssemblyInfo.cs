@@ -14,11 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Launcher.App")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a256b8f929dbe399ab2d2777c7ce4d503a7b3f8")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+29dbb7e0ead6558230a975a2a2d5327be4663547")]
->>>>>>> Luis
 [assembly: System.Reflection.AssemblyProductAttribute("Launcher.App")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Launcher.App")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
