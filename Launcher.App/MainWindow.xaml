@@ -13,23 +13,22 @@
 
 		<!-- MENÚ SUPERIOR -->
 		<Menu DockPanel.Dock="Top" Background="{StaticResource PrimaryBackground}">
-			<MenuItem Header="_Archivo" Foreground="{StaticResource PrimaryText}" >
-				<MenuItem Header="Abrir..." Foreground="#0D0D0D" IsCheckable="True" IsChecked="True" />
+			<MenuItem Header="_Archivo" Foreground="{StaticResource PrimaryText}">
+				<MenuItem Header="Abrir..." Foreground="{StaticResource PrimaryText}" />
 				<Separator />
-				<MenuItem Header="Salir" Foreground="#0D0D0D" IsCheckable="True" IsChecked="True" Click="MenuSalir_Click"/>
+				<MenuItem Header="Salir" Foreground="{StaticResource PrimaryText}" Click="MenuSalir_Click"/>
 			</MenuItem>
-			
+
 			<MenuItem Header="_Ver" Foreground="{StaticResource PrimaryText}">
 				<MenuItem Header="Actualizar"
-						  Foreground="#0D0D0D"
-						  IsCheckable="True"
-						  IsChecked="True"
-						  Click="MenuActualizar_Click"/>
+                          Foreground="{StaticResource PrimaryText}"
+                          IsCheckable="True"
+                          IsChecked="True"
+                          Click="MenuActualizar_Click"/>
 			</MenuItem>
-			
-			<MenuItem Header="_Ayuda" Foreground="{StaticResource PrimaryText}" >
-				<MenuItem Header="Acerca de..." Foreground="#0D0D0D" IsCheckable="True"
-						  IsChecked="True" Click="MenuAcercaDe_Click"/>
+
+			<MenuItem Header="_Ayuda" Foreground="{StaticResource PrimaryText}">
+				<MenuItem Header="Acerca de..." Foreground="{StaticResource PrimaryText}" Click="MenuAcercaDe_Click"/>
 			</MenuItem>
 		</Menu>
 
@@ -69,13 +68,13 @@
 			</Grid.RowDefinitions>
 
 			<!-- Pestañas -->
-			<TabControl  Grid.Row="0"
-            x:Name="MainTabs"
-            Margin="0,0,0,10"
-            Height="36"
-            Background="{StaticResource CardBackground}" 
-            BorderThickness="0"
-            SelectionChanged="MainTabs_SelectionChanged">
+			<TabControl Grid.Row="0"
+                        x:Name="MainTabs"
+                        Margin="0,0,0,10"
+                        Height="36"
+                        Background="{StaticResource PrimaryBackground}"
+                        BorderThickness="0"
+                        SelectionChanged="MainTabs_SelectionChanged">
 				<TabItem Header="Inicio" />
 				<TabItem Header="Historial" />
 			</TabControl>
