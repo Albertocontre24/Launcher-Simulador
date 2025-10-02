@@ -23,7 +23,6 @@
 				<MenuItem Header="Actualizar"
                           Foreground="{StaticResource PrimaryText}"
                           IsCheckable="True"
-                          IsChecked="True"
                           Click="MenuActualizar_Click"/>
 			</MenuItem>
 
@@ -33,7 +32,7 @@
 		</Menu>
 
 		<!-- BARRA SUPERIOR -->
-		<Border DockPanel.Dock="Top" Padding="10" Background="#FF2D2F33">
+		<Border DockPanel.Dock="Top" Padding="2" Background="#FF2D2F33">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>
@@ -43,7 +42,7 @@
 
 				<!-- Logo -->
 				<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0">
-					<Image Source="Assets/logo.png" Width="38" Height="38" Margin="0,0,10,0"/>
+					<Image Source="Assets/logo.png" Width="100" Height="100" Margin="0,0,10,0"/>
 				</StackPanel>
 
 				<!-- Título -->
@@ -89,18 +88,74 @@
 				<!-- ESTADO -->
 				<ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
 					<StackPanel>
-						<TextBlock Text="Estado" Foreground="{StaticResource PrimaryText}" FontSize="18" FontWeight="SemiBold" Margin="6"/>
+						<TextBlock Text="Estado"
+                                   Foreground="{StaticResource PrimaryText}"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Margin="6"/>
 
-						<!-- Tarjeta Estado -->
+						<!-- Tarjeta: Estado del launcher -->
 						<Border Style="{StaticResource CardStyle}">
 							<StackPanel>
-								<TextBlock Text="Conexión:" Foreground="{StaticResource PrimaryText}" FontWeight="Bold"/>
-								<TextBlock Text="{Binding LauncherStatus.ConnectionText}" Foreground="{StaticResource SecondaryText}" Margin="0,4,0,8"/>
-								<TextBlock Text="Versión:" Foreground="{StaticResource PrimaryText}" FontWeight="Bold"/>
-								<TextBlock Text="{Binding LauncherStatus.Version}" Foreground="{StaticResource SecondaryText}" Margin="0,4,0,8"/>
+								<TextBlock Text="Estado del launcher"
+                                           Foreground="{StaticResource PrimaryText}"
+                                           FontWeight="Bold"
+                                           FontSize="16"
+                                           Margin="0,0,0,10"/>
+
+								<!-- Versión instalada -->
+								<StackPanel Orientation="Horizontal" Margin="0,4">
+									<TextBlock Text="Versión instalada:"
+                                               Foreground="{StaticResource PrimaryText}"
+                                               FontWeight="Bold" Width="160"/>
+									<TextBlock Text="{Binding GameStatus.VersionInstalada}"
+                                               Foreground="{StaticResource SecondaryText}"/>
+								</StackPanel>
+
+								<!-- Última versión disponible -->
+								<StackPanel Orientation="Horizontal" Margin="0,4">
+									<TextBlock Text="Última versión:"
+                                               Foreground="{StaticResource PrimaryText}"
+                                               FontWeight="Bold" Width="160"/>
+									<TextBlock Text="{Binding GameStatus.UltimaVersion}"
+                                               Foreground="{StaticResource SecondaryText}"/>
+								</StackPanel>
+
+								<!-- Estado con icono + texto -->
+								<StackPanel Orientation="Horizontal" Margin="0,8">
+									<Image Source="{Binding GameStatus.IconoEstado}"
+										   Width="18" Height="18" Margin="0,0,6,0"/>
+									<TextBlock Text="{Binding GameStatus.TextoEstado}"
+											   Foreground="{StaticResource SecondaryText}"/>
+								</StackPanel>
+							</StackPanel>
+						</Border>
+
+						<!-- Tarjeta: Estado de la conexión/launcher -->
+						<Border Style="{StaticResource CardStyle}">
+							<StackPanel>
+								<TextBlock Text="Conexión:"
+                                           Foreground="{StaticResource PrimaryText}"
+                                           FontWeight="Bold"/>
+								<TextBlock Text="{Binding LauncherStatus.ConnectionText}"
+                                           Foreground="{StaticResource SecondaryText}"
+                                           Margin="0,4,0,8"/>
+
+								<TextBlock Text="Versión:"
+                                           Foreground="{StaticResource PrimaryText}"
+                                           FontWeight="Bold"/>
+								<TextBlock Text="{Binding LauncherStatus.Version}"
+                                           Foreground="{StaticResource SecondaryText}"
+                                           Margin="0,4,0,8"/>
+
 								<StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-									<Button Content="Revisar actualizaciones" Click="BtnRevisarActualizaciones_Click" Padding="8,4" />
-									<Button Content="Reiniciar" Click="BtnReiniciar_Click" Padding="8,4" Margin="8,0,0,0"/>
+									<Button Content="Revisar actualizaciones"
+                                            Click="BtnRevisarActualizaciones_Click"
+                                            Padding="8,4" />
+									<Button Content="Reiniciar"
+                                            Click="BtnReiniciar_Click"
+                                            Padding="8,4"
+                                            Margin="8,0,0,0"/>
 								</StackPanel>
 							</StackPanel>
 						</Border>
@@ -108,7 +163,9 @@
 						<!-- Tarjeta Actividades -->
 						<Border Style="{StaticResource CardStyle}">
 							<StackPanel>
-								<TextBlock Text="Actividades recientes" Foreground="{StaticResource PrimaryText}" FontWeight="Bold" />
+								<TextBlock Text="Actividades recientes"
+                                           Foreground="{StaticResource PrimaryText}"
+                                           FontWeight="Bold" />
 								<ItemsControl ItemsSource="{Binding RecentActivities}">
 									<ItemsControl.ItemTemplate>
 										<DataTemplate>
