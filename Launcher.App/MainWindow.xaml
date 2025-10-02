@@ -241,7 +241,7 @@
 				VerticalAlignment="Bottom"
 				Margin="0,0,12,12"
 				Style="{StaticResource GlassButtonStyle}"
-				Content="Jugar" Width="140" Height="44" Click="BtnJugar_Click"/>
+				Content="Iniciar" Width="140" Height="44" Click="BtnJugar_Click"/>
 		</Grid>
 	</DockPanel>
 </Window>
