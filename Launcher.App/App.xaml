@@ -74,6 +74,12 @@
 				</Trigger>
 			</Style.Triggers>
 		</Style>
+		<!-- 🔠 Tipografía global -->
+		<Style TargetType="TextBlock">
+			<Setter Property="FontFamily" Value="Tahoma"/>
+			<Setter Property="FontSize" Value="14"/>
+			
+		</Style>
 
 		<!-- 📑 Estilo para TabControl -->
 		<Style TargetType="TabControl">
