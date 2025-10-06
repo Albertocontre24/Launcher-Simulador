@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="Models\RemoteManifest.cs" />
+    <Compile Include="Models\ManifestFile.cs" />
+    <Compile Include="Services\FetchResult.cs" />
+    <Compile Include="Services\IRemoteManifestService.cs" />
+    <Compile Include="Services\RemoteManifestService.cs" />
+  </ItemGroup>
+
 </Project>
