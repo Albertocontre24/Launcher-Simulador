@@ -10,7 +10,15 @@ public partial class MainWindow : Window
 
     public MainWindow()
     {
-        InitializeComponent();
+        try
+        {
+            InitializeComponent();
+
+        } catch (Exception ex) {
+            System.Windows.MessageBox.Show(ex.ToString(), "Error en MainWindow");
+            throw;
+        }
+       
 
         // Inicializar ViewModel y asignar DataContext
         GameStatus = new GameStatusViewModel();
