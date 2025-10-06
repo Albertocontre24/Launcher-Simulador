@@ -8,7 +8,7 @@
 	<Resource Include="Assets\warning.png" />
 	<Resource Include="Assets\tick.png" />
   </ItemGroup>
-  <PropertyGroup>
+	<PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net9.0-windows</TargetFramework>
     <Nullable>enable</Nullable>

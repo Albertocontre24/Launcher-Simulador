@@ -10,3 +10,4 @@ C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\refint\Launcher.Core.dll
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.pdb
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\ref\Launcher.Core.dll
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.csproj.AssemblyReference.cache
