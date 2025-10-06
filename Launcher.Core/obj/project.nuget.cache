@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "S5bwktxTJy4=",
+  "dgSpecHash": "8dotls7FA4o=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Simulador3\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\alber\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\alber\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

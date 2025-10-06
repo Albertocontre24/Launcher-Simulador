@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj": {}
+    "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Simulador3\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj": {
+    "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Simulador3\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj",
+        "projectUniqueName": "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Simulador3\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj",
         "projectName": "Launcher.Core",
-        "projectPath": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj",
-        "packagesPath": "C:\\Users\\Luis Martínez Parra\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\obj\\",
+        "projectPath": "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Simulador3\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj",
+        "packagesPath": "C:\\Users\\alber\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\alber\\iCloudDrive\\MEDAC\\PRÁCTICAS\\GitHub\\Simulador3\\Launcher-Simulador\\Launcher.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Luis Martínez Parra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\alber\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -45,6 +45,12 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
