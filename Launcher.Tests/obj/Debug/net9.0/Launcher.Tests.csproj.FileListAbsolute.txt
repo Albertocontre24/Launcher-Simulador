@@ -170,3 +170,5 @@ C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Tests
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Tests\obj\Debug\net9.0\Launcher.Tests.pdb
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Tests\obj\Debug\net9.0\Launcher.Tests.genruntimeconfig.cache
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Tests\obj\Debug\net9.0\ref\Launcher.Tests.dll
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Tests\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Tests\bin\Debug\net9.0\Microsoft.Extensions.Logging.Abstractions.dll
