@@ -202,7 +202,7 @@
                 <!-- ESTADO -->
                 <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
-                        <TextBlock Text="Estado" Style="{StaticResource TituloSecundario}" Margin="6"/>
+                        <TextBlock Text="Estado" Style="{StaticResource TituloSecundario}" Margin="6" Foreground="#003594"/>
 
                         <!-- Tarjeta: Estado del launcher -->
                         <Border Style="{StaticResource CardStyle}">
@@ -261,7 +261,7 @@
 
                 <!-- NOTICIAS -->
                 <StackPanel Grid.Column="1">
-                    <TextBlock Text="Noticias" Style="{StaticResource TituloSecundario}" Margin="6"/>
+                    <TextBlock Text="Noticias" Style="{StaticResource TituloSecundario}" Margin="6" Foreground="#003594"/>
                     <Border Style="{StaticResource CardStyle}" VerticalAlignment="Stretch">
                         <Grid>
                             <Grid.RowDefinitions>
