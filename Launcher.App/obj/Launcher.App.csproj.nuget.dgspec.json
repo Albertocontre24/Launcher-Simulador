@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj": {}
+    "C:\\Users\\apini\\Documents\\Antonio\\32 ITEP\\FCT\\LAUNCHER FUNDACION\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj": {
+    "C:\\Users\\apini\\Documents\\Antonio\\32 ITEP\\FCT\\LAUNCHER FUNDACION\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj",
+        "projectUniqueName": "C:\\Users\\apini\\Documents\\Antonio\\32 ITEP\\FCT\\LAUNCHER FUNDACION\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj",
         "projectName": "Launcher.App",
-        "projectPath": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj",
-        "packagesPath": "C:\\Users\\Luis Martínez Parra\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\obj\\",
+        "projectPath": "C:\\Users\\apini\\Documents\\Antonio\\32 ITEP\\FCT\\LAUNCHER FUNDACION\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj",
+        "packagesPath": "C:\\Users\\apini\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\apini\\Documents\\Antonio\\32 ITEP\\FCT\\LAUNCHER FUNDACION\\Launcher-Simulador\\Launcher.App\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Luis Martínez Parra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\apini\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +32,8 @@
           "net9.0-windows7.0": {
             "targetAlias": "net9.0-windows",
             "projectReferences": {
-              "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj": {
-                "projectPath": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj"
+              "C:\\Users\\apini\\Documents\\Antonio\\32 ITEP\\FCT\\LAUNCHER FUNDACION\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj": {
+                "projectPath": "C:\\Users\\apini\\Documents\\Antonio\\32 ITEP\\FCT\\LAUNCHER FUNDACION\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj"
               }
             }
           }
@@ -72,17 +76,21 @@
         }
       }
     },
-    "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj": {
+    "C:\\Users\\apini\\Documents\\Antonio\\32 ITEP\\FCT\\LAUNCHER FUNDACION\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj",
+        "projectUniqueName": "C:\\Users\\apini\\Documents\\Antonio\\32 ITEP\\FCT\\LAUNCHER FUNDACION\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj",
         "projectName": "Launcher.Core",
-        "projectPath": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj",
-        "packagesPath": "C:\\Users\\Luis Martínez Parra\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.Core\\obj\\",
+        "projectPath": "C:\\Users\\apini\\Documents\\Antonio\\32 ITEP\\FCT\\LAUNCHER FUNDACION\\Launcher-Simulador\\Launcher.Core\\Launcher.Core.csproj",
+        "packagesPath": "C:\\Users\\apini\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\apini\\Documents\\Antonio\\32 ITEP\\FCT\\LAUNCHER FUNDACION\\Launcher-Simulador\\Launcher.Core\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Luis Martínez Parra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\apini\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -113,6 +121,12 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
