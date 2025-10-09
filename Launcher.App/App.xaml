@@ -6,15 +6,15 @@
 	<Application.Resources>
 
 		<!-- 🎨 Colores -->
-		<SolidColorBrush x:Key="PrimaryBackground" Color="#1B1D2A"/>
+        <SolidColorBrush x:Key="PrimaryBackground" Color="#ededed"/>
 		<!-- Fondo -->
 		<SolidColorBrush x:Key="CardBackground" Color="#2A2D3E"/>
 		<!-- Tarjetas -->
-		<SolidColorBrush x:Key="AccentBrush" Color="#4A90E2"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#003594"/>
 		<!-- Botones / acentos -->
-		<SolidColorBrush x:Key="PrimaryText" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="PrimaryText" Color="#ededed"/>
 		<!-- Texto principal -->
-		<SolidColorBrush x:Key="SecondaryText" Color="#A0A3B1"/>
+        <SolidColorBrush x:Key="SecondaryText" Color="#ededed"/>
 		<!-- Texto secundario -->
 
 		<!-- 🌟 Efecto de sombra -->
@@ -22,7 +22,7 @@
 
 		<!-- 📦 Estilo para tarjetas -->
 		<Style x:Key="CardStyle" TargetType="Border">
-			<Setter Property="Background" Value="{StaticResource CardBackground}"/>
+			<Setter Property="Background" Value="#003594"/>
 			<Setter Property="CornerRadius" Value="10"/>
 			<Setter Property="Padding" Value="12"/>
 			<Setter Property="Margin" Value="10"/>
@@ -49,11 +49,11 @@
 						<ControlTemplate.Triggers>
 							<!-- Hover -->
 							<Trigger Property="IsMouseOver" Value="True">
-								<Setter Property="Background" Value="#6AA9E9"/>
+                                <Setter Property="Background" Value="#003594"/>
 							</Trigger>
 							<!-- Click -->
 							<Trigger Property="IsPressed" Value="True">
-								<Setter Property="Background" Value="#357ABD"/>
+                                <Setter Property="Background" Value="#003594"/>
 							</Trigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
@@ -79,6 +79,44 @@
 			<Setter Property="FontFamily" Value="Tahoma"/>
 			<Setter Property="FontSize" Value="14"/>
 			
+		</Style>
+		<!-- 🅰️ Estilos de fuente -->
+		<FontFamily x:Key="ManropeLight">/Assets/Fonts/#Manrope Light</FontFamily>
+		<FontFamily x:Key="ManropeRegular">/Assets/Fonts/#Manrope</FontFamily>
+		<FontFamily x:Key="ManropeSemiBold">/Assets/Fonts/#Manrope SemiBold</FontFamily>
+		<FontFamily x:Key="ManropeBold">/Assets/Fonts/#Manrope Bold</FontFamily>
+		<FontFamily x:Key="ManropeExtraBold">/Assets/Fonts/#Manrope ExtraBold</FontFamily>
+		<FontFamily x:Key="ManropeExtraLight">/Assets/Fonts/#Manrope Bold</FontFamily>
+		<FontFamily x:Key="ManropeMedium">/Assets/Fonts/#Manrope ExtraBold</FontFamily>
+		<!-- 🧱 Estilos tipográficos globales -->
+		<Style x:Key="Titulo" TargetType="TextBlock">
+			<Setter Property="FontFamily" Value="{StaticResource ManropeLight}"/>
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="Foreground" Value="{StaticResource PrimaryText}"/>
+		</Style>
+
+		<Style x:Key="TituloSecundario" TargetType="TextBlock">
+			<Setter Property="FontFamily" Value="{StaticResource ManropeSemiBold}"/>
+			<Setter Property="FontSize" Value="18"/>
+			<Setter Property="Foreground" Value="{StaticResource PrimaryText}"/>
+		</Style>
+
+		<Style x:Key="Texto" TargetType="TextBlock">
+			<Setter Property="FontFamily" Value="{StaticResource ManropeRegular}"/>
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="Foreground" Value="{StaticResource PrimaryText}"/>
+		</Style>
+
+		<Style x:Key="TextoDestacado" TargetType="TextBlock">
+			<Setter Property="FontFamily" Value="{StaticResource ManropeBold}"/>
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="Foreground" Value="{StaticResource PrimaryText}"/>
+		</Style>
+
+		<Style x:Key="BotonTexto" TargetType="Button">
+			<Setter Property="FontFamily" Value="{StaticResource ManropeBold}"/>
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="Foreground" Value="White"/>
 		</Style>
 
 		<!-- 📑 Estilo para TabControl -->
@@ -106,7 +144,7 @@
 			</Setter>
 		</Style>
 		<Style x:Key="GlassButtonStyle" TargetType="Button">
-			<Setter Property="Background" Value="#4A90E2"/>
+            <Setter Property="Background" Value="#003594"/>
 			<Setter Property="Foreground" Value="White"/>
 			<Setter Property="FontWeight" Value="Bold"/>
 			<Setter Property="Padding" Value="10,5"/>
@@ -123,10 +161,10 @@
 						</Border>
 						<ControlTemplate.Triggers>
 							<Trigger Property="IsMouseOver" Value="True">
-								<Setter Property="Background" Value="#6AA9E9"/>
+                                <Setter Property="Background" Value="#003594"/>
 							</Trigger>
 							<Trigger Property="IsPressed" Value="True">
-								<Setter Property="Background" Value="#357ABD"/>
+                                <Setter Property="Background" Value="#003594"/>
 							</Trigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
@@ -159,7 +197,7 @@
 							</Trigger>
 							<!-- Hover -->
 							<Trigger Property="IsMouseOver" Value="True">
-								<Setter Property="Background" Value="#3B4A60"/>
+                                <Setter Property="Background" Value="#003594"/>
 								<Setter Property="Foreground" Value="White"/>
 							</Trigger>
 						</ControlTemplate.Triggers>
@@ -169,4 +207,3 @@
 		</Style>
 	</Application.Resources>
 </Application>
-

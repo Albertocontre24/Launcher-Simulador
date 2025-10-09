@@ -12,21 +12,29 @@
 	<!-- Estilos locales -->
 	<Window.Resources>
 		<!-- Estilo para botón tipo 'glass' con esquinas redondeadas -->
-		<Style x:Key="GlassButtonStyle" TargetType="Button">
+		<Style x:Key="GlassButtonStyle" TargetType="Button" BasedOn="{StaticResource BotonTexto}">
 			<Setter Property="Foreground" Value="White"/>
-			<Setter Property="FontWeight" Value="SemiBold"/>
+			<Setter Property="FontFamily" Value="{StaticResource ManropeBold}"/>
+			<Setter Property="FontSize" Value="14"/>
 			<Setter Property="Padding" Value="12,8"/>
 			<Setter Property="MinWidth" Value="120"/>
-			<!-- usar color semitransparente simple para evitar property-element duplicados -->
 			<Setter Property="Background" Value="#60FFFFFF"/>
 			<Setter Property="BorderBrush" Value="#40FFFFFF"/>
 			<Setter Property="BorderThickness" Value="1"/>
 			<Setter Property="Cursor" Value="Hand"/>
+			<Setter Property="SnapsToDevicePixels" Value="True"/>
+			<Setter Property="UseLayoutRounding" Value="True"/>
+			<Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+			<Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="Button">
-						<Grid RenderTransformOrigin="0.5,0.5">
-							<!-- Fondo principal con binding a Background -->
+						<Grid RenderTransformOrigin="0.5,0.5"
+                              SnapsToDevicePixels="True"
+                              UseLayoutRounding="True"
+                              TextOptions.TextFormattingMode="Display"
+                              TextOptions.TextRenderingMode="ClearType">
+
 							<Border x:Name="border"
 									CornerRadius="12"
 									Background="{TemplateBinding Background}"
@@ -36,16 +44,28 @@
 								<Border.Effect>
 									<DropShadowEffect Color="#1A000000" BlurRadius="10" ShadowDepth="2"/>
 								</Border.Effect>
-								<!-- Capa de contenido (no usamos Border.Background property element) -->
-								<Grid>
-									<!-- Brillo superior: rectángulo semitransparente -->
+
+								<Grid SnapsToDevicePixels="True"
+                                      UseLayoutRounding="True"
+                                      TextOptions.TextFormattingMode="Display"
+                                      TextOptions.TextRenderingMode="ClearType">
 									<Rectangle RadiusX="12" RadiusY="12" IsHitTestVisible="False" Opacity="0.6" Fill="#40FFFFFF" />
-									<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+									<ContentPresenter HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      SnapsToDevicePixels="True"
+                                                      UseLayoutRounding="True"
+                                                      TextOptions.TextFormattingMode="Display"
+                                                      TextOptions.TextRenderingMode="ClearType"/>
 								</Grid>
 							</Border>
-							<!-- Borde interior brillante -->
-							<Border CornerRadius="12" BorderThickness="1" BorderBrush="#20FFFFFF" Margin="1" IsHitTestVisible="False"/>
+
+							<Border CornerRadius="12"
+                                    BorderThickness="1"
+                                    BorderBrush="#20FFFFFF"
+                                    Margin="1"
+                                    IsHitTestVisible="False"/>
 						</Grid>
+
 						<ControlTemplate.Triggers>
 							<Trigger Property="IsMouseOver" Value="True">
 								<Setter TargetName="border" Property="Opacity" Value="0.95"/>
@@ -54,16 +74,16 @@
 										<ScaleTransform ScaleX="1.02" ScaleY="1.02"/>
 									</Setter.Value>
 								</Setter>
-								<!-- Cambiar fondo a azul suave al pasar el ratón -->
 								<Setter TargetName="border" Property="Background">
 									<Setter.Value>
 										<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-											<GradientStop Color="#FF4A90E2" Offset="0"/>
-											<GradientStop Color="#FF3A78C8" Offset="1"/>
+											<GradientStop Color="#FF5B41" Offset="0"/>
+											<GradientStop Color="#FF5B41" Offset="1"/>
 										</LinearGradientBrush>
 									</Setter.Value>
 								</Setter>
 							</Trigger>
+
 							<Trigger Property="IsPressed" Value="True">
 								<Setter TargetName="border" Property="Opacity" Value="0.9"/>
 								<Setter TargetName="border" Property="RenderTransform">
@@ -71,16 +91,16 @@
 										<ScaleTransform ScaleX="0.99" ScaleY="0.99"/>
 									</Setter.Value>
 								</Setter>
-								<!-- Fondo azul más oscuro al presionar -->
 								<Setter TargetName="border" Property="Background">
 									<Setter.Value>
 										<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-											<GradientStop Color="#FF357ABD" Offset="0"/>
-											<GradientStop Color="#FF2A5EA8" Offset="1"/>
+											<GradientStop Color="#FF5B41" Offset="0"/>
+											<GradientStop Color="#FF5B41" Offset="1"/>
 										</LinearGradientBrush>
 									</Setter.Value>
 								</Setter>
 							</Trigger>
+
 							<Trigger Property="IsEnabled" Value="False">
 								<Setter Property="Opacity" Value="0.5"/>
 							</Trigger>
@@ -91,231 +111,206 @@
 		</Style>
 	</Window.Resources>
 
-	<DockPanel LastChildFill="True">
+    <DockPanel LastChildFill="True">
+		
+			<!-- Imagen del logo arriba a la izquierda -->
+		<Image Source="Assets/logoesquina.png"
+	   DockPanel.Dock="Bottom"
+	   HorizontalAlignment="Left"
+	   VerticalAlignment="Bottom"
+	   Margin="8,0,0,8"
+	   Width="120"
+	   Stretch="Uniform"
+	   Panel.ZIndex="10"/>
+		
+        <!-- MENÚ SUPERIOR -->
+		
+        <Menu DockPanel.Dock="Top" Background="{StaticResource PrimaryBackground}" FontFamily="{StaticResource ManropeRegular}">
+            <MenuItem Header="_Archivo" Foreground="Black">
+                <MenuItem Header="Abrir..." Foreground="Black" />
+                <Separator />
+                <MenuItem Header="Salir" Foreground="Black" Click="MenuSalir_Click"/>
+            </MenuItem>
 
-		<!-- MENÚ SUPERIOR -->
-		<Menu DockPanel.Dock="Top" Background="{StaticResource PrimaryBackground}">
-			<MenuItem Header="_Archivo" Foreground="{StaticResource PrimaryText}">
-				<MenuItem Header="Abrir..." Foreground="{StaticResource PrimaryText}" />
-				<Separator />
-				<MenuItem Header="Salir" Foreground="{StaticResource PrimaryText}" Click="MenuSalir_Click"/>
-			</MenuItem>
-
-			<MenuItem Header="_Ver" Foreground="{StaticResource PrimaryText}">
-				<MenuItem Header="Actualizar"
-                          Foreground="{StaticResource PrimaryText}"
+            <MenuItem Header="_Ver" Foreground="Black">
+                <MenuItem Header="Actualizar"
+                          Foreground="Black"
                           IsCheckable="True"
                           Click="MenuActualizar_Click"/>
-			</MenuItem>
+            </MenuItem>
 
-			<MenuItem Header="_Ayuda" Foreground="{StaticResource PrimaryText}">
-				<MenuItem Header="Acerca de..." Foreground="{StaticResource PrimaryText}" Click="MenuAcercaDe_Click"/>
-			</MenuItem>
-		</Menu>
+            <MenuItem Header="_Ayuda" Foreground="Black">
+                <MenuItem Header="Acerca de..." Foreground="Black" Click="MenuAcercaDe_Click"/>
+            </MenuItem>
+        </Menu>
 
-		<!-- BARRA SUPERIOR -->
-		<Border DockPanel.Dock="Top" Padding="2" Background="#FF2D2F33">
+        <!-- BARRA SUPERIOR -->
+        <Border DockPanel.Dock="Top" Padding="2" Background="#003594">
 			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-				<!-- Logo -->
-				<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0">
-					<Image Source="Assets/logo.png" Width="100" Height="100" Margin="0,0,10,0"/>
-				</StackPanel>
+                <!-- Logo -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0">
+                    <Image Source="Assets/logo.png" Width="100" Height="100" Margin="0,0,10,0"/>
+                </StackPanel>
 
-				<!-- Título -->
-				<StackPanel Grid.Column="1" VerticalAlignment="Center">
-					<TextBlock Text="Mi Launcher" Foreground="White" FontSize="20" FontWeight="Bold"/>
-					<TextBlock Text="Panel principal" Foreground="{StaticResource SecondaryText}" FontSize="12"/>
-				</StackPanel>
+                <!-- Título -->
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Text="Mi Launcher" Style="{StaticResource Titulo}" />
+                    <TextBlock Text="Panel principal" Style="{StaticResource Texto}" Foreground="{StaticResource SecondaryText}"/>
+                </StackPanel>
 
-				<!-- Acciones rápidas -->
-				<StackPanel Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,4,0">
-					<Button Content="Actualizar" Click="BtnActualizar_Click" Padding="8,4" Margin="0,0,8,0"/>
-					<Button Content="Configuración" Click="BtnConfiguracion_Click" Padding="8,4"/>
-				</StackPanel>
-			</Grid>
-		</Border>
+                <!-- Acciones rápidas -->
+                <StackPanel Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,4,0">
+                    <Button Content="Actualizar" Click="BtnActualizar_Click" Padding="8,4" Margin="0,0,8,0" Style="{StaticResource GlassButtonStyle}" Height="30" Width="125"/>
+                    <Button Content="Configuración" Click="BtnConfiguracion_Click" Padding="8,4" Style="{StaticResource GlassButtonStyle}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
 
-		<!-- CUERPO PRINCIPAL -->
-		<Grid Margin="12">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="*"/>
-			</Grid.RowDefinitions>
+        <!-- CUERPO PRINCIPAL -->
+        <Grid Margin="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-			<!-- Pestañas -->
-			<TabControl Grid.Row="0"
+            <!-- Pestañas -->
+            <TabControl Grid.Row="0"
                         x:Name="MainTabs"
                         Margin="0,0,0,10"
                         Height="36"
                         Background="{StaticResource PrimaryBackground}"
                         BorderThickness="0"
+                        FontFamily="{StaticResource ManropeSemiBold}"
                         SelectionChanged="MainTabs_SelectionChanged">
-				<TabItem Header="Inicio" />
-				<TabItem Header="Historial" />
-			</TabControl>
+                <TabItem Header="Inicio" />
+                <TabItem Header="Historial" />
+            </TabControl>
 
-			<!-- Contenido en dos columnas -->
-			<Grid Grid.Row="1">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="3*"/>
-					<ColumnDefinition Width="2*"/>
-				</Grid.ColumnDefinitions>
+            <!-- Contenido -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
 
-				<!-- ESTADO -->
-				<ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
-					<StackPanel>
-						<TextBlock Text="Estado"
-                                   Foreground="{StaticResource PrimaryText}"
-                                   FontSize="18"
-                                   FontWeight="SemiBold"
-                                   Margin="6"/>
+                <!-- ESTADO -->
+                <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <TextBlock Text="Estado" Style="{StaticResource TituloSecundario}" Margin="6"/>
 
-						<!-- Tarjeta: Estado del launcher -->
-						<Border Style="{StaticResource CardStyle}">
-							<StackPanel>
-								<TextBlock Text="Estado del launcher"
-                                           Foreground="{StaticResource PrimaryText}"
-                                           FontWeight="Bold"
-                                           FontSize="16"
-                                           Margin="0,0,0,10"/>
+                        <!-- Tarjeta: Estado del launcher -->
+                        <Border Style="{StaticResource CardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Estado del launcher" Style="{StaticResource TextoDestacado}" FontSize="16" Margin="0,0,0,10"/>
 
-								<!-- Versión instalada -->
-								<StackPanel Orientation="Horizontal" Margin="0,4">
-									<TextBlock Text="Versión instalada:"
-                                               Foreground="{StaticResource PrimaryText}"
-                                               FontWeight="Bold" Width="160"/>
-									<TextBlock Text="{Binding GameStatus.VersionInstalada}"
-                                               Foreground="{StaticResource SecondaryText}"/>
-								</StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,4">
+                                    <TextBlock Text="Versión instalada:" Style="{StaticResource TextoDestacado}" Width="160"/>
+                                    <TextBlock Text="{Binding GameStatus.VersionInstalada}" Style="{StaticResource Texto}"/>
+                                </StackPanel>
 
-								<!-- Última versión disponible -->
-								<StackPanel Orientation="Horizontal" Margin="0,4">
-									<TextBlock Text="Última versión:"
-                                               Foreground="{StaticResource PrimaryText}"
-                                               FontWeight="Bold" Width="160"/>
-									<TextBlock Text="{Binding GameStatus.UltimaVersion}"
-                                               Foreground="{StaticResource SecondaryText}"/>
-								</StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,4">
+                                    <TextBlock Text="Última versión:" Style="{StaticResource TextoDestacado}" Width="160"/>
+                                    <TextBlock Text="{Binding GameStatus.UltimaVersion}" Style="{StaticResource Texto}"/>
+                                </StackPanel>
 
-								<!-- Estado con icono + texto -->
-								<StackPanel Orientation="Horizontal" Margin="0,8">
-									<Image Source="{Binding GameStatus.IconoEstado}"
-										   Width="18" Height="18" Margin="0,0,6,0"/>
-									<TextBlock Text="{Binding GameStatus.TextoEstado}"
-											   Foreground="{StaticResource SecondaryText}"/>
-								</StackPanel>
-							</StackPanel>
-						</Border>
+                                <StackPanel Orientation="Horizontal" Margin="0,8">
+                                    <Image Source="{Binding GameStatus.IconoEstado}" Width="18" Height="18" Margin="0,0,6,0"/>
+                                    <TextBlock Text="{Binding GameStatus.TextoEstado}" Style="{StaticResource Texto}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
 
-						<!-- Tarjeta: Estado de la conexión/launcher -->
-						<Border Style="{StaticResource CardStyle}">
-							<StackPanel>
-								<TextBlock Text="Conexión:"
-                                           Foreground="{StaticResource PrimaryText}"
-                                           FontWeight="Bold"/>
-								<TextBlock Text="{Binding LauncherStatus.ConnectionText}"
-                                           Foreground="{StaticResource SecondaryText}"
-                                           Margin="0,4,0,8"/>
+                        <!-- Tarjeta: Conexión -->
+                        <Border Style="{StaticResource CardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Conexión:" Style="{StaticResource TextoDestacado}"/>
+                                <TextBlock Text="{Binding LauncherStatus.ConnectionText}" Style="{StaticResource Texto}" Margin="0,4,0,8"/>
+                                <TextBlock Text="Versión:" Style="{StaticResource TextoDestacado}"/>
+                                <TextBlock Text="{Binding LauncherStatus.Version}" Style="{StaticResource Texto}" Margin="0,4,0,8"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                    <Button Content="Revisar actualizaciones" Click="BtnRevisarActualizaciones_Click" Padding="8,4" Margin="8,0,0,0" Style="{StaticResource GlassButtonStyle}" Height="30" Width="180"/>
+                                    <Button Content="Reiniciar" Click="BtnReiniciar_Click" Padding="8,4" Margin="8,0,0,0" Style="{StaticResource GlassButtonStyle}" Height="30" Width="125"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
 
-								<TextBlock Text="Versión:"
-                                           Foreground="{StaticResource PrimaryText}"
-                                           FontWeight="Bold"/>
-								<TextBlock Text="{Binding LauncherStatus.Version}"
-                                           Foreground="{StaticResource SecondaryText}"
-                                           Margin="0,4,0,8"/>
-
-								<StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-									<Button Content="Revisar actualizaciones"
-                                            Click="BtnRevisarActualizaciones_Click"
-                                            Padding="8,4" />
-									<Button Content="Reiniciar"
-                                            Click="BtnReiniciar_Click"
-                                            Padding="8,4"
-                                            Margin="8,0,0,0"/>
-								</StackPanel>
-							</StackPanel>
-						</Border>
-
-						<!-- Tarjeta Actividades -->
-						<Border Style="{StaticResource CardStyle}">
-							<StackPanel>
-								<TextBlock Text="Actividades recientes"
-                                           Foreground="{StaticResource PrimaryText}"
-                                           FontWeight="Bold" />
-								<ItemsControl ItemsSource="{Binding RecentActivities}">
-									<ItemsControl.ItemTemplate>
-										<DataTemplate>
-											<TextBlock TextWrapping="Wrap" Foreground="{StaticResource SecondaryText}">
+                        <!-- Tarjeta Actividades -->
+                        <Border Style="{StaticResource CardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Actividades recientes" Style="{StaticResource TextoDestacado}"/>
+                                <ItemsControl ItemsSource="{Binding RecentActivities}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock TextWrapping="Wrap" Style="{StaticResource Texto}">
 												<Run Text="• "/>
 												<Run Text="{Binding}" />
-											</TextBlock>
-										</DataTemplate>
-									</ItemsControl.ItemTemplate>
-								</ItemsControl>
-							</StackPanel>
-						</Border>
-					</StackPanel>
-				</ScrollViewer>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
 
-				<!-- NOTICIAS -->
-				<StackPanel Grid.Column="1">
-					<TextBlock Text="Noticias" Foreground="{StaticResource PrimaryText}" FontSize="18" FontWeight="SemiBold" Margin="6"/>
+                <!-- NOTICIAS -->
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="Noticias" Style="{StaticResource TituloSecundario}" Margin="6"/>
+                    <Border Style="{StaticResource CardStyle}" VerticalAlignment="Stretch">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-					<!-- Tarjeta Noticias -->
-					<Border Style="{StaticResource CardStyle}" VerticalAlignment="Stretch">
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto"/>
-								<RowDefinition Height="*"/>
-							</Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <TextBlock Text="Filtrar:" Style="{StaticResource Texto}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                <ComboBox Width="140" SelectedIndex="0" FontFamily="{StaticResource ManropeRegular}">
+                                    <ComboBoxItem Content="Todas"/>
+                                    <ComboBoxItem Content="Actualizaciones"/>
+                                    <ComboBoxItem Content="Promociones"/>
+                                </ComboBox>
+                            </StackPanel>
 
-							<!-- Filtros -->
-							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-								<TextBlock Text="Filtrar:" Foreground="{StaticResource PrimaryText}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-								<ComboBox Width="140" SelectedIndex="0">
-									<ComboBoxItem Content="Todas"/>
-									<ComboBoxItem Content="Actualizaciones"/>
-									<ComboBoxItem Content="Promociones"/>
-								</ComboBox>
-							</StackPanel>
+                            <ListView Grid.Row="1" ItemsSource="{Binding NewsItems}" Margin="0,8,0,0" Name="NewsListView">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Padding="8" Margin="4" CornerRadius="6" Background="Transparent">
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Title}" Style="{StaticResource TextoDestacado}"/>
+                                                <TextBlock Text="{Binding Summary}" Style="{StaticResource Texto}" TextWrapping="Wrap" FontSize="12" Margin="0,4,0,0"/>
+                                                <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                                                    <TextBlock Text="{Binding DateString}" FontSize="11" Foreground="#FF8A8D90"/>
+                                                    <Button Content="Abrir" Margin="8,0,0,0" Padding="6,2" Tag="{Binding}" Click="BtnAbrirNoticia_Click"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Grid>
 
-							<!-- Lista noticias -->
-							<ListView Grid.Row="1" ItemsSource="{Binding NewsItems}" Margin="0,8,0,0" Name="NewsListView">
-								<ListView.ItemTemplate>
-									<DataTemplate>
-										<Border Padding="8" Margin="4" CornerRadius="6" Background="Transparent">
-											<StackPanel>
-												<TextBlock Text="{Binding Title}" Foreground="{StaticResource PrimaryText}" FontWeight="Bold"/>
-												<TextBlock Text="{Binding Summary}" Foreground="{StaticResource SecondaryText}" TextWrapping="Wrap" FontSize="12" Margin="0,4,0,0"/>
-												<StackPanel Orientation="Horizontal" Margin="0,6,0,0">
-													<TextBlock Text="{Binding DateString}" FontSize="11" Foreground="#FF8A8D90"/>
-													<Button Content="Abrir" Margin="8,0,0,0" Padding="6,2" Tag="{Binding}" Click="BtnAbrirNoticia_Click"/>
-												</StackPanel>
-											</StackPanel>
-										</Border>
-									</DataTemplate>
-								</ListView.ItemTemplate>
-							</ListView>
-						</Grid>
-					</Border>
-				</StackPanel>
-			</Grid>
-
-			<!-- Botón Jugar situado en la esquina inferior derecha del área principal -->
-			<Button x:Name="BtnJugar"
-				Grid.Row="1"
-				Grid.Column="1"
-				HorizontalAlignment="Right"
-				VerticalAlignment="Bottom"
-				Margin="0,0,12,12"
-				Style="{StaticResource GlassButtonStyle}"
-				Content="Iniciar" Width="140" Height="44" Click="BtnJugar_Click"/>
-		</Grid>
-	</DockPanel>
+            <!-- BOTÓN JUGAR -->
+            <Button x:Name="BtnJugar"
+					Grid.Row="1"
+					Grid.Column="1"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Bottom"
+					Margin="0,0,12,12"
+					Style="{StaticResource GlassButtonStyle}"
+					Content="Iniciar"
+					Width="140"
+					Height="44"
+					Click="BtnJugar_Click"/>
+        </Grid>
+    </DockPanel>
 </Window>
