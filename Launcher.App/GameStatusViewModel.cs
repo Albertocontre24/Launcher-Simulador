@@ -10,7 +10,9 @@ namespace Launcher.App
 {
     public class GameStatusViewModel : INotifyPropertyChanged
     {
-        private string _versionInstalada = "1.2.0";
+        private readonly LocalConfigService _configService;
+
+        private string _versionInstalada = "Cargando...";
         private string _ultimaVersion = "Cargando...";
         private string _lastError = string.Empty;
 
@@ -72,13 +74,20 @@ namespace Launcher.App
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-        // Constructor: carga el manifest automáticamente
+        // Constructor
         public GameStatusViewModel()
         {
+            Console.WriteLine("🚀 Inicializando GameStatusViewModel...");
+
+            // 1️⃣ Cargar configuración local (local.json)
+            _configService = new LocalConfigService();
+            VersionInstalada = _configService.Config.VersionInstalada;
+
+            // 2️⃣ Cargar manifest remoto (última versión disponible)
             _ = CargarManifestLocalAsync();
         }
 
-        // Método para cargar el manifest local
+        // Método para cargar el manifest local/remoto
         public async Task CargarManifestLocalAsync()
         {
             try

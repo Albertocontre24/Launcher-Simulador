@@ -34,7 +34,7 @@ namespace Launcher.Core.Services
                 AllowTrailingCommas = true
             };
 
-            Load();
+           Load();
         }
 
         public void Load()
