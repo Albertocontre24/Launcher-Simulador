@@ -15,12 +15,6 @@ Este launcher permite comprobar versiones, descargar actualizaciones y mostrar n
 - Sistema operativo: Windows 10/11  
 
 ## Autor
-Antonio Pinillos 
-Luis Martinez
-Alberto Contreras
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> Luis2.0
+- Antonio Pinillos 
+- Luis Martinez
+- Alberto Contreras

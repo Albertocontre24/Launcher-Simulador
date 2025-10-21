@@ -1,17 +1,20 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Launcher.Core.Services;
-using Launcher.Core.Utils; // ✅ Importamos el comparador SemVer
+using Launcher.Core.Utils; // ✅ Comparador SemVer
 
 namespace Launcher.App
 {
     public class GameStatusViewModel : INotifyPropertyChanged
     {
         private readonly LocalConfigService _configService;
+        private readonly HttpClient _httpClient = new HttpClient();
 
         private string _versionInstalada = "Cargando...";
         private string _ultimaVersion = "Cargando...";
@@ -60,7 +63,7 @@ namespace Launcher.App
             }
         }
 
-        // ✅ Usa comparador SemVer para determinar estado
+        // ✅ Usa comparador SemVer
         public string IconoEstado
         {
             get
@@ -115,51 +118,78 @@ namespace Launcher.App
             _configService = new LocalConfigService();
             VersionInstalada = _configService.Config.VersionInstalada ?? "Desconocida";
 
-            _ = CargarManifestLocalAsync();
+            _ = CargarManifestAsync();
         }
 
-        // 📦 Cargar manifest local (o remoto si lo prefieres después)
-        public async Task CargarManifestLocalAsync()
+        // 📦 Cargar manifest remoto (GitHub) con respaldo local
+        private async Task CargarManifestAsync()
         {
             try
             {
-                Console.WriteLine("🔍 Iniciando carga del manifest local...");
+                // 🔗 URL RAW del manifest en GitHub 
+                string githubUrl = "https://raw.githubusercontent.com/Albertocontre24/Launcher-Simulador/main/manifest.json";
 
-                var provider = new LocalManifestProvider();
+                Console.WriteLine($"🌐 Descargando manifest desde GitHub: {githubUrl}");
+                var response = await _httpClient.GetAsync(githubUrl, CancellationToken.None);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var manifest = JsonSerializer.Deserialize<ManifestInfo>(json);
+
+                    if (manifest != null && !string.IsNullOrEmpty(manifest.Version))
+                    {
+                        UltimaVersion = manifest.Version;
+                        LastError = string.Empty;
+                        Console.WriteLine($"✅ Manifest remoto cargado: {UltimaVersion}");
+                        return;
+                    }
+                }
+
+                Console.WriteLine("⚠️ No se pudo leer el manifest remoto, usando el local...");
+                await CargarManifestLocalAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"⚠️ Error al acceder a GitHub: {ex.Message}");
+                await CargarManifestLocalAsync();
+            }
+        }
+
+        // 🧱 Cargar manifest local como respaldo
+        private async Task CargarManifestLocalAsync()
+        {
+            try
+            {
                 var manifestPath = Path.Combine(AppContext.BaseDirectory, "manifest.json");
-
-                Console.WriteLine($"📁 Ruta esperada: {manifestPath}");
+                Console.WriteLine($"📁 Intentando cargar manifest local en: {manifestPath}");
 
                 if (!File.Exists(manifestPath))
                 {
-                    Console.WriteLine("❌ No se encontró el archivo manifest.json");
                     UltimaVersion = "Error";
-                    LastError = "Archivo manifest.json no encontrado.";
+                    LastError = "No se encontró manifest.json local.";
+                    Console.WriteLine("❌ No se encontró manifest.json local.");
                     return;
                 }
 
-                var uri = new Uri(manifestPath);
-                var result = await provider.GetAsync(uri, CancellationToken.None);
+                var json = await File.ReadAllTextAsync(manifestPath);
+                var manifest = JsonSerializer.Deserialize<ManifestInfo>(json);
 
-                if (result.IsSuccess && result.Value != null)
-                {
-                    UltimaVersion = result.Value.Version ?? "Desconocida";
-                    LastError = string.Empty;
-                    Console.WriteLine($"✅ Manifest leído correctamente. Versión: {UltimaVersion}");
-                }
-                else
-                {
-                    UltimaVersion = "Error";
-                    LastError = result.Error ?? "No se pudo leer el manifest.";
-                    Console.WriteLine($"⚠️ Error al leer manifest: {LastError}");
-                }
+                UltimaVersion = manifest?.Version ?? "Desconocida";
+                LastError = string.Empty;
+                Console.WriteLine($"📂 Manifest local leído correctamente: {UltimaVersion}");
             }
             catch (Exception ex)
             {
                 UltimaVersion = "Error";
-                LastError = $"Excepción: {ex.Message}";
-                Console.WriteLine($"💥 Excepción al leer manifest: {ex}");
+                LastError = ex.Message;
+                Console.WriteLine($"💥 Error leyendo manifest local: {ex.Message}");
             }
+        }
+
+        private class ManifestInfo
+        {
+            public string? Version { get; set; }
         }
     }
 }
