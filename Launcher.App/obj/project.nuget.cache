@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "vJciMjBTx9U=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Luis Martínez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Luis Martínez Parra\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.9\\microsoft.extensions.dependencyinjection.abstractions.9.0.9.nupkg.sha512",
+    "C:\\Users\\Luis Martínez Parra\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.9\\microsoft.extensions.logging.abstractions.9.0.9.nupkg.sha512"
+  ],
+  "logs": []
+}

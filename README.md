@@ -19,5 +19,8 @@ Antonio Pinillos
 Luis Martinez
 Alberto Contreras
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> Luis2.0

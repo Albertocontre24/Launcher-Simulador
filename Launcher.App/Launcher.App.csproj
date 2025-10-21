@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Launcher.Core\Launcher.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+	<Resource Include="Assets\logo.png" />
+	<Resource Include="Assets\logoesquina.png" />
+	<Resource Include="Assets\warning.png" />
+	<Resource Include="Assets\tick.png" />
+	<Resource Include="Assets\Fonts\Manrope-Light.ttf" />
+	<Resource Include="Assets\Fonts\Manrope-Bold.ttf" />
+	<Resource Include="Assets\Fonts\Manrope-ExtraBold.ttf" />
+	<Resource Include="Assets\Fonts\Manrope-SemiBold.ttf" />
+	<Resource Include="Assets\Fonts\Manrope-Regular.ttf" />
+	<Resource Include="Assets\Fonts\Manrope-ExtraLight.ttf" />
+	<Resource Include="Assets\Fonts\Manrope-Medium.ttf" />
+  </ItemGroup>
+	<PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+</Project>

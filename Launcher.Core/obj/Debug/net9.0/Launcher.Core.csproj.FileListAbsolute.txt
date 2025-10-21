@@ -1,0 +1,13 @@
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\bin\Debug\net9.0\Launcher.Core.deps.json
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\bin\Debug\net9.0\Launcher.Core.dll
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\bin\Debug\net9.0\Launcher.Core.pdb
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.csproj.AssemblyReference.cache
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.AssemblyInfoInputs.cache
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.AssemblyInfo.cs
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.csproj.CoreCompileInputs.cache
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.sourcelink.json
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.dll
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\refint\Launcher.Core.dll
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.pdb
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\ref\Launcher.Core.dll
