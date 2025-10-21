@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Launcher.Core.Services;
+using Launcher.Core.Utils; // ✅ Importamos el comparador SemVer
 
 namespace Launcher.App
 {
@@ -59,35 +60,65 @@ namespace Launcher.App
             }
         }
 
-        public string IconoEstado =>
-            VersionInstalada == UltimaVersion
-                ? "Assets/tick.png"
-                : "Assets/warning.png";
+        // ✅ Usa comparador SemVer para determinar estado
+        public string IconoEstado
+        {
+            get
+            {
+                if (UltimaVersion == "Cargando..." || UltimaVersion == "Error")
+                    return "Assets/loading.png";
 
-        public string TextoEstado =>
-            VersionInstalada == UltimaVersion
-                ? " El launcher está actualizado y listo para jugar"
-                : " Hay una actualización disponible";
+                try
+                {
+                    return SemVerComparer.IsRemoteNewer(VersionInstalada, UltimaVersion)
+                        ? "Assets/warning.png"   // Hay actualización
+                        : "Assets/tick.png";      // Todo actualizado
+                }
+                catch
+                {
+                    return "Assets/error.png";
+                }
+            }
+        }
+
+        public string TextoEstado
+        {
+            get
+            {
+                if (UltimaVersion == "Cargando...")
+                    return " Comprobando versiones...";
+                if (UltimaVersion == "Error")
+                    return $" Error: {LastError}";
+
+                try
+                {
+                    return SemVerComparer.IsRemoteNewer(VersionInstalada, UltimaVersion)
+                        ? $" Hay una actualización disponible ({UltimaVersion})"
+                        : $" El launcher está actualizado ({VersionInstalada})";
+                }
+                catch (Exception ex)
+                {
+                    return $" Error comparando versiones: {ex.Message}";
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
-
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-        // Constructor
+        // 🧠 Constructor
         public GameStatusViewModel()
         {
             Console.WriteLine("🚀 Inicializando GameStatusViewModel...");
 
-            // 1️⃣ Cargar configuración local (local.json)
             _configService = new LocalConfigService();
-            VersionInstalada = _configService.Config.VersionInstalada;
+            VersionInstalada = _configService.Config.VersionInstalada ?? "Desconocida";
 
-            // 2️⃣ Cargar manifest remoto (última versión disponible)
             _ = CargarManifestLocalAsync();
         }
 
-        // Método para cargar el manifest local/remoto
+        // 📦 Cargar manifest local (o remoto si lo prefieres después)
         public async Task CargarManifestLocalAsync()
         {
             try
