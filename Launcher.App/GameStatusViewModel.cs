@@ -127,7 +127,7 @@ namespace Launcher.App
             try
             {
                 // 🔗 URL RAW del manifest en GitHub 
-                string githubUrl = "https://raw.githubusercontent.com/Albertocontre24/Launcher-Simulador/main/manifest.json";
+                string githubUrl = "https://https://raw.githubusercontent.com/Albertocontre24/Launcher-Simulador/refs/heads/main/manifest.json";
 
                 Console.WriteLine($"🌐 Descargando manifest desde GitHub: {githubUrl}");
                 var response = await _httpClient.GetAsync(githubUrl, CancellationToken.None);

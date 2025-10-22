@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Launcher.App\\Launcher.App.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\GameStatusViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Launcher.App\\GameStatusViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Launcher.App\\Launcher.App.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\manifest.json||{3B902123-F8A7-4915-9F01-361F908088D0}",
@@ -41,11 +41,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Launcher.App.csproj",
               "DocumentMoniker": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj",
               "RelativeDocumentMoniker": "Launcher.App\\Launcher.App.csproj",
@@ -66,8 +66,7 @@
               "RelativeToolTip": "manifest.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-21T11:37:56.062Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-21T11:37:56.062Z"
             },
             {
               "$type": "Document",
@@ -79,18 +78,17 @@
               "RelativeToolTip": "README.md",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-10-21T11:36:03.865Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-21T11:36:03.865Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "GameStatusViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\GameStatusViewModel.cs",
               "RelativeDocumentMoniker": "Launcher.App\\GameStatusViewModel.cs",
               "ToolTip": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\GameStatusViewModel.cs",
               "RelativeToolTip": "Launcher.App\\GameStatusViewModel.cs",
-              "ViewState": "AgIAAHwAAAAAAAAAAAAAAIAAAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAAHwAAAAAAAAAAAAAAH4AAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-21T11:34:21.535Z",
               "EditorCaption": ""
@@ -142,8 +140,7 @@
               "RelativeToolTip": "Launcher.App\\MainWindow.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-09-30T12:37:45.857Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T12:37:45.857Z"
             }
           ]
         }
