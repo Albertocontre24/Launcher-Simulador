@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.IO.Compression;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
@@ -64,34 +65,21 @@ namespace Launcher.App
         }
 
         // ✅ Usa comparador SemVer
-        public string IconoEstado
-        {
-            get
+        public string IconoEstado =>
+            UltimaVersion switch
             {
-                if (UltimaVersion == "Cargando..." || UltimaVersion == "Error")
-                    return "Assets/loading.png";
-
-                try
-                {
-                    return SemVerComparer.IsRemoteNewer(VersionInstalada, UltimaVersion)
-                        ? "Assets/warning.png"   // Hay actualización
-                        : "Assets/tick.png";      // Todo actualizado
-                }
-                catch
-                {
-                    return "Assets/error.png";
-                }
-            }
-        }
+                "Cargando..." or "Error" => "Assets/loading.png",
+                _ => SemVerComparer.IsRemoteNewer(VersionInstalada, UltimaVersion)
+                    ? "Assets/warning.png"
+                    : "Assets/tick.png"
+            };
 
         public string TextoEstado
         {
             get
             {
-                if (UltimaVersion == "Cargando...")
-                    return " Comprobando versiones...";
-                if (UltimaVersion == "Error")
-                    return $" Error: {LastError}";
+                if (UltimaVersion == "Cargando...") return " Comprobando versiones...";
+                if (UltimaVersion == "Error") return $" Error: {LastError}";
 
                 try
                 {
@@ -126,8 +114,7 @@ namespace Launcher.App
         {
             try
             {
-                // 🔗 URL RAW del manifest en GitHub 
-                string githubUrl = "https://https://raw.githubusercontent.com/Albertocontre24/Launcher-Simulador/refs/heads/main/manifest.json";
+                string githubUrl = "https://raw.githubusercontent.com/Albertocontre24/Launcher-Simulador/main/manifest.json";
 
                 Console.WriteLine($"🌐 Descargando manifest desde GitHub: {githubUrl}");
                 var response = await _httpClient.GetAsync(githubUrl, CancellationToken.None);
@@ -142,6 +129,12 @@ namespace Launcher.App
                         UltimaVersion = manifest.Version;
                         LastError = string.Empty;
                         Console.WriteLine($"✅ Manifest remoto cargado: {UltimaVersion}");
+
+                        // Si hay una versión nueva, descarga y actualiza
+                        if (SemVerComparer.IsRemoteNewer(VersionInstalada, UltimaVersion))
+                        {
+                            await DescargarYActualizarAsync(manifest);
+                        }
                         return;
                     }
                 }
@@ -187,9 +180,54 @@ namespace Launcher.App
             }
         }
 
+        // 🧩 Método de actualización completo
+        private async Task DescargarYActualizarAsync(ManifestInfo manifest)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(manifest.PackageUrl))
+                {
+                    Console.WriteLine("⚠️ No se especificó la URL del paquete en el manifest.");
+                    return;
+                }
+
+                string tempZip = Path.Combine(Path.GetTempPath(), "update.zip");
+                Console.WriteLine($"⬇️ Descargando actualización desde: {manifest.PackageUrl}");
+
+                var data = await _httpClient.GetByteArrayAsync(manifest.PackageUrl);
+                await File.WriteAllBytesAsync(tempZip, data);
+
+                string extractPath = AppContext.BaseDirectory;
+                Console.WriteLine($"📦 Descomprimiendo en: {extractPath}");
+
+                ZipFile.ExtractToDirectory(tempZip, extractPath, true);
+
+                File.Delete(tempZip);
+                Console.WriteLine("✅ Actualización completada correctamente.");
+
+                // 🟢 Actualizar config local
+                _configService.Config.VersionInstalada = UltimaVersion;
+                _configService.Save();
+
+                // 🟢 Refrescar UI
+                VersionInstalada = UltimaVersion;
+                OnPropertyChanged(nameof(VersionInstalada));
+                OnPropertyChanged(nameof(TextoEstado));
+                OnPropertyChanged(nameof(IconoEstado));
+
+                Console.WriteLine($"✅ Versión actualizada a {UltimaVersion}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"💥 Error durante la actualización: {ex.Message}");
+                LastError = ex.Message;
+            }
+        }
+
         private class ManifestInfo
         {
             public string? Version { get; set; }
+            public string? PackageUrl { get; set; }
         }
     }
 }

@@ -17,7 +17,7 @@
 	<Resource Include="Assets\Fonts\Manrope-Medium.ttf" />
   </ItemGroup>
 	<PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net9.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
