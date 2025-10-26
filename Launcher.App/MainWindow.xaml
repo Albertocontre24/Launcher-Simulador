@@ -54,10 +54,11 @@
 				</StackPanel>
 
 				<!-- Acciones rápidas -->
-				<StackPanel Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,4,0">
-					<Button Content="Actualizar" Click="BtnActualizar_Click" Padding="8,4" Margin="0,0,8,0"/>
-					<Button Content="Configuración" Click="BtnConfiguracion_Click" Padding="8,4"/>
-				</StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,4,0">
+                                        <Button Content="Jugar" Click="BtnJugar_Click" Padding="8,4" Margin="0,0,8,0"/>
+                                        <Button Content="Actualizar" Click="BtnActualizar_Click" Padding="8,4" Margin="0,0,8,0"/>
+                                        <Button Content="Configuración" Click="BtnConfiguracion_Click" Padding="8,4"/>
+                                </StackPanel>
 			</Grid>
 		</Border>
 
