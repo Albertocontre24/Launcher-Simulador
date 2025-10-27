@@ -7,10 +7,6 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Launcher.App\\Launcher.App.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\GameStatusViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Launcher.App\\GameStatusViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\manifest.json||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:manifest.json||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
@@ -21,6 +17,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\MainWindow.xaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Launcher.App\\MainWindow.xaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\GameStatusViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Launcher.App\\GameStatusViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
@@ -51,20 +51,20 @@
               "RelativeDocumentMoniker": "Launcher.App\\Launcher.App.csproj",
               "ToolTip": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\Launcher.App.csproj",
               "RelativeToolTip": "Launcher.App\\Launcher.App.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2025-10-21T11:48:43.72Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "manifest.json",
               "DocumentMoniker": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\manifest.json",
               "RelativeDocumentMoniker": "manifest.json",
               "ToolTip": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\manifest.json",
               "RelativeToolTip": "manifest.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-10-21T11:37:56.062Z",
               "EditorCaption": ""
@@ -83,7 +83,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "GameStatusViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\GameStatusViewModel.cs",
               "RelativeDocumentMoniker": "Launcher.App\\GameStatusViewModel.cs",
@@ -121,28 +121,29 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "Launcher.App\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\MainWindow.xaml.cs",
               "RelativeToolTip": "Launcher.App\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAGMAAAAAAAAAAAAAAH4AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAAAH4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-01T07:08:53.051Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\MainWindow.xaml",
               "RelativeDocumentMoniker": "Launcher.App\\MainWindow.xaml",
               "ToolTip": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\MainWindow.xaml",
               "RelativeToolTip": "Launcher.App\\MainWindow.xaml",
-              "ViewState": "AgIAAB0BAAAAAAAAAAAAADoBAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAA4BAAAAAAAAAAAAADoBAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-09-30T12:37:45.857Z"
+              "WhenOpened": "2025-09-30T12:37:45.857Z",
+              "EditorCaption": ""
             }
           ]
         }
