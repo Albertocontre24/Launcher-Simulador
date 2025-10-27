@@ -1,5 +1,5 @@
 {
-  "Version": "1.4.0",
+  "Version": "1.4.1",
   "Channel": "stable",
   "PackageUrl": "https://github.com/Albertocontre24/Launcher-Simulador/releases/download/v1.4/Build.zip",
   "Sha256": "abc123",
@@ -8,3 +8,4 @@
   "ReleaseDate": "2025-10-21",
   "Notes": "Mejoras de rendimiento y correcciones de errores."
 }
+
