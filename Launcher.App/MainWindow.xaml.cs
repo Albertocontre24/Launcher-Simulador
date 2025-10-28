@@ -17,7 +17,6 @@ namespace Launcher.App
     {
         public GameStatusViewModel GameStatus { get; set; }
 
-        // Servicio de configuración local
         private readonly LocalConfigService _configService;
         private readonly HttpClient _httpClient = new HttpClient();
 
@@ -41,6 +40,23 @@ namespace Launcher.App
             _configService.Save();
         }
 
+        // 🔹 Sobrescribir el evento para cargar noticias una vez la ventana esté lista
+        protected override async void OnContentRendered(EventArgs e)
+        {
+            base.OnContentRendered(e);
+
+            try
+            {
+                Console.WriteLine("📰 Cargando noticias del último release...");
+                await GameStatus.CargarNoticiasAsync(); // ✅ Llamada directa, sin reflexión
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"⚠️ Error al cargar noticias al inicio: {ex.Message}");
+            }
+        }
+
+
         // 🧩 Menús
         private void MenuSalir_Click(object sender, RoutedEventArgs e) => Close();
 
@@ -59,10 +75,8 @@ namespace Launcher.App
             {
                 MessageBox.Show("Comprobando actualizaciones...", "Launcher", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // ✅ URL RAW del manifest remoto (cuando el repo sea público)
                 string manifestUrl = "https://raw.githubusercontent.com/Albertocontre24/Launcher-Simulador/main/manifest.json";
 
-                // 🔹 Descargar manifest desde GitHub
                 var response = await _httpClient.GetAsync(manifestUrl);
                 if (!response.IsSuccessStatusCode)
                 {
@@ -70,7 +84,6 @@ namespace Launcher.App
                     return;
                 }
 
-                // 🔹 Leer JSON del manifest
                 var json = await response.Content.ReadAsStringAsync();
                 var manifest = JsonSerializer.Deserialize<ManifestInfo>(json);
 
@@ -80,7 +93,6 @@ namespace Launcher.App
                     return;
                 }
 
-                // 📦 Descargar ZIP de la actualización
                 string zipPath = Path.Combine(AppContext.BaseDirectory, "update.zip");
                 MessageBox.Show($"Descargando actualización desde:\n{manifest.PackageUrl}", "Descargando...", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -90,7 +102,6 @@ namespace Launcher.App
                     await stream.CopyToAsync(fileStream);
                 }
 
-                // 📂 Descomprimir el ZIP descargado
                 string extractPath = Path.Combine(AppContext.BaseDirectory, "update");
                 if (Directory.Exists(extractPath))
                     Directory.Delete(extractPath, true);
@@ -98,9 +109,6 @@ namespace Launcher.App
                 ZipFile.ExtractToDirectory(zipPath, extractPath);
 
                 MessageBox.Show("Actualización descargada y descomprimida correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                // 💡 (Opcional): Ejecutar instalador o reiniciar launcher
-                // System.Diagnostics.Process.Start(Path.Combine(extractPath, "setup.exe"));
             }
             catch (Exception ex)
             {
@@ -115,23 +123,33 @@ namespace Launcher.App
             public string? PackageUrl { get; set; }
         }
 
-        // Otros botones (vacíos por ahora)
+        // Otros botones
         private void BtnConfiguracion_Click(object sender, RoutedEventArgs e) { /* TODO */ }
         private void BtnRevisarActualizaciones_Click(object sender, RoutedEventArgs e) { /* TODO */ }
         private void BtnReiniciar_Click(object sender, RoutedEventArgs e) { /* TODO */ }
         private void BtnAbrirNoticia_Click(object sender, RoutedEventArgs e) { /* TODO */ }
 
         private void MainTabs_SelectionChanged(object sender, SelectionChangedEventArgs e) { /* opcional */ }
+        
+        // 📰 Cambiar entre noticia actual y anterior (ComboBox Noticias)
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (GameStatus == null)
+                return;
 
-        // 🎮 BOTÓN INICIAR — Busca y lanza el juego desde la carpeta bin/Release/net9.0-windows
+            var combo = sender as ComboBox;
+            if (combo?.SelectedIndex == 1)
+                GameStatus.CambiarNoticia(true);  // Mostrar noticia anterior
+            else
+                GameStatus.CambiarNoticia(false); // Mostrar noticia actual
+        }
+
+        // 🎮 BOTÓN INICIAR
         private async void BtnIniciar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // 📂 Carpeta base del proyecto (donde está tu Launcher.App)
                 string projectRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
-
-                // 📁 Ruta exacta del ejecutable del juego
                 string exePath = Path.Combine(projectRoot, "bin", "Debug", "net9.0-windows", "update", "Build", "TestLauncher.exe");
 
                 if (!File.Exists(exePath))
@@ -141,10 +159,8 @@ namespace Launcher.App
                     return;
                 }
 
-                // 🚀 Minimizar launcher mientras se ejecuta el juego
                 this.WindowState = WindowState.Minimized;
 
-                // 🚀 Ejecutar el juego directamente
                 var startInfo = new ProcessStartInfo
                 {
                     FileName = exePath,
@@ -156,15 +172,12 @@ namespace Launcher.App
 
                 if (process != null)
                 {
-                    // 🕒 Esperar a que se cierre sin congelar la interfaz
                     await Task.Run(() => process.WaitForExit());
-
                     this.WindowState = WindowState.Normal;
 
                     MessageBox.Show("El juego se ha cerrado. Reiniciando el launcher...",
                                     "Launcher", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    // 🔁 Reiniciar el launcher
                     string exeLauncher = Process.GetCurrentProcess().MainModule!.FileName;
                     Process.Start(exeLauncher);
                     Application.Current.Shutdown();
@@ -178,4 +191,3 @@ namespace Launcher.App
         }
     }
 }
-

@@ -21,6 +21,32 @@ namespace Launcher.App
         private string _ultimaVersion = "Cargando...";
         private string _lastError = string.Empty;
 
+        // 📰 Datos del título y fecha de las noticias
+        private string _tituloNoticiaActual = "Cargando...";
+        private string _tituloNoticiaAnterior = "Cargando...";
+        private string _fechaNoticiaActual = "";
+        private string _fechaNoticiaAnterior = "";
+
+        // 📰 Variables internas para guardar las dos noticias
+        private string _ultimaNoticiaActual = "Cargando...";
+        private string _ultimaNoticiaAnterior = "Cargando...";
+        private string _ultimaNoticia = "Cargando noticias...";
+
+        // 📰 Propiedad visible en la interfaz (nombre + fecha del release)
+        private string _tituloNoticia = "Cargando...";
+        public string TituloNoticia
+        {
+            get => _tituloNoticia;
+            set
+            {
+                if (_tituloNoticia != value)
+                {
+                    _tituloNoticia = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public string VersionInstalada
         {
             get => _versionInstalada;
@@ -47,6 +73,19 @@ namespace Launcher.App
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(TextoEstado));
                     OnPropertyChanged(nameof(IconoEstado));
+                }
+            }
+        }
+
+        public string UltimaNoticia
+        {
+            get => _ultimaNoticia;
+            set
+            {
+                if (_ultimaNoticia != value)
+                {
+                    _ultimaNoticia = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -107,15 +146,84 @@ namespace Launcher.App
             VersionInstalada = _configService.Config.VersionInstalada ?? "Desconocida";
 
             _ = CargarManifestAsync();
+            _ = CargarNoticiasAsync(); // 🆕 carga las noticias al iniciar
         }
 
-        // 📦 Cargar manifest remoto (GitHub) con respaldo local
+        // 📰 Obtener notas del último release de GitHub
+        public async Task CargarNoticiasAsync()
+        {
+            try
+            {
+                string url = "https://api.github.com/repos/Albertocontre24/Launcher-Simulador/releases";
+                _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("LauncherClient/1.0");
+
+                Console.WriteLine($"🌐 Consultando noticias desde: {url}");
+                var response = await _httpClient.GetStringAsync(url);
+
+                using var doc = JsonDocument.Parse(response);
+                var releases = doc.RootElement.EnumerateArray().ToList();
+
+                if (releases.Count == 0)
+                {
+                    UltimaNoticia = "No se encontraron releases en el repositorio.";
+                    return;
+                }
+
+                // 🟢 Último release
+                var latest = releases[0];
+                _tituloNoticiaActual = latest.GetProperty("name").GetString() ?? "Sin nombre";
+                _fechaNoticiaActual = DateTime.Parse(latest.GetProperty("published_at").GetString() ?? DateTime.Now.ToString()).ToString("dd/MM/yyyy");
+                _ultimaNoticiaActual = latest.GetProperty("body").GetString()?.Trim() ?? "Sin descripción del último release.";
+
+                // 🟡 Release anterior (si existe)
+                if (releases.Count > 1)
+                {
+                    var prev = releases[1];
+                    _tituloNoticiaAnterior = prev.GetProperty("name").GetString() ?? "Sin nombre";
+                    _fechaNoticiaAnterior = DateTime.Parse(prev.GetProperty("published_at").GetString() ?? DateTime.Now.ToString()).ToString("dd/MM/yyyy");
+                    _ultimaNoticiaAnterior = prev.GetProperty("body").GetString()?.Trim() ?? "Sin descripción del release anterior.";
+                }
+                else
+                {
+                    _tituloNoticiaAnterior = "Sin release anterior";
+                    _fechaNoticiaAnterior = "";
+                    _ultimaNoticiaAnterior = "No hay información de una versión anterior.";
+                }
+
+                // Mostrar por defecto el actual
+                TituloNoticia = $"{_tituloNoticiaActual} — {_fechaNoticiaActual}";
+                UltimaNoticia = _ultimaNoticiaActual;
+
+                Console.WriteLine("📰 Noticias cargadas correctamente (actual + anterior).");
+            }
+            catch (Exception ex)
+            {
+                UltimaNoticia = $"Error al cargar noticias: {ex.Message}";
+                Console.WriteLine($"💥 Error al cargar noticias: {ex.Message}");
+            }
+        }
+
+        // 🔄 Cambiar la noticia mostrada (entre actual y anterior)
+        public void CambiarNoticia(bool mostrarAnterior)
+        {
+            if (mostrarAnterior)
+            {
+                UltimaNoticia = _ultimaNoticiaAnterior;
+                TituloNoticia = $"{_tituloNoticiaAnterior} — {_fechaNoticiaAnterior}";
+            }
+            else
+            {
+                UltimaNoticia = _ultimaNoticiaActual;
+                TituloNoticia = $"{_tituloNoticiaActual} — {_fechaNoticiaActual}";
+            }
+        }
+
+        // 📦 Cargar manifest remoto (GitHub)
         private async Task CargarManifestAsync()
         {
             try
             {
                 string githubUrl = "https://raw.githubusercontent.com/Albertocontre24/Launcher-Simulador/main/manifest.json";
-
                 Console.WriteLine($"🌐 Descargando manifest desde GitHub: {githubUrl}");
                 var response = await _httpClient.GetAsync(githubUrl, CancellationToken.None);
 
@@ -130,7 +238,6 @@ namespace Launcher.App
                         LastError = string.Empty;
                         Console.WriteLine($"✅ Manifest remoto cargado: {UltimaVersion}");
 
-                        // Si hay una versión nueva, descarga y actualiza
                         if (SemVerComparer.IsRemoteNewer(VersionInstalada, UltimaVersion))
                         {
                             await DescargarYActualizarAsync(manifest);
@@ -149,7 +256,7 @@ namespace Launcher.App
             }
         }
 
-        // 🧱 Cargar manifest local como respaldo
+        // 🧱 Cargar manifest local
         private async Task CargarManifestLocalAsync()
         {
             try
@@ -201,15 +308,13 @@ namespace Launcher.App
                 Console.WriteLine($"📦 Descomprimiendo en: {extractPath}");
 
                 ZipFile.ExtractToDirectory(tempZip, extractPath, true);
-
                 File.Delete(tempZip);
+
                 Console.WriteLine("✅ Actualización completada correctamente.");
 
-                // 🟢 Actualizar config local
                 _configService.Config.VersionInstalada = UltimaVersion;
                 _configService.Save();
 
-                // 🟢 Refrescar UI
                 VersionInstalada = UltimaVersion;
                 OnPropertyChanged(nameof(VersionInstalada));
                 OnPropertyChanged(nameof(TextoEstado));

@@ -259,58 +259,80 @@
                     </StackPanel>
                 </ScrollViewer>
 
-                <!-- NOTICIAS -->
-                <StackPanel Grid.Column="1">
-                    <TextBlock Text="Noticias" Style="{StaticResource TituloSecundario}" Margin="6" Foreground="#003594"/>
-                    <Border Style="{StaticResource CardStyle}" VerticalAlignment="Stretch">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+				<!-- NOTICIAS -->
+				<StackPanel Grid.Column="1">
+					<TextBlock Text="Noticias"
+							   Style="{StaticResource TituloSecundario}"
+							   Margin="6"
+							   Foreground="#003594"/>
 
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <TextBlock Text="Filtrar:" Style="{StaticResource Texto}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                                <ComboBox Width="140" SelectedIndex="0" FontFamily="{StaticResource ManropeRegular}">
-                                    <ComboBoxItem Content="Todas"/>
-                                    <ComboBoxItem Content="Actualizaciones"/>
-                                    <ComboBoxItem Content="Promociones"/>
-                                </ComboBox>
-                            </StackPanel>
+					<Border Style="{StaticResource CardStyle}"
+							VerticalAlignment="Stretch"
+							Padding="10"
+							Margin="0,4,0,0">
 
-                            <ListView Grid.Row="1" ItemsSource="{Binding NewsItems}" Margin="0,8,0,0" Name="NewsListView">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Padding="8" Margin="4" CornerRadius="6" Background="Transparent">
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding Title}" Style="{StaticResource TextoDestacado}"/>
-                                                <TextBlock Text="{Binding Summary}" Style="{StaticResource Texto}" TextWrapping="Wrap" FontSize="12" Margin="0,4,0,0"/>
-                                                <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
-                                                    <TextBlock Text="{Binding DateString}" FontSize="11" Foreground="#FF8A8D90"/>
-                                                    <Button Content="Abrir" Margin="8,0,0,0" Padding="6,2" Tag="{Binding}" Click="BtnAbrirNoticia_Click"/>
-                                                </StackPanel>
-                                            </StackPanel>
-                                        </Border>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </Grid>
-                    </Border>
-                </StackPanel>
-            </Grid>
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="*"/>
+							</Grid.RowDefinitions>
 
-            <!-- BOTÓN INICIAR -->
-            <Button x:Name="BtnIniciar"
-					Grid.Row="1"
-					Grid.Column="1"
-					HorizontalAlignment="Right"
-					VerticalAlignment="Bottom"
-					Margin="0,0,12,12"
-					Style="{StaticResource GlassButtonStyle}"
-					Content="Iniciar"
-					Width="140"
-					Height="44"
-					Click="BtnIniciar_Click"/>
-        </Grid>
-    </DockPanel>
+							<!-- 🔹 Barra superior con selector de release -->
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+								<TextBlock Text="Versión:"
+										   Style="{StaticResource Texto}"
+										   VerticalAlignment="Center"
+										   Margin="0,0,6,0"/>
+								<ComboBox Width="140"
+										  SelectedIndex="0"
+										  FontFamily="{StaticResource ManropeRegular}"
+										  SelectionChanged="ComboBox_SelectionChanged">
+									<ComboBoxItem Content="Actual"/>
+									<ComboBoxItem Content="Anterior"/>
+								</ComboBox>
+							</StackPanel>
+
+							<!-- 🔹 Contenido de la noticia -->
+							<ScrollViewer Grid.Row="1"
+										  VerticalScrollBarVisibility="Auto"
+										  Margin="0,8,0,0">
+								<StackPanel>
+									<!-- 📰 Título + Fecha del release -->
+									<TextBlock Text="{Binding GameStatus.TituloNoticia}"
+											   FontFamily="{StaticResource ManropeSemiBold}"
+											   FontSize="15"
+											   Foreground="#FFEBEBEB"
+											   Margin="0,0,0,8"/>
+
+									<!-- 🧾 Descripción del release -->
+									<TextBlock Text="{Binding GameStatus.UltimaNoticia}"
+											   TextWrapping="Wrap"
+											   Foreground="White"
+											   FontFamily="{StaticResource ManropeRegular}"
+											   FontSize="14"
+											   LineHeight="20"
+											   Padding="4"
+											   TextAlignment="Left"/>
+								</StackPanel>
+							</ScrollViewer>
+						</Grid>
+					</Border>
+				</StackPanel>
+
+				<!-- BOTÓN INICIAR -->
+				<Button x:Name="BtnIniciar"
+						Grid.Row="1"
+						Grid.Column="1"
+						HorizontalAlignment="Right"
+						VerticalAlignment="Bottom"
+						Margin="0,0,12,12"
+						Style="{StaticResource GlassButtonStyle}"
+						Content="Iniciar"
+						Width="140"
+						Height="44"
+						Click="BtnIniciar_Click"/>
+			   </Grid>
+			</Grid>
+		</DockPanel>
 </Window>
+
