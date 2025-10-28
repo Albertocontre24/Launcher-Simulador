@@ -1,0 +1,15 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-logo",
+      "appliesTo": "Launcher.App/Assets/logo.png",
+      "type": "launch"
+    },
+    {
+      "taskLabel": "task-logo",
+      "appliesTo": "Launcher.App/Assets/logo.png",
+      "type": "launch"
+    }
+  ]
+}

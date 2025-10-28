@@ -1,6 +1,7 @@
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\bin\Debug\net9.0\Launcher.Core.deps.json
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\bin\Debug\net9.0\Launcher.Core.dll
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\bin\Debug\net9.0\Launcher.Core.pdb
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.csproj.AssemblyReference.cache
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.AssemblyInfoInputs.cache
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.AssemblyInfo.cs
@@ -10,6 +11,7 @@ C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\refint\Launcher.Core.dll
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.pdb
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\ref\Launcher.Core.dll
+<<<<<<< HEAD
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.csproj.AssemblyReference.cache
 C:\Users\apini\Documents\Antonio\32 ITEP\FCT\LAUNCHER FUNDACION\Launcher-Simulador\Launcher.Core\bin\Debug\net9.0\Launcher.Core.deps.json
 C:\Users\apini\Documents\Antonio\32 ITEP\FCT\LAUNCHER FUNDACION\Launcher-Simulador\Launcher.Core\bin\Debug\net9.0\Launcher.Core.dll
@@ -24,3 +26,5 @@ C:\Users\apini\Documents\Antonio\32 ITEP\FCT\LAUNCHER FUNDACION\Launcher-Simulad
 C:\Users\apini\Documents\Antonio\32 ITEP\FCT\LAUNCHER FUNDACION\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\refint\Launcher.Core.dll
 C:\Users\apini\Documents\Antonio\32 ITEP\FCT\LAUNCHER FUNDACION\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\Launcher.Core.pdb
 C:\Users\apini\Documents\Antonio\32 ITEP\FCT\LAUNCHER FUNDACION\Launcher-Simulador\Launcher.Core\obj\Debug\net9.0\ref\Launcher.Core.dll
+=======
+>>>>>>> Luis2.0

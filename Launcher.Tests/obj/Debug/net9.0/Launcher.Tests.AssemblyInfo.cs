@@ -19,7 +19,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Launcher.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f900fe6141accb47acca5ad6016459cf88e90c8e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f5a69d3c8f3b8d597eb4e9a56af7682f457f0808")]
 [assembly: System.Reflection.AssemblyProductAttribute("Launcher.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Launcher.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

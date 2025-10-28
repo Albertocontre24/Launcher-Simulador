@@ -1,0 +1,10 @@
+{
+  "Version": "1.3.1",
+  "Channel": "stable",
+  "PackageUrl": "https://github.com/Albertocontre24/Launcher-Simulador/releases/download/v1.3.0/simulador_v1.1.zip",
+  "Sha256": "abc123",
+  "Size": 10524123,
+  "NotesUrl": null,
+  "ReleaseDate": "2025-10-21",
+  "Notes": "Mejoras de rendimiento y correcciones de errores."
+}

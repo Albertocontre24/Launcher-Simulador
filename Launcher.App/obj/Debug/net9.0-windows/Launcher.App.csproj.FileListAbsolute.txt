@@ -3,9 +3,12 @@ C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\b
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\bin\Debug\net9.0-windows\Launcher.App.runtimeconfig.json
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\bin\Debug\net9.0-windows\Launcher.App.dll
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\bin\Debug\net9.0-windows\Launcher.App.pdb
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\bin\Debug\net9.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\bin\Debug\net9.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\bin\Debug\net9.0-windows\Launcher.Core.dll
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\bin\Debug\net9.0-windows\Launcher.Core.pdb
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\obj\Debug\net9.0-windows\Launcher.App.csproj.AssemblyReference.cache
+C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\obj\Debug\net9.0-windows\App.baml
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\obj\Debug\net9.0-windows\MainWindow.g.cs
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\obj\Debug\net9.0-windows\App.g.cs
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\obj\Debug\net9.0-windows\Launcher.App_MarkupCompile.cache
@@ -23,6 +26,7 @@ C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\o
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\obj\Debug\net9.0-windows\Launcher.App.pdb
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\obj\Debug\net9.0-windows\Launcher.App.genruntimeconfig.cache
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\obj\Debug\net9.0-windows\ref\Launcher.App.dll
+<<<<<<< HEAD
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\obj\Debug\net9.0-windows\App.baml
 <<<<<<< HEAD
 C:\Users\apini\Documents\Antonio\32 ITEP\FCT\LAUNCHER FUNDACION\Launcher-Simulador\Launcher.App\bin\Debug\net9.0-windows\Launcher.App.exe
@@ -57,3 +61,5 @@ C:\Users\apini\Documents\Antonio\32 ITEP\FCT\LAUNCHER FUNDACION\Launcher-Simulad
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\bin\Debug\net9.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\Users\Luis Martínez Parra\Documents\GitHub\Launcher-Simulador\Launcher.App\bin\Debug\net9.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
 >>>>>>> origin/Luis2.0
+=======
+>>>>>>> Luis2.0
