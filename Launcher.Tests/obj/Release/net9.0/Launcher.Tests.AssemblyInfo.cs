@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Launcher.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2f1ca9a46382de05cdf875b5ff4516ebdca39df0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7d2e2a0490103fc652832b288d4bf5eba020e8a5")]
 [assembly: System.Reflection.AssemblyProductAttribute("Launcher.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Launcher.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

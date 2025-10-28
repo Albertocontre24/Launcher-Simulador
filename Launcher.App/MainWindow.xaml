@@ -263,7 +263,7 @@
 				<StackPanel Grid.Column="1">
 					<TextBlock Text="Noticias"
 							   Style="{StaticResource TituloSecundario}"
-							   Margin="6"
+							   Margin="8.5"
 							   Foreground="#003594"/>
 
 					<Border Style="{StaticResource CardStyle}"

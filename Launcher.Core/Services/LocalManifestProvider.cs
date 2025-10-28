@@ -10,27 +10,10 @@ namespace Launcher.Core.Services
     {
         public string Version { get; set; } = "0.0.0";
         public string Channel { get; set; } = "stable";
-        public string PackageUrl { get; set; } = "";
-        public string Sha256 { get; set; } = "";
+        public string PackageUrl { get; set; } = string.Empty;
+        public string Sha256 { get; set; } = string.Empty;
         public long Size { get; set; }
         public string? NotesUrl { get; set; }
-    }
-
-    public sealed class Result<T>
-    {
-        public bool IsSuccess { get; }
-        public string? Error { get; }
-        public T? Value { get; }
-
-        private Result(bool success, T? value, string? error)
-        {
-            IsSuccess = success;
-            Value = value;
-            Error = error;
-        }
-
-        public static Result<T> Success(T value) => new(true, value, null);
-        public static Result<T> Failure(string error) => new(false, default, error);
     }
 
     public interface IManifestProvider
@@ -48,11 +31,11 @@ namespace Launcher.Core.Services
                 Console.WriteLine($"[Manifest] Leyendo manifest local desde: {path}");
 
                 if (!File.Exists(path))
-                    return Result<RemoteManifest>.Failure($"Archivo no encontrado: {path}");
+                    return Result<RemoteManifest>.Fail($"Archivo no encontrado: {path}");
 
                 var json = await File.ReadAllTextAsync(path, ct);
                 if (string.IsNullOrWhiteSpace(json))
-                    return Result<RemoteManifest>.Failure("El archivo manifest está vacío.");
+                    return Result<RemoteManifest>.Fail("El archivo manifest está vacío.");
 
                 var options = new JsonSerializerOptions
                 {
@@ -62,18 +45,18 @@ namespace Launcher.Core.Services
 
                 var manifest = JsonSerializer.Deserialize<RemoteManifest>(json, options);
                 if (manifest == null)
-                    return Result<RemoteManifest>.Failure("No se pudo deserializar el manifest.");
+                    return Result<RemoteManifest>.Fail("No se pudo deserializar el manifest.");
 
                 Console.WriteLine($"[Manifest] Cargado correctamente (versión: {manifest.Version})");
-                return Result<RemoteManifest>.Success(manifest);
+                return Result<RemoteManifest>.Ok(manifest);
             }
             catch (JsonException jex)
             {
-                return Result<RemoteManifest>.Failure($"Error JSON: {jex.Message}");
+                return Result<RemoteManifest>.Fail($"Error JSON: {jex.Message}");
             }
             catch (Exception ex)
             {
-                return Result<RemoteManifest>.Failure($"Error al leer manifest: {ex.Message}");
+                return Result<RemoteManifest>.Fail($"Error al leer manifest: {ex.Message}");
             }
         }
     }
