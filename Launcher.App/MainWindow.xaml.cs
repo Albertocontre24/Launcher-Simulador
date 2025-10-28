@@ -132,7 +132,7 @@ namespace Launcher.App
                 string projectRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
 
                 // 📁 Ruta exacta del ejecutable del juego
-                string exePath = Path.Combine(projectRoot, "bin", "Release", "net9.0-windows", "Build (1)", "Build", "TestLauncher.exe");
+                string exePath = Path.Combine(projectRoot, "bin", "Debug", "net9.0-windows", "update", "Build", "TestLauncher.exe");
 
                 if (!File.Exists(exePath))
                 {
