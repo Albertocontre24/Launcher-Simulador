@@ -2,11 +2,13 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Diagnostics;
 using Launcher.Core.Services;
 
 namespace Launcher.App
@@ -121,9 +123,59 @@ namespace Launcher.App
 
         private void MainTabs_SelectionChanged(object sender, SelectionChangedEventArgs e) { /* opcional */ }
 
-        private void BtnJugar_Click(object sender, RoutedEventArgs e)
+        // 🎮 BOTÓN INICIAR — Busca y lanza el juego desde la carpeta bin/Release/net9.0-windows
+        private async void BtnIniciar_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Has pulsado Jugar.", "Jugar");
+            try
+            {
+                // 📂 Carpeta base del proyecto (donde está tu Launcher.App)
+                string projectRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
+
+                // 📁 Ruta exacta del ejecutable del juego
+                string exePath = Path.Combine(projectRoot, "bin", "Release", "net9.0-windows", "Build (1)", "Build", "TestLauncher.exe");
+
+                if (!File.Exists(exePath))
+                {
+                    MessageBox.Show($"No se encontró el ejecutable del juego en:\n{exePath}",
+                                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // 🚀 Minimizar launcher mientras se ejecuta el juego
+                this.WindowState = WindowState.Minimized;
+
+                // 🚀 Ejecutar el juego directamente
+                var startInfo = new ProcessStartInfo
+                {
+                    FileName = exePath,
+                    WorkingDirectory = Path.GetDirectoryName(exePath)!,
+                    UseShellExecute = true
+                };
+
+                var process = Process.Start(startInfo);
+
+                if (process != null)
+                {
+                    // 🕒 Esperar a que se cierre sin congelar la interfaz
+                    await Task.Run(() => process.WaitForExit());
+
+                    this.WindowState = WindowState.Normal;
+
+                    MessageBox.Show("El juego se ha cerrado. Reiniciando el launcher...",
+                                    "Launcher", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    // 🔁 Reiniciar el launcher
+                    string exeLauncher = Process.GetCurrentProcess().MainModule!.FileName;
+                    Process.Start(exeLauncher);
+                    Application.Current.Shutdown();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al intentar iniciar el juego:\n{ex.Message}",
+                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
+

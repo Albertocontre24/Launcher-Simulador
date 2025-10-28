@@ -299,8 +299,8 @@
                 </StackPanel>
             </Grid>
 
-            <!-- BOTÓN JUGAR -->
-            <Button x:Name="BtnJugar"
+            <!-- BOTÓN INICIAR -->
+            <Button x:Name="BtnIniciar"
 					Grid.Row="1"
 					Grid.Column="1"
 					HorizontalAlignment="Right"
@@ -310,7 +310,7 @@
 					Content="Iniciar"
 					Width="140"
 					Height="44"
-					Click="BtnJugar_Click"/>
+					Click="BtnIniciar_Click"/>
         </Grid>
     </DockPanel>
 </Window>
