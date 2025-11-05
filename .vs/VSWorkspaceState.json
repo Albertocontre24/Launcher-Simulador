@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Launcher.App"
+    "\\Launcher.App",
+    "\\Launcher.Core",
+    "\\Launcher.Tests"
   ],
-  "SelectedNode": "\\Launcher.App\\MainWindow.xaml.cs",
   "PreviewInSolutionExplorer": false
 }
