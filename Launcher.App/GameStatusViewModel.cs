@@ -2,50 +2,95 @@
 using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Launcher.Core.Services;
-using Launcher.Core.Utils; // ✅ Comparador SemVer
+using Launcher.Core.Utils; // Comparador SemVer
 
 namespace Launcher.App
 {
     public class GameStatusViewModel : INotifyPropertyChanged
     {
-        private readonly LocalConfigService _configService;
-        private readonly HttpClient _httpClient = new HttpClient();
+        // Carpeta final: <base>\update\Build
+        private static readonly string InstallDir =
+            Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "update", "Build"));
 
+        // NOMBRE EXACTO del EXE del juego
+        private const string ExeName = "TestLauncher.exe";
+
+        private readonly LocalConfigService _configService;
+        private readonly HttpClient _http = new HttpClient();
+
+        // Estado instalación / descarga
+        private string _mensaje = "Cargando...";
+        private double _progreso = 0;
+        private bool _isTrabajando = false;
+        private bool _instalado = false;
+
+        // Versionado
         private string _versionInstalada = "Cargando...";
         private string _ultimaVersion = "Cargando...";
         private string _lastError = string.Empty;
 
-        // 📰 Datos del título y fecha de las noticias
+        // Noticias (actual y anterior)
         private string _tituloNoticiaActual = "Cargando...";
         private string _tituloNoticiaAnterior = "Cargando...";
         private string _fechaNoticiaActual = "";
         private string _fechaNoticiaAnterior = "";
-
-        // 📰 Variables internas para guardar las dos noticias
         private string _ultimaNoticiaActual = "Cargando...";
         private string _ultimaNoticiaAnterior = "Cargando...";
         private string _ultimaNoticia = "Cargando noticias...";
-
-        // 📰 Propiedad visible en la interfaz (nombre + fecha del release)
         private string _tituloNoticia = "Cargando...";
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
         public string TituloNoticia
         {
             get => _tituloNoticia;
+            set { if (_tituloNoticia != value) { _tituloNoticia = value; OnPropertyChanged(); } }
+        }
+
+        public string Mensaje
+        {
+            get => _mensaje;
+            private set { if (_mensaje != value) { _mensaje = value; OnPropertyChanged(); } }
+        }
+
+        public double Progreso
+        {
+            get => _progreso;
             set
             {
-                if (_tituloNoticia != value)
+                var v = Math.Max(0, Math.Min(100, value));
+                if (Math.Abs(_progreso - v) > 0.001)
                 {
-                    _tituloNoticia = value;
+                    _progreso = v;
                     OnPropertyChanged();
                 }
             }
         }
+
+        public bool IsTrabajando
+        {
+            get => _isTrabajando;
+            private set { if (_isTrabajando != value) { _isTrabajando = value; OnPropertyChanged(); OnPropertyChanged(nameof(PuedeIniciar)); } }
+        }
+
+        public bool Instalado
+        {
+            get => _instalado;
+            private set { if (_instalado != value) { _instalado = value; OnPropertyChanged(); OnPropertyChanged(nameof(PuedeIniciar)); } }
+        }
+
+        public bool PuedeIniciar => Instalado && !IsTrabajando;
+
+        public string RutaExe => Path.Combine(InstallDir, ExeName);
 
         public string VersionInstalada
         {
@@ -80,30 +125,15 @@ namespace Launcher.App
         public string UltimaNoticia
         {
             get => _ultimaNoticia;
-            set
-            {
-                if (_ultimaNoticia != value)
-                {
-                    _ultimaNoticia = value;
-                    OnPropertyChanged();
-                }
-            }
+            set { if (_ultimaNoticia != value) { _ultimaNoticia = value; OnPropertyChanged(); } }
         }
 
         public string LastError
         {
             get => _lastError;
-            set
-            {
-                if (_lastError != value)
-                {
-                    _lastError = value;
-                    OnPropertyChanged();
-                }
-            }
+            set { if (_lastError != value) { _lastError = value; OnPropertyChanged(); } }
         }
 
-        // ✅ Usa comparador SemVer
         public string IconoEstado =>
             UltimaVersion switch
             {
@@ -133,11 +163,7 @@ namespace Launcher.App
             }
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string? name = null)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-
-        // 🧠 Constructor
+        // Constructor
         public GameStatusViewModel()
         {
             Console.WriteLine("🚀 Inicializando GameStatusViewModel...");
@@ -145,20 +171,77 @@ namespace Launcher.App
             _configService = new LocalConfigService();
             VersionInstalada = _configService.Config.VersionInstalada ?? "Desconocida";
 
-            _ = CargarManifestAsync();
-            _ = CargarNoticiasAsync(); // 🆕 carga las noticias al iniciar
+            // Cabeceras para GitHub (manifest + assets)
+            _http.DefaultRequestHeaders.UserAgent.Clear();
+            _http.DefaultRequestHeaders.UserAgent.ParseAdd("LauncherClient/1.0");
+            _http.DefaultRequestHeaders.Accept.ParseAdd("application/octet-stream");
+            _http.DefaultRequestHeaders.Accept.ParseAdd("application/vnd.github+json");
+
+            _ = CargarNoticiasAsync();
         }
 
-        // 📰 Obtener notas del último release de GitHub
+        // Arranque: comprobar / descargar si no está / actualizar
+        public async Task InicializarAsync(CancellationToken ct = default)
+        {
+            try
+            {
+                IsTrabajando = true;
+                Mensaje = "Comprobando instalación...";
+                Progreso = 0;
+
+                Directory.CreateDirectory(InstallDir);
+                Instalado = File.Exists(RutaExe);
+
+                var manifest = await GetManifestPreferRemoteAsync(ct); // actualiza UltimaVersion
+
+                if (!Instalado)
+                {
+                    Mensaje = "No instalado. Descargando...";
+                    await DescargarEInstalarAsync(manifest, ct);
+                    Instalado = File.Exists(RutaExe);
+                    if (!Instalado) Mensaje = "La instalación no se completó.";
+                }
+                else
+                {
+                    Mensaje = "Instalación detectada. Comprobando actualizaciones...";
+                    if (manifest != null &&
+                        !string.IsNullOrWhiteSpace(manifest.Version) &&
+                        SemVerComparer.IsRemoteNewer(VersionInstalada, manifest.Version))
+                    {
+                        await DescargarEInstalarAsync(manifest, ct);
+                        Instalado = File.Exists(RutaExe);
+                        if (!Instalado) Mensaje = "Actualización incompleta.";
+                    }
+                    else
+                    {
+                        Mensaje = "Listo. Instalación al día.";
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                Mensaje = "Operación cancelada.";
+            }
+            catch (Exception ex)
+            {
+                Mensaje = $"Error: {ex.Message}";
+                LastError = ex.Message;
+            }
+            finally
+            {
+                Progreso = 0;
+                IsTrabajando = false;
+            }
+        }
+
+        // Noticias
         public async Task CargarNoticiasAsync()
         {
             try
             {
                 string url = "https://api.github.com/repos/Albertocontre24/Launcher-Simulador/releases";
-                _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("LauncherClient/1.0");
-
                 Console.WriteLine($"🌐 Consultando noticias desde: {url}");
-                var response = await _httpClient.GetStringAsync(url);
+                var response = await _http.GetStringAsync(url);
 
                 using var doc = JsonDocument.Parse(response);
                 var releases = doc.RootElement.EnumerateArray().ToList();
@@ -169,13 +252,11 @@ namespace Launcher.App
                     return;
                 }
 
-                // 🟢 Último release
                 var latest = releases[0];
                 _tituloNoticiaActual = latest.GetProperty("name").GetString() ?? "Sin nombre";
                 _fechaNoticiaActual = DateTime.Parse(latest.GetProperty("published_at").GetString() ?? DateTime.Now.ToString()).ToString("dd/MM/yyyy");
                 _ultimaNoticiaActual = latest.GetProperty("body").GetString()?.Trim() ?? "Sin descripción del último release.";
 
-                // 🟡 Release anterior (si existe)
                 if (releases.Count > 1)
                 {
                     var prev = releases[1];
@@ -190,7 +271,6 @@ namespace Launcher.App
                     _ultimaNoticiaAnterior = "No hay información de una versión anterior.";
                 }
 
-                // Mostrar por defecto el actual
                 TituloNoticia = $"{_tituloNoticiaActual} — {_fechaNoticiaActual}";
                 UltimaNoticia = _ultimaNoticiaActual;
 
@@ -203,7 +283,6 @@ namespace Launcher.App
             }
         }
 
-        // 🔄 Cambiar la noticia mostrada (entre actual y anterior)
         public void CambiarNoticia(bool mostrarAnterior)
         {
             if (mostrarAnterior)
@@ -218,46 +297,39 @@ namespace Launcher.App
             }
         }
 
-        // 📦 Cargar manifest remoto (GitHub)
-        private async Task CargarManifestAsync()
+        // Manifest remoto con fallback a local
+        private async Task<ManifestInfo?> GetManifestPreferRemoteAsync(CancellationToken ct)
         {
             try
             {
                 string githubUrl = "https://raw.githubusercontent.com/Albertocontre24/Launcher-Simulador/main/manifest.json";
                 Console.WriteLine($"🌐 Descargando manifest desde GitHub: {githubUrl}");
-                var response = await _httpClient.GetAsync(githubUrl, CancellationToken.None);
+                using var response = await _http.GetAsync(githubUrl, HttpCompletionOption.ResponseHeadersRead, ct);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var json = await response.Content.ReadAsStringAsync();
+                    var json = await response.Content.ReadAsStringAsync(ct);
                     var manifest = JsonSerializer.Deserialize<ManifestInfo>(json);
-
                     if (manifest != null && !string.IsNullOrEmpty(manifest.Version))
                     {
                         UltimaVersion = manifest.Version;
                         LastError = string.Empty;
                         Console.WriteLine($"✅ Manifest remoto cargado: {UltimaVersion}");
-
-                        if (SemVerComparer.IsRemoteNewer(VersionInstalada, UltimaVersion))
-                        {
-                            await DescargarYActualizarAsync(manifest);
-                        }
-                        return;
+                        return manifest;
                     }
                 }
 
                 Console.WriteLine("⚠️ No se pudo leer el manifest remoto, usando el local...");
-                await CargarManifestLocalAsync();
+                return await GetManifestLocalAsync(ct);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"⚠️ Error al acceder a GitHub: {ex.Message}");
-                await CargarManifestLocalAsync();
+                return await GetManifestLocalAsync(ct);
             }
         }
 
-        // 🧱 Cargar manifest local
-        private async Task CargarManifestLocalAsync()
+        private async Task<ManifestInfo?> GetManifestLocalAsync(CancellationToken ct)
         {
             try
             {
@@ -269,64 +341,204 @@ namespace Launcher.App
                     UltimaVersion = "Error";
                     LastError = "No se encontró manifest.json local.";
                     Console.WriteLine("❌ No se encontró manifest.json local.");
-                    return;
+                    return null;
                 }
 
-                var json = await File.ReadAllTextAsync(manifestPath);
+                var json = await File.ReadAllTextAsync(manifestPath, ct);
                 var manifest = JsonSerializer.Deserialize<ManifestInfo>(json);
 
                 UltimaVersion = manifest?.Version ?? "Desconocida";
                 LastError = string.Empty;
                 Console.WriteLine($"📂 Manifest local leído correctamente: {UltimaVersion}");
+                return manifest;
             }
             catch (Exception ex)
             {
                 UltimaVersion = "Error";
                 LastError = ex.Message;
                 Console.WriteLine($"💥 Error leyendo manifest local: {ex.Message}");
+                return null;
             }
         }
 
-        // 🧩 Método de actualización completo
-        private async Task DescargarYActualizarAsync(ManifestInfo manifest)
+        // Descargar y EXTRAER a %LOCALAPPDATA% y luego COPIAR a <base>\update\Build (anti AV/CFA)
+        private async Task DescargarEInstalarAsync(ManifestInfo? manifest, CancellationToken ct)
         {
+            if (manifest == null || string.IsNullOrWhiteSpace(manifest.PackageUrl))
+            {
+                Mensaje = "No hay paquete para descargar (manifest vacío).";
+                Console.WriteLine("⚠️ No se especificó la URL del paquete en el manifest.");
+                return;
+            }
+
+            string? tempZip = null;
+            string? workRoot = null;
+
             try
             {
-                if (string.IsNullOrEmpty(manifest.PackageUrl))
-                {
-                    Console.WriteLine("⚠️ No se especificó la URL del paquete en el manifest.");
-                    return;
-                }
+                IsTrabajando = true;
 
-                string tempZip = Path.Combine(Path.GetTempPath(), "update.zip");
+                var updateRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "update"));
+                var buildRoot = InstallDir;
+                Directory.CreateDirectory(updateRoot);
+
+                // 1) Descarga ZIP a %LOCALAPPDATA%
+                var dlBase = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "DavanteLauncher", "downloads");
+                Directory.CreateDirectory(dlBase);
+
+                tempZip = Path.Combine(dlBase, $"update_{Guid.NewGuid():N}.zip");
                 Console.WriteLine($"⬇️ Descargando actualización desde: {manifest.PackageUrl}");
 
-                var data = await _httpClient.GetByteArrayAsync(manifest.PackageUrl);
-                await File.WriteAllBytesAsync(tempZip, data);
+                using (var response = await _http.GetAsync(manifest.PackageUrl, HttpCompletionOption.ResponseHeadersRead, ct))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        var body = await response.Content.ReadAsStringAsync(ct);
+                        Mensaje = $"Error al descargar ZIP: {(int)response.StatusCode} {response.ReasonPhrase}";
+                        Console.WriteLine($"💥 GET {manifest.PackageUrl} -> {(int)response.StatusCode} {response.ReasonPhrase}\n{body}");
+                        return;
+                    }
 
-                string extractPath = AppContext.BaseDirectory;
-                Console.WriteLine($"📦 Descomprimiendo en: {extractPath}");
+                    var total = response.Content.Headers.ContentLength ?? -1L;
+                    var canReport = total > 0;
 
-                ZipFile.ExtractToDirectory(tempZip, extractPath, true);
-                File.Delete(tempZip);
+                    await using var httpStream = await response.Content.ReadAsStreamAsync(ct);
+                    await using var fileStream = File.Create(tempZip);
 
-                Console.WriteLine("✅ Actualización completada correctamente.");
+                    var buffer = new byte[81920];
+                    long totalRead = 0;
+                    int read;
 
-                _configService.Config.VersionInstalada = UltimaVersion;
-                _configService.Save();
+                    while ((read = await httpStream.ReadAsync(buffer.AsMemory(0, buffer.Length), ct)) > 0)
+                    {
+                        await fileStream.WriteAsync(buffer.AsMemory(0, read), ct);
+                        totalRead += read;
 
-                VersionInstalada = UltimaVersion;
-                OnPropertyChanged(nameof(VersionInstalada));
-                OnPropertyChanged(nameof(TextoEstado));
-                OnPropertyChanged(nameof(IconoEstado));
+                        if (canReport)
+                        {
+                            Progreso = Math.Round((double)totalRead / total * 100, 1);
+                            Mensaje = $"Descargando... {Progreso}%";
+                        }
+                        else
+                        {
+                            Mensaje = "Descargando...";
+                        }
+                    }
+                }
 
-                Console.WriteLine($"✅ Versión actualizada a {UltimaVersion}");
+                // 2) Extrae el ZIP en %LOCALAPPDATA% (fuera de Documents)
+                Mensaje = "Descomprimiendo...";
+                workRoot = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "DavanteLauncher", "staging", $"work_{Guid.NewGuid():N}");
+                Directory.CreateDirectory(workRoot);
+
+                // Extraemos todo el ZIP al directorio de trabajo
+                ZipFile.ExtractToDirectory(tempZip, workRoot, overwriteFiles: true);
+
+                // 3) Detecta carpeta origen a copiar (si el ZIP trae Build/ úsala; si no, copia todo)
+                var srcBuild = Path.Combine(workRoot, "Build");
+                var sourceDir = Directory.Exists(srcBuild) ? srcBuild : workRoot;
+
+                // 4) Copia a <base>\update\Build con reintentos por archivo (evita locks)
+                Mensaje = "Instalando...";
+                await CopyDirectoryWithRetriesAsync(sourceDir, buildRoot, ct);
+
+                // 5) Persistir versión instalada
+                if (!string.IsNullOrWhiteSpace(UltimaVersion))
+                {
+                    _configService.Config.VersionInstalada = UltimaVersion;
+                    _configService.Save();
+                    VersionInstalada = UltimaVersion;
+                }
+
+                // 6) Validar ejecutable
+                var exePath = Path.Combine(InstallDir, ExeName);
+                if (!File.Exists(exePath))
+                    exePath = Directory.EnumerateFiles(InstallDir, ExeName, SearchOption.AllDirectories).FirstOrDefault() ?? "";
+
+                Instalado = File.Exists(exePath);
+                Mensaje = Instalado
+                    ? "Instalación/Actualización completada correctamente."
+                    : "No se encontró el ejecutable tras la instalación.";
+
+                Console.WriteLine($"▶ EXE {(Instalado ? "detectado" : "no encontrado")}: {exePath}");
+            }
+            catch (OperationCanceledException)
+            {
+                Mensaje = "Descarga cancelada.";
+                throw;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"💥 Error durante la actualización: {ex.Message}");
                 LastError = ex.Message;
+                Mensaje = $"Error durante la instalación: {ex.Message}";
+                Console.WriteLine($"💥 Error durante la instalación: {ex.Message}");
             }
+            finally
+            {
+                Progreso = 0;
+                IsTrabajando = false;
+
+                // Limpieza
+                try { if (tempZip is not null && File.Exists(tempZip)) File.Delete(tempZip); } catch { }
+                try
+                {
+                    if (workRoot is not null && Directory.Exists(workRoot))
+                        Directory.Delete(workRoot, recursive: true);
+                }
+                catch { }
+            }
+        }
+
+        private static async Task CopyDirectoryWithRetriesAsync(string src, string dst, CancellationToken ct, int maxRetries = 5)
+        {
+            // Crea destino
+            Directory.CreateDirectory(dst);
+
+            // Copia archivos del nivel actual
+            foreach (var file in Directory.EnumerateFiles(src))
+            {
+                ct.ThrowIfCancellationRequested();
+                var destFile = Path.Combine(dst, Path.GetFileName(file));
+                await CopyFileWithRetriesAsync(file, destFile, ct, maxRetries);
+            }
+
+            // Recurse subdirectorios
+            foreach (var dir in Directory.EnumerateDirectories(src))
+            {
+                ct.ThrowIfCancellationRequested();
+                var name = Path.GetFileName(dir);
+                var destDir = Path.Combine(dst, name);
+                await CopyDirectoryWithRetriesAsync(dir, destDir, ct, maxRetries);
+            }
+        }
+
+        private static async Task CopyFileWithRetriesAsync(string srcFile, string dstFile, CancellationToken ct, int maxRetries = 5)
+        {
+            for (int i = 0; i < maxRetries; i++)
+            {
+                try
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(dstFile)!);
+                    File.Copy(srcFile, dstFile, overwrite: true);
+                    return;
+                }
+                catch (IOException)
+                {
+                    await Task.Delay(300 + i * 200, ct); // backoff por archivo en uso
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    await Task.Delay(500 + i * 200, ct); // AV/CFA
+                }
+            }
+
+            // último intento fuera del bucle para propagar error real si persiste
+            Directory.CreateDirectory(Path.GetDirectoryName(dstFile)!);
+            File.Copy(srcFile, dstFile, overwrite: true);
         }
 
         private class ManifestInfo

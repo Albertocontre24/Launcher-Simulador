@@ -11,7 +11,8 @@
 
 	<!-- Estilos locales -->
 	<Window.Resources>
-		<!-- Estilo para botón tipo 'glass' con esquinas redondeadas -->
+
+		<!-- ======= Tu botón "glass" (sin cambios) ======= -->
 		<Style x:Key="GlassButtonStyle" TargetType="Button" BasedOn="{StaticResource BotonTexto}">
 			<Setter Property="Foreground" Value="White"/>
 			<Setter Property="FontFamily" Value="{StaticResource ManropeBold}"/>
@@ -29,41 +30,21 @@
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="Button">
-						<Grid RenderTransformOrigin="0.5,0.5"
-                              SnapsToDevicePixels="True"
-                              UseLayoutRounding="True"
-                              TextOptions.TextFormattingMode="Display"
-                              TextOptions.TextRenderingMode="ClearType">
-
+						<Grid RenderTransformOrigin="0.5,0.5">
 							<Border x:Name="border"
 									CornerRadius="12"
 									Background="{TemplateBinding Background}"
 									BorderBrush="{TemplateBinding BorderBrush}"
-									BorderThickness="{TemplateBinding BorderThickness}"
-									SnapsToDevicePixels="True">
+									BorderThickness="{TemplateBinding BorderThickness}">
 								<Border.Effect>
 									<DropShadowEffect Color="#1A000000" BlurRadius="10" ShadowDepth="2"/>
 								</Border.Effect>
-
-								<Grid SnapsToDevicePixels="True"
-                                      UseLayoutRounding="True"
-                                      TextOptions.TextFormattingMode="Display"
-                                      TextOptions.TextRenderingMode="ClearType">
-									<Rectangle RadiusX="12" RadiusY="12" IsHitTestVisible="False" Opacity="0.6" Fill="#40FFFFFF" />
-									<ContentPresenter HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"
-                                                      SnapsToDevicePixels="True"
-                                                      UseLayoutRounding="True"
-                                                      TextOptions.TextFormattingMode="Display"
-                                                      TextOptions.TextRenderingMode="ClearType"/>
+								<Grid>
+									<Rectangle RadiusX="12" RadiusY="12" IsHitTestVisible="False" Opacity="0.6" Fill="#40FFFFFF"/>
+									<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
 								</Grid>
 							</Border>
-
-							<Border CornerRadius="12"
-                                    BorderThickness="1"
-                                    BorderBrush="#20FFFFFF"
-                                    Margin="1"
-                                    IsHitTestVisible="False"/>
+							<Border CornerRadius="12" BorderThickness="1" BorderBrush="#20FFFFFF" Margin="1" IsHitTestVisible="False"/>
 						</Grid>
 
 						<ControlTemplate.Triggers>
@@ -91,14 +72,6 @@
 										<ScaleTransform ScaleX="0.99" ScaleY="0.99"/>
 									</Setter.Value>
 								</Setter>
-								<Setter TargetName="border" Property="Background">
-									<Setter.Value>
-										<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-											<GradientStop Color="#FF5B41" Offset="0"/>
-											<GradientStop Color="#FF5B41" Offset="1"/>
-										</LinearGradientBrush>
-									</Setter.Value>
-								</Setter>
 							</Trigger>
 
 							<Trigger Property="IsEnabled" Value="False">
@@ -109,78 +82,123 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
+
+		<!-- ======= Paleta para chips de estado ======= -->
+		<SolidColorBrush x:Key="OkBg"   Color="#0E2A1E"/>
+		<SolidColorBrush x:Key="OkBd"   Color="#28C76F"/>
+		<SolidColorBrush x:Key="OkFg"   Color="#D9FFE9"/>
+		<SolidColorBrush x:Key="WarnBg" Color="#2C1A1A"/>
+		<SolidColorBrush x:Key="WarnBd" Color="#E14C4C"/>
+		<SolidColorBrush x:Key="WarnFg" Color="#FFE4E4"/>
+
+		<!-- Icono MDL2 para chips -->
+		<Style x:Key="Glyph" TargetType="TextBlock">
+			<Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="Margin" Value="0,0,6,0"/>
+		</Style>
+
+		<!-- Contenedor reutilizable tipo "chip" -->
+		<Style x:Key="InfoChip" TargetType="Border">
+			<Setter Property="CornerRadius" Value="10"/>
+			<Setter Property="Padding" Value="8"/>
+			<Setter Property="Margin" Value="6,10,6,0"/>
+			<Setter Property="BorderThickness" Value="1"/>
+		</Style>
+
+		<!-- ======= ProgressBar redondeada ======= -->
+		<!-- Nota: Usa PART_Track y PART_Indicator para que WPF gestione el ancho según Value/Maximum -->
+		<Style x:Key="RoundedProgress" TargetType="ProgressBar">
+			<Setter Property="Height" Value="16"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ProgressBar">
+						<Grid x:Name="Root" ClipToBounds="True">
+							<!-- Fondo -->
+							<Border CornerRadius="8" Background="#1C2B42" BorderBrush="#223344" BorderThickness="1"/>
+							<!-- Track e indicador (los maneja internamente ProgressBar) -->
+							<Border x:Name="PART_Track" CornerRadius="8" Background="Transparent"/>
+							<Border x:Name="PART_Indicator" CornerRadius="8" Background="#1ABC9C"/>
+						</Grid>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsIndeterminate" Value="True">
+								<Setter TargetName="PART_Indicator" Property="Opacity" Value="0.6"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
 	</Window.Resources>
 
-    <DockPanel LastChildFill="True">
-		
-			<!-- Imagen del logo arriba a la izquierda -->
+	<DockPanel LastChildFill="True">
+
+		<!-- Imagen del logo abajo a la izquierda -->
 		<Image Source="Assets/logoesquina.png"
-	   DockPanel.Dock="Bottom"
-	   HorizontalAlignment="Left"
-	   VerticalAlignment="Bottom"
-	   Margin="8,0,0,8"
-	   Width="120"
-	   Stretch="Uniform"
-	   Panel.ZIndex="10"/>
-		
-        <!-- MENÚ SUPERIOR -->
-		
-        <Menu DockPanel.Dock="Top" Background="{StaticResource PrimaryBackground}" FontFamily="{StaticResource ManropeRegular}">
-            <MenuItem Header="_Archivo" Foreground="Black">
-                <MenuItem Header="Abrir..." Foreground="Black" />
-                <Separator />
-                <MenuItem Header="Salir" Foreground="Black" Click="MenuSalir_Click"/>
-            </MenuItem>
+			   DockPanel.Dock="Bottom"
+			   HorizontalAlignment="Left"
+			   VerticalAlignment="Bottom"
+			   Margin="8,0,0,8"
+			   Width="120"
+			   Stretch="Uniform"
+			   Panel.ZIndex="10"/>
 
-            <MenuItem Header="_Ver" Foreground="Black">
-                <MenuItem Header="Actualizar"
-                          Foreground="Black"
-                          IsCheckable="True"
-                          Click="MenuActualizar_Click"/>
-            </MenuItem>
+		<!-- MENÚ SUPERIOR -->
+		<Menu DockPanel.Dock="Top" Background="{StaticResource PrimaryBackground}" FontFamily="{StaticResource ManropeRegular}">
+			<MenuItem Header="_Archivo" Foreground="Black">
+				<MenuItem Header="Abrir..." Foreground="Black" />
+				<Separator />
+				<MenuItem Header="Salir" Foreground="Black" Click="MenuSalir_Click"/>
+			</MenuItem>
 
-            <MenuItem Header="_Ayuda" Foreground="Black">
-                <MenuItem Header="Acerca de..." Foreground="Black" Click="MenuAcercaDe_Click"/>
-            </MenuItem>
-        </Menu>
+			<MenuItem Header="_Ver" Foreground="Black">
+				<MenuItem Header="Actualizar" Foreground="Black" IsCheckable="True" Click="MenuActualizar_Click"/>
+			</MenuItem>
 
-        <!-- BARRA SUPERIOR -->
-        <Border DockPanel.Dock="Top" Padding="2" Background="#003594">
+			<MenuItem Header="_Ayuda" Foreground="Black">
+				<MenuItem Header="Acerca de..." Foreground="Black" Click="MenuAcercaDe_Click"/>
+			</MenuItem>
+		</Menu>
+
+		<!-- BARRA SUPERIOR -->
+		<Border DockPanel.Dock="Top" Padding="2" Background="#003594">
 			<Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
 
-                <!-- Logo -->
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0">
-                    <Image Source="Assets/logo.png" Width="100" Height="100" Margin="0,0,10,0"/>
-                </StackPanel>
+				<!-- Logo -->
+				<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0">
+					<Image Source="Assets/logo.png" Width="100" Height="100" Margin="0,0,10,0"/>
+				</StackPanel>
 
-                <!-- Título -->
-                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Text="Mi Launcher" Style="{StaticResource Titulo}" />
-                    <TextBlock Text="Panel principal" Style="{StaticResource Texto}" Foreground="{StaticResource SecondaryText}"/>
-                </StackPanel>
+				<!-- Título -->
+				<StackPanel Grid.Column="1" VerticalAlignment="Center">
+					<TextBlock Text="Mi Launcher" Style="{StaticResource Titulo}" />
+					<TextBlock Text="Panel principal" Style="{StaticResource Texto}" Foreground="{StaticResource SecondaryText}"/>
+				</StackPanel>
 
-                <!-- Acciones rápidas -->
-                <StackPanel Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,4,0">
-                    <Button Content="Actualizar" Click="BtnActualizar_Click" Padding="8,4" Margin="0,0,8,0" Style="{StaticResource GlassButtonStyle}" Height="30" Width="125"/>
-                    <Button Content="Configuración" Click="BtnConfiguracion_Click" Padding="8,4" Style="{StaticResource GlassButtonStyle}"/>
-                </StackPanel>
-            </Grid>
-        </Border>
+				<!-- Acciones rápidas -->
+				<StackPanel Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,4,0">
+					<Button Content="Actualizar" Click="BtnActualizar_Click" Padding="8,4" Margin="0,0,8,0" Style="{StaticResource GlassButtonStyle}" Height="30" Width="125"/>
+					<Button Content="Configuración" Click="BtnConfiguracion_Click" Padding="8,4" Style="{StaticResource GlassButtonStyle}"/>
+				</StackPanel>
+			</Grid>
+		</Border>
 
-        <!-- CUERPO PRINCIPAL -->
-        <Grid Margin="12">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+		<!-- CUERPO PRINCIPAL -->
+		<Grid Margin="12">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
 
-            <!-- Pestañas -->
-            <TabControl Grid.Row="0"
+			<!-- Pestañas -->
+			<TabControl Grid.Row="0"
                         x:Name="MainTabs"
                         Margin="0,0,0,10"
                         Height="36"
@@ -188,76 +206,202 @@
                         BorderThickness="0"
                         FontFamily="{StaticResource ManropeSemiBold}"
                         SelectionChanged="MainTabs_SelectionChanged">
-                <TabItem Header="Inicio" />
-                <TabItem Header="Historial" />
-            </TabControl>
+				<TabItem Header="Inicio" />
+				<TabItem Header="Historial" />
+			</TabControl>
 
-            <!-- Contenido -->
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
+			<!-- Contenido -->
+			<Grid Grid.Row="1">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="3*"/>
+					<ColumnDefinition Width="2*"/>
+				</Grid.ColumnDefinitions>
 
-                <!-- ESTADO -->
-                <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
-                    <StackPanel>
-                        <TextBlock Text="Estado" Style="{StaticResource TituloSecundario}" Margin="6" Foreground="#003594"/>
+				<!-- ESTADO -->
+				<ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+					<StackPanel>
+						<TextBlock Text="Estado" Style="{StaticResource TituloSecundario}" Margin="6" Foreground="#003594"/>
 
-                        <!-- Tarjeta: Estado del launcher -->
-                        <Border Style="{StaticResource CardStyle}">
-                            <StackPanel>
-                                <TextBlock Text="Estado del launcher" Style="{StaticResource TextoDestacado}" FontSize="16" Margin="0,0,0,10"/>
+						<!-- Tarjeta: Estado del launcher -->
+						<Border Style="{StaticResource CardStyle}">
+							<StackPanel>
+								<TextBlock Text="Estado del launcher" Style="{StaticResource TextoDestacado}" FontSize="16" Margin="0,0,0,10"/>
 
-                                <StackPanel Orientation="Horizontal" Margin="0,4">
-                                    <TextBlock Text="Versión instalada:" Style="{StaticResource TextoDestacado}" Width="160"/>
-                                    <TextBlock Text="{Binding GameStatus.VersionInstalada}" Style="{StaticResource Texto}"/>
-                                </StackPanel>
+								<StackPanel Orientation="Horizontal" Margin="0,4">
+									<TextBlock Text="Versión instalada:" Style="{StaticResource TextoDestacado}" Width="160"/>
+									<TextBlock Text="{Binding GameStatus.VersionInstalada}" Style="{StaticResource Texto}"/>
+								</StackPanel>
+								<!-- ✅ CHIP: ejecutable detectado -->
+								<Border Background="{StaticResource OkBg}" BorderBrush="{StaticResource OkBd}">
+									<DockPanel LastChildFill="True" ToolTip="{Binding GameStatus.RutaExe}">
+										<TextBlock Style="{StaticResource Glyph}" Foreground="{StaticResource OkBd}" Text="&#xE73E;"/>
+										<TextBlock Foreground="{StaticResource OkFg}" TextTrimming="CharacterEllipsis">
+											<Run Text="Ejecutable detectado: "/>
+											<Run Text="{Binding GameStatus.RutaExe, Mode=OneWay}"/>
+										</TextBlock>
 
-                                <StackPanel Orientation="Horizontal" Margin="0,4">
-                                    <TextBlock Text="Última versión:" Style="{StaticResource TextoDestacado}" Width="160"/>
-                                    <TextBlock Text="{Binding GameStatus.UltimaVersion}" Style="{StaticResource Texto}"/>
-                                </StackPanel>
+										<!-- Botones -->
+										<StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Margin="8,0,0,0">
+											<Button Style="{StaticResource GlassButtonStyle}" Height="24" Padding="10,0"
+													Click="BtnCopiarRuta_Click" Content="Copiar ruta" Margin="0,0,6,0"/>
+											<Button Style="{StaticResource GlassButtonStyle}" Height="24" Padding="10,0"
+													Click="BtnAbrirCarpeta_Click" Content="Abrir carpeta"/>
+										</StackPanel>
+									</DockPanel>
 
-                                <StackPanel Orientation="Horizontal" Margin="0,8">
-                                    <Image Source="{Binding GameStatus.IconoEstado}" Width="18" Height="18" Margin="0,0,6,0"/>
-                                    <TextBlock Text="{Binding GameStatus.TextoEstado}" Style="{StaticResource Texto}"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Border>
+									<!-- Solo visible si hay ejecutable -->
+									<Border.Style>
+										<Style TargetType="Border" BasedOn="{StaticResource InfoChip}">
+											<Setter Property="Visibility" Value="Collapsed"/>
+											<Style.Triggers>
+												<DataTrigger Binding="{Binding GameStatus.Instalado}" Value="True">
+													<Setter Property="Visibility" Value="Visible"/>
+												</DataTrigger>
+											</Style.Triggers>
+										</Style>
+									</Border.Style>
+								</Border>
 
-                        <!-- Tarjeta: Conexión -->
-                        <Border Style="{StaticResource CardStyle}">
-                            <StackPanel>
-                                <TextBlock Text="Conexión:" Style="{StaticResource TextoDestacado}"/>
-                                <TextBlock Text="{Binding LauncherStatus.ConnectionText}" Style="{StaticResource Texto}" Margin="0,4,0,8"/>
-                                <TextBlock Text="Versión:" Style="{StaticResource TextoDestacado}"/>
-                                <TextBlock Text="{Binding LauncherStatus.Version}" Style="{StaticResource Texto}" Margin="0,4,0,8"/>
-                                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                                    <Button Content="Revisar actualizaciones" Click="BtnRevisarActualizaciones_Click" Padding="8,4" Margin="8,0,0,0" Style="{StaticResource GlassButtonStyle}" Height="30" Width="180"/>
-                                    <Button Content="Reiniciar" Click="BtnReiniciar_Click" Padding="8,4" Margin="8,0,0,0" Style="{StaticResource GlassButtonStyle}" Height="30" Width="125"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Border>
+								<!-- ❌ CHIP: no detectado -->
+								<Border Background="{StaticResource WarnBg}" BorderBrush="{StaticResource WarnBd}">
+									<DockPanel LastChildFill="True">
+										<TextBlock Style="{StaticResource Glyph}" Foreground="{StaticResource WarnBd}" Text="&#xE783;"/>
+										<TextBlock Foreground="{StaticResource WarnFg}" TextWrapping="Wrap">
+											<Run Text="No se encontró el ejecutable. "/>
+											<Run Text="Pulsa "/>
+											<Run Text="Actualizar" FontWeight="Bold"/>
+											<Run Text=" o verifica que el ZIP incluya "/>
+											<Run Text="Build/TestLauncher.exe" FontWeight="Bold"/>
+											<Run Text="."/>
+										</TextBlock>
+									</DockPanel>
 
-                        <!-- Tarjeta Actividades -->
-                        <Border Style="{StaticResource CardStyle}">
-                            <StackPanel>
-                                <TextBlock Text="Actividades recientes" Style="{StaticResource TextoDestacado}"/>
-                                <ItemsControl ItemsSource="{Binding RecentActivities}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock TextWrapping="Wrap" Style="{StaticResource Texto}">
+									<!-- Visible solo si NO está instalado -->
+									<Border.Style>
+										<Style TargetType="Border" BasedOn="{StaticResource InfoChip}">
+											<Setter Property="Visibility" Value="Collapsed"/>
+											<Style.Triggers>
+												<DataTrigger Binding="{Binding GameStatus.Instalado}" Value="False">
+													<Setter Property="Visibility" Value="Visible"/>
+												</DataTrigger>
+											</Style.Triggers>
+										</Style>
+									</Border.Style>
+								</Border>
+
+
+								<StackPanel Orientation="Horizontal" Margin="0,4">
+									<TextBlock Text="Última versión:" Style="{StaticResource TextoDestacado}" Width="160"/>
+									<TextBlock Text="{Binding GameStatus.UltimaVersion}" Style="{StaticResource Texto}"/>
+								</StackPanel>
+
+								<StackPanel Orientation="Horizontal" Margin="0,8">
+									<Image Source="{Binding GameStatus.IconoEstado}" Width="18" Height="18" Margin="0,0,6,0"/>
+									<TextBlock Text="{Binding GameStatus.TextoEstado}" Style="{StaticResource Texto}"/>
+								</StackPanel>
+
+								<!-- ───── Mensaje + Progreso (siempre visible, se llena al terminar) ───── -->
+								<StackPanel Margin="0,8,0,0">
+									<TextBlock Text="{Binding GameStatus.Mensaje}"
+											   Style="{StaticResource Texto}"
+											   TextWrapping="Wrap"
+											   Margin="0,0,0,6"/>
+
+									<ProgressBar Style="{StaticResource RoundedProgress}"
+                                        Minimum="0" Maximum="100"
+                                        Value="{Binding GameStatus.Progreso, Mode=OneWay}"
+                                        IsIndeterminate="{Binding GameStatus.IsTrabajando, Mode=OneWay}"/>
+ 
+
+									<TextBlock Margin="0,4,0,0"
+											   Style="{StaticResource Texto}"
+											   Opacity="0.85">
+										<Run Text="Progreso: "/>
+										<Run Text="{Binding GameStatus.Progreso, StringFormat={}{0:F1}%}"/>
+									</TextBlock>
+								</StackPanel>
+								<!-- ─────────────────────────────────────────────────────────────── -->
+
+								<!-- ───── Mensajes según detección del EXE ───── -->
+								<!-- Detectado (verde) -->
+								<Border Margin="0,10,0,0" Padding="8"
+										Background="#14321E" BorderBrush="#2ECC71" BorderThickness="1" CornerRadius="8">
+									<Border.Style>
+										<Style TargetType="Border">
+											<Setter Property="Visibility" Value="Collapsed"/>
+											<Style.Triggers>
+												<DataTrigger Binding="{Binding GameStatus.Instalado}" Value="True">
+													<Setter Property="Visibility" Value="Visible"/>
+												</DataTrigger>
+											</Style.Triggers>
+										</Style>
+									</Border.Style>
+									<TextBlock>
+										<Run Text="✅ Ejecutable detectado: "/>
+										<Run Text="{Binding GameStatus.RutaExe, Mode=OneWay}"/>
+									</TextBlock>
+								</Border>
+
+								<!-- No detectado (rojo) -->
+								<Border Margin="0,10,0,0" Padding="8"
+										Background="#3A1B1B" BorderBrush="#E74C3C" BorderThickness="1" CornerRadius="8">
+									<Border.Style>
+										<Style TargetType="Border">
+											<Setter Property="Visibility" Value="Collapsed"/>
+											<Style.Triggers>
+												<DataTrigger Binding="{Binding GameStatus.Instalado}" Value="False">
+													<Setter Property="Visibility" Value="Visible"/>
+												</DataTrigger>
+											</Style.Triggers>
+										</Style>
+									</Border.Style>
+									<TextBlock TextWrapping="Wrap">
+										<Run Text="⛔ No se encontró el ejecutable. "/>
+										<Run Text="Pulsa "/>
+										<Run Text="Actualizar" FontWeight="Bold"/>
+										<Run Text=" para reinstalar, o verifica que el ZIP contenga la carpeta "/>
+										<Run Text="Build" FontWeight="Bold"/>
+										<Run Text=" con "/>
+										<Run Text="TestLauncher.exe" FontWeight="Bold"/>
+										<Run Text="."/>
+									</TextBlock>
+								</Border>
+								<!-- ─────────────────────────────────────────── -->
+							</StackPanel>
+						</Border>
+
+						<!-- Tarjeta: Conexión -->
+						<Border Style="{StaticResource CardStyle}">
+							<StackPanel>
+								<TextBlock Text="Conexión:" Style="{StaticResource TextoDestacado}"/>
+								<TextBlock Text="{Binding LauncherStatus.ConnectionText}" Style="{StaticResource Texto}" Margin="0,4,0,8"/>
+								<TextBlock Text="Versión:" Style="{StaticResource TextoDestacado}"/>
+								<TextBlock Text="{Binding LauncherStatus.Version}" Style="{StaticResource Texto}" Margin="0,4,0,8"/>
+								<StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+									<Button Content="Revisar actualizaciones" Click="BtnRevisarActualizaciones_Click" Padding="8,4" Margin="8,0,0,0" Style="{StaticResource GlassButtonStyle}" Height="30" Width="180"/>
+									<Button Content="Reiniciar" Click="BtnReiniciar_Click" Padding="8,4" Margin="8,0,0,0" Style="{StaticResource GlassButtonStyle}" Height="30" Width="125"/>
+								</StackPanel>
+							</StackPanel>
+						</Border>
+
+						<!-- Tarjeta Actividades -->
+						<Border Style="{StaticResource CardStyle}">
+							<StackPanel>
+								<TextBlock Text="Actividades recientes" Style="{StaticResource TextoDestacado}"/>
+								<ItemsControl ItemsSource="{Binding RecentActivities}">
+									<ItemsControl.ItemTemplate>
+										<DataTemplate>
+											<TextBlock TextWrapping="Wrap" Style="{StaticResource Texto}">
 												<Run Text="• "/>
 												<Run Text="{Binding}" />
-                                            </TextBlock>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-                        </Border>
-                    </StackPanel>
-                </ScrollViewer>
+											</TextBlock>
+										</DataTemplate>
+									</ItemsControl.ItemTemplate>
+								</ItemsControl>
+							</StackPanel>
+						</Border>
+					</StackPanel>
+				</ScrollViewer>
 
 				<!-- NOTICIAS -->
 				<StackPanel Grid.Column="1">
@@ -297,14 +441,12 @@
 										  VerticalScrollBarVisibility="Auto"
 										  Margin="0,8,0,0">
 								<StackPanel>
-									<!-- 📰 Título + Fecha del release -->
 									<TextBlock Text="{Binding GameStatus.TituloNoticia}"
 											   FontFamily="{StaticResource ManropeSemiBold}"
 											   FontSize="15"
 											   Foreground="#FFEBEBEB"
 											   Margin="0,0,0,8"/>
 
-									<!-- 🧾 Descripción del release -->
 									<TextBlock Text="{Binding GameStatus.UltimaNoticia}"
 											   TextWrapping="Wrap"
 											   Foreground="White"
@@ -327,12 +469,12 @@
 						VerticalAlignment="Bottom"
 						Margin="0,0,12,12"
 						Style="{StaticResource GlassButtonStyle}"
+						IsEnabled="{Binding GameStatus.PuedeIniciar, Mode=OneWay}"
 						Content="Iniciar"
 						Width="140"
 						Height="44"
 						Click="BtnIniciar_Click"/>
-			   </Grid>
 			</Grid>
-		</DockPanel>
+		</Grid>
+	</DockPanel>
 </Window>
-
