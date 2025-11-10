@@ -108,16 +108,13 @@
 		</Style>
 
 		<!-- ======= ProgressBar redondeada ======= -->
-		<!-- Nota: Usa PART_Track y PART_Indicator para que WPF gestione el ancho según Value/Maximum -->
 		<Style x:Key="RoundedProgress" TargetType="ProgressBar">
 			<Setter Property="Height" Value="16"/>
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="ProgressBar">
 						<Grid x:Name="Root" ClipToBounds="True">
-							<!-- Fondo -->
 							<Border CornerRadius="8" Background="#1C2B42" BorderBrush="#223344" BorderThickness="1"/>
-							<!-- Track e indicador (los maneja internamente ProgressBar) -->
 							<Border x:Name="PART_Track" CornerRadius="8" Background="Transparent"/>
 							<Border x:Name="PART_Indicator" CornerRadius="8" Background="#1ABC9C"/>
 						</Grid>
@@ -135,7 +132,6 @@
 
 	<DockPanel LastChildFill="True">
 
-		<!-- Imagen del logo abajo a la izquierda -->
 		<Image Source="Assets/logoesquina.png"
 			   DockPanel.Dock="Bottom"
 			   HorizontalAlignment="Left"
@@ -145,24 +141,20 @@
 			   Stretch="Uniform"
 			   Panel.ZIndex="10"/>
 
-		<!-- MENÚ SUPERIOR -->
 		<Menu DockPanel.Dock="Top" Background="{StaticResource PrimaryBackground}" FontFamily="{StaticResource ManropeRegular}">
 			<MenuItem Header="_Archivo" Foreground="Black">
 				<MenuItem Header="Abrir..." Foreground="Black" />
 				<Separator />
 				<MenuItem Header="Salir" Foreground="Black" Click="MenuSalir_Click"/>
 			</MenuItem>
-
 			<MenuItem Header="_Ver" Foreground="Black">
 				<MenuItem Header="Actualizar" Foreground="Black" IsCheckable="True" Click="MenuActualizar_Click"/>
 			</MenuItem>
-
 			<MenuItem Header="_Ayuda" Foreground="Black">
 				<MenuItem Header="Acerca de..." Foreground="Black" Click="MenuAcercaDe_Click"/>
 			</MenuItem>
 		</Menu>
 
-		<!-- BARRA SUPERIOR -->
 		<Border DockPanel.Dock="Top" Padding="2" Background="#003594">
 			<Grid>
 				<Grid.ColumnDefinitions>
@@ -171,18 +163,15 @@
 					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
 
-				<!-- Logo -->
 				<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0">
 					<Image Source="Assets/logo.png" Width="100" Height="100" Margin="0,0,10,0"/>
 				</StackPanel>
 
-				<!-- Título -->
 				<StackPanel Grid.Column="1" VerticalAlignment="Center">
 					<TextBlock Text="Mi Launcher" Style="{StaticResource Titulo}" />
 					<TextBlock Text="Panel principal" Style="{StaticResource Texto}" Foreground="{StaticResource SecondaryText}"/>
 				</StackPanel>
 
-				<!-- Acciones rápidas -->
 				<StackPanel Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,4,0">
 					<Button Content="Actualizar" Click="BtnActualizar_Click" Padding="8,4" Margin="0,0,8,0" Style="{StaticResource GlassButtonStyle}" Height="30" Width="125"/>
 					<Button Content="Configuración" Click="BtnConfiguracion_Click" Padding="8,4" Style="{StaticResource GlassButtonStyle}"/>
@@ -190,14 +179,12 @@
 			</Grid>
 		</Border>
 
-		<!-- CUERPO PRINCIPAL -->
 		<Grid Margin="12">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
 
-			<!-- Pestañas -->
 			<TabControl Grid.Row="0"
                         x:Name="MainTabs"
                         Margin="0,0,0,10"
@@ -210,7 +197,6 @@
 				<TabItem Header="Historial" />
 			</TabControl>
 
-			<!-- Contenido -->
 			<Grid Grid.Row="1">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="3*"/>
@@ -227,20 +213,52 @@
 							<StackPanel>
 								<TextBlock Text="Estado del launcher" Style="{StaticResource TextoDestacado}" FontSize="16" Margin="0,0,0,10"/>
 
+								<!-- Versión instalada -->
 								<StackPanel Orientation="Horizontal" Margin="0,4">
 									<TextBlock Text="Versión instalada:" Style="{StaticResource TextoDestacado}" Width="160"/>
 									<TextBlock Text="{Binding GameStatus.VersionInstalada}" Style="{StaticResource Texto}"/>
 								</StackPanel>
-								<!-- ✅ CHIP: ejecutable detectado -->
+
+								<!-- Última versión -->
+								<StackPanel Orientation="Horizontal" Margin="0,4">
+									<TextBlock Text="Última versión:" Style="{StaticResource TextoDestacado}" Width="160"/>
+									<TextBlock Text="{Binding GameStatus.UltimaVersion}" Style="{StaticResource Texto}"/>
+								</StackPanel>
+
+								<!-- Estado general -->
+								<StackPanel Orientation="Horizontal" Margin="0,8">
+									<Image Source="{Binding GameStatus.IconoEstado}" Width="18" Height="18" Margin="0,0,6,0"/>
+									<TextBlock Text="{Binding GameStatus.TextoEstado}" Style="{StaticResource Texto}"/>
+								</StackPanel>
+
+								<!-- Mensaje + Progreso -->
+								<StackPanel Margin="0,8,0,0">
+									<TextBlock Text="{Binding GameStatus.Mensaje}"
+											   Style="{StaticResource Texto}"
+											   TextWrapping="Wrap"
+											   Margin="0,0,0,6"/>
+
+									<ProgressBar Style="{StaticResource RoundedProgress}"
+												 Minimum="0" Maximum="100"
+												 Value="{Binding GameStatus.Progreso, Mode=OneWay}"
+												 IsIndeterminate="{Binding GameStatus.IsTrabajando, Mode=OneWay}"/>
+
+									<TextBlock Margin="0,4,0,0" Style="{StaticResource Texto}" Opacity="0.85">
+										<Run Text="Progreso: "/>
+										<Run Text="{Binding GameStatus.Progreso, StringFormat={}{0:F1}%}"/>
+									</TextBlock>
+								</StackPanel>
+
+								<!-- CHIP "bueno" (verde con botones) abajo -->
 								<Border Background="{StaticResource OkBg}" BorderBrush="{StaticResource OkBd}">
 									<DockPanel LastChildFill="True" ToolTip="{Binding GameStatus.RutaExe}">
 										<TextBlock Style="{StaticResource Glyph}" Foreground="{StaticResource OkBd}" Text="&#xE73E;"/>
 										<TextBlock Foreground="{StaticResource OkFg}" TextTrimming="CharacterEllipsis">
 											<Run Text="Ejecutable detectado: "/>
-											<Run Text="{Binding GameStatus.RutaExe, Mode=OneWay}"/>
+											<!-- Mostrar solo el nombre del .exe -->
+											<Run Text="{Binding GameStatus.NombreExe, Mode=OneWay}"/>
 										</TextBlock>
 
-										<!-- Botones -->
 										<StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Margin="8,0,0,0">
 											<Button Style="{StaticResource GlassButtonStyle}" Height="24" Padding="10,0"
 													Click="BtnCopiarRuta_Click" Content="Copiar ruta" Margin="0,0,6,0"/>
@@ -249,7 +267,6 @@
 										</StackPanel>
 									</DockPanel>
 
-									<!-- Solo visible si hay ejecutable -->
 									<Border.Style>
 										<Style TargetType="Border" BasedOn="{StaticResource InfoChip}">
 											<Setter Property="Visibility" Value="Collapsed"/>
@@ -262,7 +279,7 @@
 									</Border.Style>
 								</Border>
 
-								<!-- ❌ CHIP: no detectado -->
+								<!-- ❌ CHIP: no detectado (visible solo si Instalado=False) -->
 								<Border Background="{StaticResource WarnBg}" BorderBrush="{StaticResource WarnBd}">
 									<DockPanel LastChildFill="True">
 										<TextBlock Style="{StaticResource Glyph}" Foreground="{StaticResource WarnBd}" Text="&#xE783;"/>
@@ -276,7 +293,6 @@
 										</TextBlock>
 									</DockPanel>
 
-									<!-- Visible solo si NO está instalado -->
 									<Border.Style>
 										<Style TargetType="Border" BasedOn="{StaticResource InfoChip}">
 											<Setter Property="Visibility" Value="Collapsed"/>
@@ -289,84 +305,6 @@
 									</Border.Style>
 								</Border>
 
-
-								<StackPanel Orientation="Horizontal" Margin="0,4">
-									<TextBlock Text="Última versión:" Style="{StaticResource TextoDestacado}" Width="160"/>
-									<TextBlock Text="{Binding GameStatus.UltimaVersion}" Style="{StaticResource Texto}"/>
-								</StackPanel>
-
-								<StackPanel Orientation="Horizontal" Margin="0,8">
-									<Image Source="{Binding GameStatus.IconoEstado}" Width="18" Height="18" Margin="0,0,6,0"/>
-									<TextBlock Text="{Binding GameStatus.TextoEstado}" Style="{StaticResource Texto}"/>
-								</StackPanel>
-
-								<!-- ───── Mensaje + Progreso (siempre visible, se llena al terminar) ───── -->
-								<StackPanel Margin="0,8,0,0">
-									<TextBlock Text="{Binding GameStatus.Mensaje}"
-											   Style="{StaticResource Texto}"
-											   TextWrapping="Wrap"
-											   Margin="0,0,0,6"/>
-
-									<ProgressBar Style="{StaticResource RoundedProgress}"
-                                        Minimum="0" Maximum="100"
-                                        Value="{Binding GameStatus.Progreso, Mode=OneWay}"
-                                        IsIndeterminate="{Binding GameStatus.IsTrabajando, Mode=OneWay}"/>
- 
-
-									<TextBlock Margin="0,4,0,0"
-											   Style="{StaticResource Texto}"
-											   Opacity="0.85">
-										<Run Text="Progreso: "/>
-										<Run Text="{Binding GameStatus.Progreso, StringFormat={}{0:F1}%}"/>
-									</TextBlock>
-								</StackPanel>
-								<!-- ─────────────────────────────────────────────────────────────── -->
-
-								<!-- ───── Mensajes según detección del EXE ───── -->
-								<!-- Detectado (verde) -->
-								<Border Margin="0,10,0,0" Padding="8"
-										Background="#14321E" BorderBrush="#2ECC71" BorderThickness="1" CornerRadius="8">
-									<Border.Style>
-										<Style TargetType="Border">
-											<Setter Property="Visibility" Value="Collapsed"/>
-											<Style.Triggers>
-												<DataTrigger Binding="{Binding GameStatus.Instalado}" Value="True">
-													<Setter Property="Visibility" Value="Visible"/>
-												</DataTrigger>
-											</Style.Triggers>
-										</Style>
-									</Border.Style>
-									<TextBlock>
-										<Run Text="✅ Ejecutable detectado: "/>
-										<Run Text="{Binding GameStatus.RutaExe, Mode=OneWay}"/>
-									</TextBlock>
-								</Border>
-
-								<!-- No detectado (rojo) -->
-								<Border Margin="0,10,0,0" Padding="8"
-										Background="#3A1B1B" BorderBrush="#E74C3C" BorderThickness="1" CornerRadius="8">
-									<Border.Style>
-										<Style TargetType="Border">
-											<Setter Property="Visibility" Value="Collapsed"/>
-											<Style.Triggers>
-												<DataTrigger Binding="{Binding GameStatus.Instalado}" Value="False">
-													<Setter Property="Visibility" Value="Visible"/>
-												</DataTrigger>
-											</Style.Triggers>
-										</Style>
-									</Border.Style>
-									<TextBlock TextWrapping="Wrap">
-										<Run Text="⛔ No se encontró el ejecutable. "/>
-										<Run Text="Pulsa "/>
-										<Run Text="Actualizar" FontWeight="Bold"/>
-										<Run Text=" para reinstalar, o verifica que el ZIP contenga la carpeta "/>
-										<Run Text="Build" FontWeight="Bold"/>
-										<Run Text=" con "/>
-										<Run Text="TestLauncher.exe" FontWeight="Bold"/>
-										<Run Text="."/>
-									</TextBlock>
-								</Border>
-								<!-- ─────────────────────────────────────────── -->
 							</StackPanel>
 						</Border>
 
@@ -421,7 +359,6 @@
 								<RowDefinition Height="*"/>
 							</Grid.RowDefinitions>
 
-							<!-- 🔹 Barra superior con selector de release -->
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 								<TextBlock Text="Versión:"
 										   Style="{StaticResource Texto}"
@@ -436,7 +373,6 @@
 								</ComboBox>
 							</StackPanel>
 
-							<!-- 🔹 Contenido de la noticia -->
 							<ScrollViewer Grid.Row="1"
 										  VerticalScrollBarVisibility="Auto"
 										  Margin="0,8,0,0">

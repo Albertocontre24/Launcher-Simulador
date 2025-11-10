@@ -92,6 +92,18 @@ namespace Launcher.App
 
         public string RutaExe => Path.Combine(InstallDir, ExeName);
 
+        /// <summary>
+        /// Solo el nombre del ejecutable (p.ej. "TestLauncher.exe") para mostrar en UI.
+        /// </summary>
+        public string NombreExe
+        {
+            get
+            {
+                try { return Path.GetFileName(RutaExe) ?? string.Empty; }
+                catch { return string.Empty; }
+            }
+        }
+
         public string VersionInstalada
         {
             get => _versionInstalada;
