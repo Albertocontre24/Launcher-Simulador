@@ -7,15 +7,15 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Launcher.App\\MainWindow.xaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Luis Mart\u00EDnez Parra\\AppData\\Local\\Temp\\.vsdbgsrc\\d1af1769b234626406ba4999490eb004ed59af4984d32a319132ada97bfb6c86\\PropertyPathWorker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\MainWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Launcher.App\\MainWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\GameStatusViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Launcher.App\\GameStatusViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\MainWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Launcher.App\\MainWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Luis Mart\u00EDnez Parra\\AppData\\Local\\Temp\\.vsdbgsrc\\d1af1769b234626406ba4999490eb004ed59af4984d32a319132ada97bfb6c86\\PropertyPathWorker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\AssemblyInfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -80,8 +80,7 @@
               "RelativeToolTip": "Launcher.App\\Launcher.App.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-10-21T11:48:43.72Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-21T11:48:43.72Z"
             },
             {
               "$type": "Document",
@@ -91,7 +90,7 @@
               "RelativeDocumentMoniker": "Launcher.App\\MainWindow.xaml",
               "ToolTip": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\MainWindow.xaml",
               "RelativeToolTip": "Launcher.App\\MainWindow.xaml",
-              "ViewState": "AgIAAO4AAAAAAAAAAAArwAIBAABEAAAAAAAAAA==",
+              "ViewState": "AgIAAI0BAAAAAAAAAAAkwJEBAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-09-30T12:37:45.857Z",
               "EditorCaption": ""
@@ -116,27 +115,27 @@
               "RelativeDocumentMoniker": "Launcher.App\\GameStatusViewModel.cs",
               "ToolTip": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\GameStatusViewModel.cs",
               "RelativeToolTip": "Launcher.App\\GameStatusViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADICAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAG8CAAAAAAAAAAAAAI8CAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-21T11:34:21.535Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "Launcher.App\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\Luis Mart\u00EDnez Parra\\Documents\\GitHub\\Launcher-Simulador\\Launcher.App\\MainWindow.xaml.cs",
               "RelativeToolTip": "Launcher.App\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAM0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-01T07:08:53.051Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "PropertyPathWorker.cs",
               "DocumentMoniker": "C:\\Users\\Luis Mart\u00EDnez Parra\\AppData\\Local\\Temp\\.vsdbgsrc\\d1af1769b234626406ba4999490eb004ed59af4984d32a319132ada97bfb6c86\\PropertyPathWorker.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\d1af1769b234626406ba4999490eb004ed59af4984d32a319132ada97bfb6c86\\PropertyPathWorker.cs",
@@ -144,8 +143,7 @@
               "RelativeToolTip": "..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\d1af1769b234626406ba4999490eb004ed59af4984d32a319132ada97bfb6c86\\PropertyPathWorker.cs",
               "ViewState": "AgIAAJgEAAAAAAAAAAAAAKoEAAAEAAAAAQAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-05T09:38:26.326Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-05T09:38:26.326Z"
             },
             {
               "$type": "Document",
@@ -157,8 +155,7 @@
               "RelativeToolTip": "Launcher.App\\App.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-01T07:38:38.139Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T07:38:38.139Z"
             },
             {
               "$type": "Document",
@@ -170,8 +167,7 @@
               "RelativeToolTip": "Launcher.App\\App.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T09:39:44.73Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-28T09:39:44.73Z"
             },
             {
               "$type": "Document",
@@ -183,8 +179,7 @@
               "RelativeToolTip": "Launcher.App\\AssemblyInfo.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T09:37:45.995Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-28T09:37:45.995Z"
             },
             {
               "$type": "Document",
@@ -245,8 +240,7 @@
               "RelativeToolTip": "Launcher.Core\\Services\\GitHubNewsService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABpAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T10:50:13.32Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-28T10:50:13.32Z"
             }
           ]
         },

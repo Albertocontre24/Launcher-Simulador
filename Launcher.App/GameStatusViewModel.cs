@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
@@ -19,7 +20,7 @@ namespace Launcher.App
         private static readonly string InstallDir =
             Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "update", "Build"));
 
-        // NOMBRE EXACTO del EXE del juego
+        // NOMBRE EXACTO del EXE del juego (fallback si no hay selección)
         private const string ExeName = "TestLauncher.exe";
 
         private readonly LocalConfigService _configService;
@@ -45,6 +46,39 @@ namespace Launcher.App
         private string _ultimaNoticiaAnterior = "Cargando...";
         private string _ultimaNoticia = "Cargando noticias...";
         private string _tituloNoticia = "Cargando...";
+
+        // =========================
+        //  Selector de Launcher
+        // =========================
+        public sealed record LauncherOption(string Key, string Display, string ExeName, string? Subfolder = null);
+
+        private LauncherOption _selectedLauncher;
+
+        // Ajusta esta lista a tus ejecutables reales. Puedes añadir o quitar opciones sin tocar más lógica.
+        public IReadOnlyList<LauncherOption> Launchers { get; } =
+            new List<LauncherOption>
+            {
+                new LauncherOption("main",   "Launcher principal",           "TestLauncher.exe"),
+                new LauncherOption("altdx11","Launcher DX11 (alternativo)", "TestLauncherDX11.exe", "DX11"),
+                // Ejemplo: nuevo ejecutable en subcarpeta "Legacy"
+                // new LauncherOption("legacy","Launcher Legacy", "TestLauncherLegacy.exe", "Legacy")
+            };
+
+        public LauncherOption SelectedLauncher
+        {
+            get => _selectedLauncher;
+            set
+            {
+                if (_selectedLauncher != value)
+                {
+                    _selectedLauncher = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(RutaExe));
+                    OnPropertyChanged(nameof(NombreExe));
+                    OnPropertyChanged(nameof(PuedeIniciar));
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
@@ -88,9 +122,20 @@ namespace Launcher.App
             private set { if (_instalado != value) { _instalado = value; OnPropertyChanged(); OnPropertyChanged(nameof(PuedeIniciar)); } }
         }
 
-        public bool PuedeIniciar => Instalado && !IsTrabajando;
+        // Ahora depende de que exista el EXE de la selección actual
+        public bool PuedeIniciar => File.Exists(RutaExe) && !IsTrabajando;
 
-        public string RutaExe => Path.Combine(InstallDir, ExeName);
+        public string RutaExe
+        {
+            get
+            {
+                var exe = SelectedLauncher?.ExeName ?? ExeName;
+                var sub = SelectedLauncher?.Subfolder;
+                return string.IsNullOrWhiteSpace(sub)
+                    ? Path.Combine(InstallDir, exe)
+                    : Path.Combine(InstallDir, sub!, exe);
+            }
+        }
 
         /// <summary>
         /// Solo el nombre del ejecutable (p.ej. "TestLauncher.exe") para mostrar en UI.
@@ -183,6 +228,9 @@ namespace Launcher.App
             _configService = new LocalConfigService();
             VersionInstalada = _configService.Config.VersionInstalada ?? "Desconocida";
 
+            // Selección por defecto (primera opción)
+            _selectedLauncher = Launchers[0];
+
             // Cabeceras para GitHub (manifest + assets)
             _http.DefaultRequestHeaders.UserAgent.Clear();
             _http.DefaultRequestHeaders.UserAgent.ParseAdd("LauncherClient/1.0");
@@ -202,6 +250,8 @@ namespace Launcher.App
                 Progreso = 0;
 
                 Directory.CreateDirectory(InstallDir);
+
+                // Instalado si existe el EXE de la opción actual
                 Instalado = File.Exists(RutaExe);
 
                 var manifest = await GetManifestPreferRemoteAsync(ct); // actualiza UltimaVersion
@@ -210,7 +260,9 @@ namespace Launcher.App
                 {
                     Mensaje = "No instalado. Descargando...";
                     await DescargarEInstalarAsync(manifest, ct);
-                    Instalado = File.Exists(RutaExe);
+
+                    // Tras instalar, considera instalado si existe CUALQUIER EXE de la lista
+                    Instalado = AnyLauncherExeExists();
                     if (!Instalado) Mensaje = "La instalación no se completó.";
                 }
                 else
@@ -221,7 +273,8 @@ namespace Launcher.App
                         SemVerComparer.IsRemoteNewer(VersionInstalada, manifest.Version))
                     {
                         await DescargarEInstalarAsync(manifest, ct);
-                        Instalado = File.Exists(RutaExe);
+
+                        Instalado = AnyLauncherExeExists();
                         if (!Instalado) Mensaje = "Actualización incompleta.";
                     }
                     else
@@ -466,17 +519,17 @@ namespace Launcher.App
                     VersionInstalada = UltimaVersion;
                 }
 
-                // 6) Validar ejecutable
-                var exePath = Path.Combine(InstallDir, ExeName);
-                if (!File.Exists(exePath))
-                    exePath = Directory.EnumerateFiles(InstallDir, ExeName, SearchOption.AllDirectories).FirstOrDefault() ?? "";
+                // 6) Validar ejecutables
+                //    - Comprobamos TODOS los exes posibles del selector
+                //    - Si no aparecen directamente, buscamos recursivamente (por si hay subcarpetas adicionales)
+                bool anyExe = AnyLauncherExeExists();
+                Instalado = anyExe;
 
-                Instalado = File.Exists(exePath);
                 Mensaje = Instalado
                     ? "Instalación/Actualización completada correctamente."
-                    : "No se encontró el ejecutable tras la instalación.";
+                    : "No se encontró ningún ejecutable tras la instalación.";
 
-                Console.WriteLine($"▶ EXE {(Instalado ? "detectado" : "no encontrado")}: {exePath}");
+                Console.WriteLine($"▶ Instalación: {(Instalado ? "OK" : "FALLÓ")} (selector activo)");
             }
             catch (OperationCanceledException)
             {
@@ -551,6 +604,46 @@ namespace Launcher.App
             // último intento fuera del bucle para propagar error real si persiste
             Directory.CreateDirectory(Path.GetDirectoryName(dstFile)!);
             File.Copy(srcFile, dstFile, overwrite: true);
+        }
+
+        // ¿Existe el EXE de la opción actual?
+        private bool SelectedLauncherExeExists()
+        {
+            var exePath = RutaExe;
+            if (File.Exists(exePath)) return true;
+
+            // Búsqueda recursiva de seguridad si la estructura no es la esperada
+            try
+            {
+                var name = Path.GetFileName(exePath);
+                var found = Directory.EnumerateFiles(InstallDir, name, SearchOption.AllDirectories).Any();
+                return found;
+            }
+            catch { return false; }
+        }
+
+        // ¿Existe CUALQUIERA de los EXEs configurados?
+        private bool AnyLauncherExeExists()
+        {
+            foreach (var opt in Launchers)
+            {
+                var basePath = string.IsNullOrWhiteSpace(opt.Subfolder)
+                    ? InstallDir
+                    : Path.Combine(InstallDir, opt.Subfolder!);
+
+                var direct = Path.Combine(basePath, opt.ExeName);
+                if (File.Exists(direct)) return true;
+
+                try
+                {
+                    // fallback recursivo por si el ZIP trae subcarpetas adicionales
+                    if (Directory.Exists(basePath) &&
+                        Directory.EnumerateFiles(basePath, opt.ExeName, SearchOption.AllDirectories).Any())
+                        return true;
+                }
+                catch { /* ignore */ }
+            }
+            return false;
         }
 
         private class ManifestInfo

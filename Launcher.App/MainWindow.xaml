@@ -397,19 +397,37 @@
 					</Border>
 				</StackPanel>
 
-				<!-- BOTÓN INICIAR -->
-				<Button x:Name="BtnIniciar"
-						Grid.Row="1"
-						Grid.Column="1"
-						HorizontalAlignment="Right"
-						VerticalAlignment="Bottom"
-						Margin="0,0,12,12"
-						Style="{StaticResource GlassButtonStyle}"
-						IsEnabled="{Binding GameStatus.PuedeIniciar, Mode=OneWay}"
-						Content="Iniciar"
-						Width="140"
-						Height="44"
-						Click="BtnIniciar_Click"/>
+				<!-- Contenedor en la MISMA celda donde estaba el botón -->
+				<DockPanel Grid.Row="2"
+						   Grid.Column="1"
+						   Grid.ColumnSpan="1"
+					       LastChildFill="False"
+					       HorizontalAlignment="Stretch"
+				           Margin="0,0,0,0">
+
+					<!-- ⚠️ IMPORTANTE: el PRIMERO va más a la DERECHA en un DockPanel con Dock=Right -->
+
+					<!-- Selector (a la derecha del todo) -->
+					<ComboBox DockPanel.Dock="Right"
+							  Width="180" Height="36"
+							  ItemsSource="{Binding GameStatus.Launchers}"
+							  SelectedItem="{Binding GameStatus.SelectedLauncher}"
+							  DisplayMemberPath="Display"
+							  MaxDropDownHeight="200"
+							  Margin="0,0,10,0"
+							  Background="White"/>
+
+					<!-- Botón Iniciar (queda a la IZQUIERDA del selector) -->
+					<Button DockPanel.Dock="Right"
+							x:Name="BtnIniciar"
+							Content="Iniciar"
+							Width="120" Height="36"
+							Click="BtnIniciar_Click"
+							IsEnabled="{Binding GameStatus.PuedeIniciar}"
+							Style="{StaticResource GlassButtonStyle}"/>
+				</DockPanel>
+
+
 			</Grid>
 		</Grid>
 	</DockPanel>
