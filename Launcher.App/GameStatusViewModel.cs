@@ -64,6 +64,9 @@ namespace Launcher.App
                 // new LauncherOption("legacy","Launcher Legacy", "TestLauncherLegacy.exe", "Legacy")
             };
 
+        // 🔔 Evento para notificar errores a la UI
+        public event Action<string>? OnError;
+
         public LauncherOption SelectedLauncher
         {
             get => _selectedLauncher;
@@ -83,6 +86,28 @@ namespace Launcher.App
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+        // 🔧 Centralizamos aquí el comportamiento de error
+        private void NotificarError(string contexto, Exception ex, bool actualizarMensaje = true)
+        {
+            // Lo que verá el usuario en el MessageBox
+            var textoUsuario = $"{contexto}:\n{ex.Message}";
+
+            // Mensaje de estado del launcher (barra inferior, etc.)
+            if (actualizarMensaje)
+                Mensaje = $"Error: {ex.Message}";
+
+            LastError = ex.Message;
+
+            try
+            {
+                OnError?.Invoke(textoUsuario);
+            }
+            catch
+            {
+                // Nunca reventar por un fallo en el handler
+            }
+        }
 
         public string TituloNoticia
         {
@@ -289,8 +314,7 @@ namespace Launcher.App
             }
             catch (Exception ex)
             {
-                Mensaje = $"Error: {ex.Message}";
-                LastError = ex.Message;
+                NotificarError("Error durante la inicialización", ex);
             }
             finally
             {
@@ -345,6 +369,8 @@ namespace Launcher.App
             {
                 UltimaNoticia = $"Error al cargar noticias: {ex.Message}";
                 Console.WriteLine($"💥 Error al cargar noticias: {ex.Message}");
+                // No tocamos el Mensaje general del launcher
+                NotificarError("Error al cargar noticias", ex, actualizarMensaje: false);
             }
         }
 
@@ -390,6 +416,8 @@ namespace Launcher.App
             catch (Exception ex)
             {
                 Console.WriteLine($"⚠️ Error al acceder a GitHub: {ex.Message}");
+                // Mostramos advertencia pero sin romper el flujo
+                NotificarError("No se pudo acceder al manifest remoto en GitHub (se usará el local si existe)", ex, actualizarMensaje: false);
                 return await GetManifestLocalAsync(ct);
             }
         }
@@ -406,6 +434,8 @@ namespace Launcher.App
                     UltimaVersion = "Error";
                     LastError = "No se encontró manifest.json local.";
                     Console.WriteLine("❌ No se encontró manifest.json local.");
+                    // Error "duro": sí que actualizamos Mensaje
+                    NotificarError("No se encontró el manifest local", new FileNotFoundException("manifest.json no existe", manifestPath));
                     return null;
                 }
 
@@ -422,6 +452,7 @@ namespace Launcher.App
                 UltimaVersion = "Error";
                 LastError = ex.Message;
                 Console.WriteLine($"💥 Error leyendo manifest local: {ex.Message}");
+                NotificarError("Error leyendo el manifest local", ex);
                 return null;
             }
         }
@@ -463,6 +494,7 @@ namespace Launcher.App
                         var body = await response.Content.ReadAsStringAsync(ct);
                         Mensaje = $"Error al descargar ZIP: {(int)response.StatusCode} {response.ReasonPhrase}";
                         Console.WriteLine($"💥 GET {manifest.PackageUrl} -> {(int)response.StatusCode} {response.ReasonPhrase}\n{body}");
+                        NotificarError("Error al descargar el paquete de actualización", new InvalidOperationException($"{(int)response.StatusCode} {response.ReasonPhrase}"));
                         return;
                     }
 
@@ -538,9 +570,8 @@ namespace Launcher.App
             }
             catch (Exception ex)
             {
-                LastError = ex.Message;
-                Mensaje = $"Error durante la instalación: {ex.Message}";
                 Console.WriteLine($"💥 Error durante la instalación: {ex.Message}");
+                NotificarError("Error durante la instalación o actualización", ex);
             }
             finally
             {
@@ -653,3 +684,4 @@ namespace Launcher.App
         }
     }
 }
+

@@ -20,6 +20,16 @@ namespace Launcher.App
             // El DataContext es la propia ventana, que expone .GameStatus
             DataContext = this;
 
+            // 🔔 Suscribirse a los errores del ViewModel
+            GameStatus.OnError += msg =>
+            {
+                // Aseguramos que se ejecute en el hilo de UI
+                Dispatcher.Invoke(() =>
+                {
+                    MessageBox.Show(msg, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                });
+            };
+
             // Al cargar la ventana: comprobar/descargar/instalar si hace falta
             Loaded += async (_, __) =>
             {
@@ -203,3 +213,4 @@ namespace Launcher.App
         }
     }
 }
+
